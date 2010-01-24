@@ -10,6 +10,23 @@ using namespace std;
 #include <sqlite3.h>
 #include "Question.cpp"
 
+class DBError {
+	const char* errormsg;
+	const char* sql;
+	
+	public:
+	DBError(const char* msg)
+	{
+		cout << "DB error:" << msg << endl;
+	}
+	
+	DBError(const char* msg, const char* lsql)
+	{
+		cout << "DB error:" << msg << endl <<"Last SQL Query:"<<endl<<"`" << lsql<<"`"<<endl;
+	}
+};
+	
+	
 
 class SQLITE3 {
 private:
@@ -27,11 +44,14 @@ public:
 
 
   SQLITE3 (string tablename="init.db"): zErrMsg(0), rc(0),db_open(0) {
-    rc = sqlite3_open(tablename.c_str(), &db);
+
+    rc = sqlite3_open_v2(tablename.c_str(),&db,SQLITE_OPEN_READONLY,NULL);
     if( rc ){
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      //fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      throw DBError(sqlite3_errmsg(db));
       sqlite3_close(db);
     }
+    
     db_open=1;
   }
   
@@ -62,13 +82,14 @@ public:
 	  char buffer[1024];
 	  sprintf(buffer,"Select Qpag,qcod FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
 	  string s_exe(buffer);
-	  //cout << s_exe <<endl;
+
 	  rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
-	  
+
+
 	  if( rc == SQLITE_OK )
 	  {
 		  vector<int> *v = new vector<int>[31];
-		  
+		  assert(nrow != 0);
 		  for(int i=1; i <= nrow;i++)
 			 v[atoi(result[ncol*i])-1].push_back(atoi(result[ncol*i+1]));
 		 
@@ -76,21 +97,21 @@ public:
 		 return v;
 		 
 		 for(int i=0; i < 30;i++) {
-			 /*cout << "array[" << i << "][0]=" << array[i][0];
-			 cout << ",array[" << i << "][1]=" << array[i][1] <<endl;*/
 			 cout << endl << "v[" << i << "]=";
 			 copy(v[i].begin(),v[i].end(),ostream_iterator<int>(cout,","));
 		 }		 
-	  }
-
+	  } else { throw DBError(sqlite3_errmsg(db),s_exe.c_str()); }
+	  
+	  
 	  return NULL;
   }
   
   Question *getQuestionArray(int *array) {
 	  Question *q = new Question[30];
-	  for (int i=0; i<30; i++) {
-		  q[i] = getQuestion(array[i]);
-	  }
+	  
+	  for (int i=0; i<30; i++)
+		q[i] = getQuestion(array[i]);
+		
 	  return q;
   }
 
@@ -124,35 +145,12 @@ public:
 		 Question q =  Question(result[ncol],result[ncol+1],result[ncol+2],result[ncol+3],a,nrow);
 		 sqlite3_free_table(result);
 		 return q;	 
-     }
+     }else {throw DBError(sqlite3_errmsg(db),s_exe.c_str());}
      
      sqlite3_free_table(result);
      return Question();
   }
 
-  int exe(string s_exe) {
-      rc = sqlite3_get_table(
-			db,              /* An open database */
-			s_exe.c_str(),       /* SQL to be executed */
-			&result,       /* Result written to a char *[]  that this points to */
-			&nrow,             /* Number of result rows written here */
-			&ncol,          /* Number of result columns written here */
-			&zErrMsg          /* Error msg written here */
-			);
-
-      if(vcol_head.size() > 0) {vcol_head.clear();}
-      if(vdata.size()>0) {vdata.clear();}
-
-     if( rc == SQLITE_OK ){
-      for(int i=0; i < ncol; ++i)
-	vcol_head.push_back(result[i]); /* First row heading */
-	
-      for(int i=0; i < ncol*nrow; ++i)
-	vdata.push_back(result[ncol+i]);
-     }
-     sqlite3_free_table(result);
-      return rc;
-  }
 
   ~SQLITE3(){
       sqlite3_close(db);

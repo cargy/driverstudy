@@ -93,19 +93,20 @@ class Question
 		int dbId;
 		char question[MAXQUESTIONSIZE];
 		unsigned int amountOfAnswers;
-		unsigned int selectedAnswer;
+		int selectedAnswer;
 		Answer *qAnswers;
 		char imgFile[MAXIMGFILESIZE];
 		char sndFile[MAXSNDFILESIZE];
 		char book[128];
+		bool verified;
 	
 	public:
 	
 		Question()
 		{
-
+			amountOfAnswers = 0;
+			selectedAnswer = -1;
 		}
-		
 		
 		Question(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook,Answer *xferAnswers, unsigned int aoa)
 		{
@@ -124,6 +125,7 @@ class Question
 			qAnswers = xferAnswers;
 			selectedAnswer = -1;
 			amountOfAnswers = aoa;
+			verified = false;
 		}
 		
 		void answerRandomly() {
@@ -153,9 +155,9 @@ class Question
 			return qAnswers[selectedAnswer].isCorrect();
 		}
 		
-		void selectAnswer(unsigned int selected) {
+		void selectAnswer(int selected) {
 			for (unsigned int i=0; i < amountOfAnswers;i++) qAnswers[i].deselect();
-			qAnswers[selected].select();
+			if (selected != -1 ) qAnswers[selected].select();
 			selectedAnswer = selected;
 		}		
 			
@@ -174,8 +176,9 @@ class Question
 			return book;
 		}
 		
-		const char *getAnswer(int i)
+		const char *getAnswer(unsigned int i)
 		{
+			assert(i<amountOfAnswers);
 			return qAnswers[i].getText();
 		}
 		
@@ -184,9 +187,30 @@ class Question
 			return amountOfAnswers;
 		}
 		
-		unsigned int getSelectedAnswer()
+		int getSelectedAnswer()
 		{
 			return selectedAnswer;
+		}
+		
+		unsigned int getCorrectAnswer()
+		{
+			for (unsigned int i=0; i<amountOfAnswers;i++) 
+			{
+				if ( qAnswers[i].isCorrect() ) return i;
+			}
+					
+			return -1;
+		}
+		
+		bool isVerified()
+		{
+			return verified;
+		}
+		
+		void verify()
+		{
+			// flag question verified ONLY if a selection is made
+			if (selectedAnswer != -1) verified = true;
 		}
 	
 	
@@ -205,9 +229,8 @@ class Test {
 		{
 			tQuestions = xferQuestions;
 			amountOfQuestions = aoq;
-			cursor = 0;
+			cursor = -1;
 		}
-		
 		
 		void showResults() {
 			int i=0;
@@ -217,10 +240,31 @@ class Test {
 			}
 		}
 		
+		void selectAnswerOfCurrentQuestion(int a)
+		{
+			tQuestions[cursor].selectAnswer(a);
+		}
+		
+		void verifyAnswerOfCurrentQuestion()
+		{
+			tQuestions[cursor].verify();
+		}
+		
 		void answerRandomly() 
 		{
 		    for(int i=0;i<amountOfQuestions;i++)
 				tQuestions[i].answerRandomly();			
+		}
+		
+		bool completed()
+		{
+			bool flag = true;
+			
+			for(int i=0;i<amountOfQuestions;i++) 
+				if (!tQuestions[i].isVerified())
+					return false;
+			
+			return flag;
 		}
 		
 		int getCorrect() {
@@ -228,14 +272,37 @@ class Test {
 			for(int i=0;i<amountOfQuestions;i++) {
 				if ( tQuestions[i].isCorrect() ) correctQuestions++;
 			}
-			cout << endl << correctQuestions << " out of " << amountOfQuestions << " correct Questions" << endl;
+			//cout << endl << correctQuestions << " out of " << amountOfQuestions << " correct Questions" << endl;
 			return correctQuestions;
 		}
 		
-		Question *next()
+		Question *wrongQuestions() 
 		{
-			if (cursor < amountOfQuestions - 1)	return &tQuestions[cursor++];
-			else return &tQuestions[cursor];
+			Question *wq = new Question[amountOfQuestions-getCorrect()];
+			int index = -1;
+			for(int i=0;i<amountOfQuestions;i++) {
+				if ( !tQuestions[i].isCorrect() ) {
+					wq[++index] = tQuestions[i];
+				}
+			}
+			return wq;			
+		}
+		
+		int getAOQ()
+		{
+			return amountOfQuestions;
+		}
+		
+		Question *next()
+		{			
+			if (cursor >= amountOfQuestions-1) cursor = -1;
+			
+			while ( tQuestions[++cursor].isVerified() && !completed() ) 
+			{
+				if (cursor >= amountOfQuestions-1) cursor = -1;
+			}
+			return &tQuestions[cursor];
+			
 		}
 		
 		int getCursor()
