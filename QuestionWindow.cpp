@@ -167,6 +167,7 @@ public:
     	answers[i] = new RadioButton(5, 60*i, 425, 60, "Answer 1");
     	answers[i]->align(fltk::ALIGN_LEFT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP);
     	answers[i]->buttonbox(fltk::PLASTIC_DOWN_BOX);
+    	answers[i]->textsize(20);
     	answers[i]->callback((Callback*)cb_check_answer,this);
 	}
 	
