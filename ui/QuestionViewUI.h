@@ -4,17 +4,31 @@
 #define QuestionViewUI_h
 #include <fltk/Window.h>
 #include <fltk/Group.h>
+#include <fltk/TextDisplay.h>
+#include <fltk/Button.h>
 #include <fltk/Widget.h>
 
 class QuestionViewUI  {
 public:
   QuestionViewUI();
+private:
   fltk::Window *mainWindow;
       fltk::Group *LeftGroup;
-        fltk::Group *QuestionView;
-        fltk::Group *MainControlsView;
+        fltk::Group *QuestionGroup;
+          fltk::TextDisplay *questionDisplay;
+          fltk::Group *AnswerGroup;
+        fltk::Group *MainControlsGroup;
+          fltk::Button *exitBtn;
+          inline void cb_exitBtn_i(fltk::Button*, void*);
+          static void cb_exitBtn(fltk::Button*, void*);
+          fltk::Button *fullscreenBtn;
+          inline void cb_fullscreenBtn_i(fltk::Button*, void*);
+          static void cb_fullscreenBtn(fltk::Button*, void*);
+          fltk::Button *auxBtn;
       fltk::Group *RightGroup;
         fltk::Widget *ImageHolder;
-        fltk::Group *QuestionControlsView;
+        fltk::Group *QuestionControlsGroup;
+          fltk::Button *validateBtn;
+          fltk::Button *nextBtn;
 };
 #endif

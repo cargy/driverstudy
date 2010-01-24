@@ -2,6 +2,35 @@
 
 #include "QuestionViewUI.h"
 
+inline void QuestionViewUI::cb_exitBtn_i(fltk::Button*, void*) {
+  if (ask("Do you want to quit?")) exit(0);
+}
+void QuestionViewUI::cb_exitBtn(fltk::Button* o, void* v) {
+  ((QuestionViewUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_exitBtn_i(o,v);
+}
+
+inline void QuestionViewUI::cb_fullscreenBtn_i(fltk::Button*, void* v) {
+  if (((QuestionWindow*)v)->fs_status) 
+  {
+    ((QuestionWindow*)v)->fullscreen_off(((QuestionWindow*)v)->winX,((QuestionWindow*)v)->winY,800,480);
+    ((QuestionWindow*)v)->set_non_modal();
+  }
+  else 
+  {
+    ((QuestionWindow*)v)->winX = ((QuestionWindow*)v)->x();
+    ((QuestionWindow*)v)->winY = ((QuestionWindow*)v)->y();
+    ((QuestionWindow*)v)->fullscreen();
+    ((QuestionWindow*)v)->set_modal();
+    
+  }
+  
+  if (((QuestionWindow*)v)->fs_status) ((QuestionWindow*)v)->fs_status=false;
+  else ((QuestionWindow*)v)->fs_status=true;
+}
+void QuestionViewUI::cb_fullscreenBtn(fltk::Button* o, void* v) {
+  ((QuestionViewUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_fullscreenBtn_i(o,v);
+}
+
 QuestionViewUI::QuestionViewUI() {
   fltk::Window* w;
    {fltk::Window* o = mainWindow = new fltk::Window(800, 600);
@@ -15,12 +44,27 @@ QuestionViewUI::QuestionViewUI() {
         o->set_vertical();
         o->box(fltk::THIN_DOWN_BOX);
         o->begin();
-         {fltk::Group* o = QuestionView = new fltk::Group(5, 5, 440, 450);
+         {fltk::Group* o = QuestionGroup = new fltk::Group(5, 5, 440, 450);
           o->set_vertical();
           o->box(fltk::THIN_UP_BOX);
+          o->begin();
+          questionDisplay = new fltk::TextDisplay(5, 5, 430, 130);
+           {fltk::Group* o = AnswerGroup = new fltk::Group(5, 140, 430, 305);
+            o->box(fltk::THIN_DOWN_BOX);
+          }
+          o->end();
         }
-         {fltk::Group* o = MainControlsView = new fltk::Group(5, 460, 440, 125);
+         {fltk::Group* o = MainControlsGroup = new fltk::Group(5, 460, 440, 125);
           o->box(fltk::THIN_UP_BOX);
+          o->begin();
+           {fltk::Button* o = exitBtn = new fltk::Button(10, 10, 115, 105, "Exit");
+            o->callback((fltk::Callback*)cb_exitBtn);
+          }
+           {fltk::Button* o = fullscreenBtn = new fltk::Button(165, 10, 115, 105, "Fullscreen");
+            o->callback((fltk::Callback*)cb_fullscreenBtn);
+          }
+          auxBtn = new fltk::Button(315, 10, 115, 105, "Aux");
+          o->end();
         }
         o->end();
         fltk::Group::current()->resizable(o);
@@ -30,8 +74,12 @@ QuestionViewUI::QuestionViewUI() {
         o->box(fltk::THIN_DOWN_BOX);
         o->begin();
         ImageHolder = new fltk::Widget(5, 5, 330, 300, "I should load an image in here");
-         {fltk::Group* o = QuestionControlsView = new fltk::Group(5, 310, 330, 275);
+         {fltk::Group* o = QuestionControlsGroup = new fltk::Group(5, 310, 330, 275);
           o->box(fltk::THIN_UP_BOX);
+          o->begin();
+          validateBtn = new fltk::Button(15, 25, 300, 100, "Validate Answer");
+          nextBtn = new fltk::Button(15, 150, 300, 100, "Next Question");
+          o->end();
           fltk::Group::current()->resizable(o);
         }
         o->end();

@@ -1,6 +1,6 @@
 # data file for the FLTK User Interface Designer (FLUID)
 version 2.1000 
-images_dir  
+images_dir header_name 
 header_name {.h} 
 code_name {.cxx} 
 gridx 5 
@@ -11,31 +11,77 @@ class QuestionViewUI {open
   Function {QuestionViewUI()} {open
   } {
     {fltk::Window} mainWindow {open
-      xywh {441 64 800 600} resizable visible
+      private xywh {479 48 800 600} resizable visible
     } {
       {fltk::Group} {} {open
-        xywh {0 0 800 600} resizable
+        private xywh {0 0 800 600} resizable
       } {
         {fltk::Group} LeftGroup {open
-          xywh {5 5 450 590} resizable box THIN_DOWN_BOX
+          private xywh {5 5 450 590} resizable box THIN_DOWN_BOX
         } {
-          {fltk::Group} QuestionView {
-            xywh {5 5 440 450} box THIN_UP_BOX
-          } {}
-          {fltk::Group} MainControlsView {open
-            xywh {5 460 440 125} box THIN_UP_BOX
-          } {}
+          {fltk::Group} QuestionGroup {open
+            private xywh {5 5 440 450} box THIN_UP_BOX
+          } {
+            {fltk::TextDisplay} questionDisplay {
+              private xywh {5 5 430 130}
+            }
+            {fltk::Group} AnswerGroup {open
+              private xywh {5 140 430 305} box THIN_DOWN_BOX
+            } {}
+          }
+          {fltk::Group} MainControlsGroup {open
+            private xywh {5 460 440 125} box THIN_UP_BOX
+          } {
+            {fltk::Button} exitBtn {
+              label Exit
+              callback {if (ask("Do you want to quit?")) exit(0);}
+              private xywh {10 10 115 105}
+            }
+            {fltk::Button} fullscreenBtn {
+              label Fullscreen
+              callback {if (((QuestionWindow*)v)->fs_status) 
+{
+  ((QuestionWindow*)v)->fullscreen_off(((QuestionWindow*)v)->winX,((QuestionWindow*)v)->winY,800,480);
+  ((QuestionWindow*)v)->set_non_modal();
+}
+else 
+{
+  ((QuestionWindow*)v)->winX = ((QuestionWindow*)v)->x();
+  ((QuestionWindow*)v)->winY = ((QuestionWindow*)v)->y();
+  ((QuestionWindow*)v)->fullscreen();
+  ((QuestionWindow*)v)->set_modal();
+  
+}
+
+if (((QuestionWindow*)v)->fs_status) ((QuestionWindow*)v)->fs_status=false;
+else ((QuestionWindow*)v)->fs_status=true;} selected
+              private xywh {165 10 115 105}
+            }
+            {fltk::Button} auxBtn {
+              label Aux
+              private xywh {315 10 115 105}
+            }
+          }
         }
         {fltk::Group} RightGroup {open
-          xywh {455 5 340 590} box THIN_DOWN_BOX
+          private xywh {455 5 340 590} box THIN_DOWN_BOX
         } {
           {fltk::Widget} ImageHolder {
             label {I should load an image in here}
-            xywh {5 5 330 300}
+            private xywh {5 5 330 300}
           }
-          {fltk::Group} QuestionControlsView {open selected
-            xywh {5 310 330 275} resizable box THIN_UP_BOX
-          } {}
+          {fltk::Group} QuestionControlsGroup {open
+            private xywh {5 310 330 275} resizable box THIN_UP_BOX
+          } {
+            {fltk::Button} validateBtn {
+              label {Validate Answer}
+              private xywh {15 25 300 100}
+            }
+            {fltk::Button} nextBtn {
+              label {Next Question}
+              private xywh {15 150 300 100}
+            }
+          }
         }
       }
     }
