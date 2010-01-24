@@ -1,0 +1,43 @@
+# data file for the FLTK User Interface Designer (FLUID)
+version 2.1000 
+images_dir  
+header_name {.h} 
+code_name {.cxx} 
+gridx 5 
+gridy 5 
+snap 3
+class QuestionViewUI {open
+} {
+  Function {QuestionViewUI()} {open
+  } {
+    {fltk::Window} mainWindow {open
+      xywh {441 64 800 600} resizable visible
+    } {
+      {fltk::Group} {} {open
+        xywh {0 0 800 600} resizable
+      } {
+        {fltk::Group} LeftGroup {open
+          xywh {5 5 450 590} resizable box THIN_DOWN_BOX
+        } {
+          {fltk::Group} QuestionView {
+            xywh {5 5 440 450} box THIN_UP_BOX
+          } {}
+          {fltk::Group} MainControlsView {open
+            xywh {5 460 440 125} box THIN_UP_BOX
+          } {}
+        }
+        {fltk::Group} RightGroup {open
+          xywh {455 5 340 590} box THIN_DOWN_BOX
+        } {
+          {fltk::Widget} ImageHolder {
+            label {I should load an image in here}
+            xywh {5 5 330 300}
+          }
+          {fltk::Group} QuestionControlsView {open selected
+            xywh {5 310 330 275} resizable box THIN_UP_BOX
+          } {}
+        }
+      }
+    }
+  }
+} 
