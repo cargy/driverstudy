@@ -6,10 +6,15 @@ code_name {.cxx}
 gridx 5 
 gridy 5 
 snap 3
+decl {\#include <fltk/ask.h>} {} 
+
+decl {\#include <stdlib.h>} {} 
+
 class QuestionViewUI {open
 } {
-  Function {QuestionViewUI()} {open
-  } {
+  decl {int win_x, win_y;} {}
+  decl {bool fullscreen_flag;} {}
+  Function {QuestionViewUI()} {} {
     {fltk::Window} mainWindow {open
       private xywh {479 48 800 600} resizable visible
     } {
@@ -20,53 +25,77 @@ class QuestionViewUI {open
           private xywh {5 5 450 590} resizable box THIN_DOWN_BOX
         } {
           {fltk::Group} QuestionGroup {open
-            private xywh {5 5 440 450} box THIN_UP_BOX
+            private xywh {5 5 440 465} box THIN_UP_BOX
           } {
             {fltk::TextDisplay} questionDisplay {
-              private xywh {5 5 430 130}
+              label {Question \#/\#}
+              private xywh {5 20 430 130} align 1 labeltype ENGRAVED_LABEL labelsize 18 textsize 16
+              extra_code {o->wrap_mode(true);}
             }
             {fltk::Group} AnswerGroup {open
-              private xywh {5 140 430 305} box THIN_DOWN_BOX
-            } {}
+              private xywh {5 155 430 305} box THIN_DOWN_BOX
+            } {
+              {fltk::RadioButton} {answerRB[0]} {
+                label {Answer 0}
+                callback {if (selectedRB() > -1) validateBtn->activate();
+else validateBtn->deactivate();}
+                private xywh {5 1 420 75} align 164 buttonbox BORDER_BOX labelsize 16 textsize 16
+              }
+              {fltk::RadioButton} {answerRB[1]} {
+                label {Answer 1}
+                callback cb_answerRB
+                private xywh {5 77 420 75} align 164 buttonbox BORDER_BOX labelsize 16 textsize 16
+              }
+              {fltk::RadioButton} {answerRB[2]} {
+                label {Answer 2}
+                callback cb_answerRB
+                private xywh {5 153 420 75} align 164 buttonbox BORDER_BOX labelsize 16 textsize 16
+              }
+              {fltk::RadioButton} {answerRB[3]} {
+                label {Answer 3}
+                callback cb_answerRB
+                private xywh {5 229 420 75} align 164 buttonbox BORDER_BOX labelsize 16 textsize 16
+              }
+            }
           }
           {fltk::Group} MainControlsGroup {open
-            private xywh {5 460 440 125} box THIN_UP_BOX
+            private xywh {5 475 440 110} box THIN_UP_BOX
           } {
             {fltk::Button} exitBtn {
               label Exit
-              callback {if (ask("Do you want to quit?")) exit(0);}
-              private xywh {10 10 115 105}
+              callback {if (fltk::ask("Do you want to quit?")) exit(0);}
+              private xywh {10 15 115 80} labelfont 1
             }
             {fltk::Button} fullscreenBtn {
               label Fullscreen
-              callback {if (((QuestionWindow*)v)->fs_status) 
+              callback {if (this->fullscreen_flag) 
 {
-  ((QuestionWindow*)v)->fullscreen_off(((QuestionWindow*)v)->winX,((QuestionWindow*)v)->winY,800,480);
-  ((QuestionWindow*)v)->set_non_modal();
+    mainWindow->fullscreen_off( win_x, win_y,800,600);
+    mainWindow->set_non_modal();
 }
 else 
 {
-  ((QuestionWindow*)v)->winX = ((QuestionWindow*)v)->x();
-  ((QuestionWindow*)v)->winY = ((QuestionWindow*)v)->y();
-  ((QuestionWindow*)v)->fullscreen();
-  ((QuestionWindow*)v)->set_modal();
-  
+    win_x = mainWindow->x();
+    win_y = mainWindow->y();
+    mainWindow->fullscreen();
+    mainWindow->set_modal();
+    
 }
-
-if (((QuestionWindow*)v)->fs_status) ((QuestionWindow*)v)->fs_status=false;
-else ((QuestionWindow*)v)->fs_status=true;} selected
-              private xywh {165 10 115 105}
+  
+if (fullscreen_flag) fullscreen_flag=false;
+else fullscreen_flag=true;}
+              private xywh {165 15 115 80} labelfont 1 labelsize 14
             }
             {fltk::Button} auxBtn {
               label Aux
-              private xywh {315 10 115 105}
+              private xywh {315 15 115 80} deactivate labelfont 1 labelsize 14
             }
           }
         }
         {fltk::Group} RightGroup {open
           private xywh {455 5 340 590} box THIN_DOWN_BOX
         } {
-          {fltk::Widget} ImageHolder {
+          {fltk::Widget} imageHolder {
             label {I should load an image in here}
             private xywh {5 5 330 300}
           }
@@ -74,16 +103,32 @@ else ((QuestionWindow*)v)->fs_status=true;} selected
             private xywh {5 310 330 275} resizable box THIN_UP_BOX
           } {
             {fltk::Button} validateBtn {
-              label {Validate Answer}
-              private xywh {15 25 300 100}
+              label {Validate Answer  @+1+}
+              callback {fltk::message("RadioButton selected: %d",selectedRB());}
+              private xywh {15 25 300 100} deactivate labeltype EMBOSSED_LABEL labelsize 16
             }
             {fltk::Button} nextBtn {
-              label {Next Question}
-              private xywh {15 150 300 100}
+              label {Next Question  @+1>@+1>[]}
+              private xywh {15 150 300 100} labeltype EMBOSSED_LABEL labelsize 16
             }
           }
         }
       }
+    }
+    code {win_x = 0; win_y = 0;
+fullscreen_flag = false;} {}
+  }
+  Function {show()} {} {
+    code {mainWindow->show();} {}
+  }
+  Function {selectedRB()} {private return_type int
+  } {
+    code {for (int i=0; i<4; i++) 
+{
+  if ( answerRB[i]->visible() && answerRB[i]->state() )
+	return i;
+}
+return -1;} {selected
     }
   }
 } 

@@ -5,10 +5,14 @@
 #include <fltk/Window.h>
 #include <fltk/Group.h>
 #include <fltk/TextDisplay.h>
+#include <fltk/RadioButton.h>
+extern void cb_answerRB(fltk::RadioButton*, void*);
 #include <fltk/Button.h>
 #include <fltk/Widget.h>
 
 class QuestionViewUI  {
+  int win_x, win_y;
+  bool fullscreen_flag;
 public:
   QuestionViewUI();
 private:
@@ -17,6 +21,9 @@ private:
         fltk::Group *QuestionGroup;
           fltk::TextDisplay *questionDisplay;
           fltk::Group *AnswerGroup;
+            inline void cb_answerRB_i(fltk::RadioButton*, void*);
+            static void cb_answerRB(fltk::RadioButton*, void*);
+            fltk::RadioButton *answerRB[4];
         fltk::Group *MainControlsGroup;
           fltk::Button *exitBtn;
           inline void cb_exitBtn_i(fltk::Button*, void*);
@@ -26,9 +33,15 @@ private:
           static void cb_fullscreenBtn(fltk::Button*, void*);
           fltk::Button *auxBtn;
       fltk::Group *RightGroup;
-        fltk::Widget *ImageHolder;
+        fltk::Widget *imageHolder;
         fltk::Group *QuestionControlsGroup;
           fltk::Button *validateBtn;
+          inline void cb_validateBtn_i(fltk::Button*, void*);
+          static void cb_validateBtn(fltk::Button*, void*);
           fltk::Button *nextBtn;
+public:
+  void show();
+private:
+  int selectedRB();
 };
 #endif
