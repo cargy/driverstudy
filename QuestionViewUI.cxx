@@ -2,6 +2,8 @@
 
 #include "QuestionViewUI.h"
 #include <fltk/ask.h>
+#include <fltk/Image.h>
+#include <fltk/SharedImage.h>
 #include <stdlib.h>
 
 inline void QuestionViewUI::cb_answerRB_i(fltk::RadioButton*, void*) {
@@ -46,6 +48,30 @@ inline void QuestionViewUI::cb_validateBtn_i(fltk::Button*, void*) {
 }
 void QuestionViewUI::cb_validateBtn(fltk::Button* o, void* v) {
   ((QuestionViewUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_validateBtn_i(o,v);
+}
+
+inline void QuestionViewUI::cb_nextBtn_i(fltk::Button*, void*) {
+  // get user input answer
+  currTest->selectAnswerOfCurrentQuestion(selectedRB());
+  
+  // validate the answer of current question
+  //if (validated) currTest->verifyAnswerOfCurrentQuestion();	  
+  
+  //check if test is completed
+  if (currTest->completed()) 
+  {
+    fltk::message("Απαντήσατε:\n%d από τις %d ερωτήσεις σωστά.",currTest->getCorrect(), currTest->getAOQ());
+    
+    Test *w = new Test(currTest->wrongQuestions(),currTest->getAOQ()-currTest->getCorrect());
+    w->showResults();
+    setTest(w);
+  }
+  // load next question
+  else 
+  showQuestion(currTest->next());  //Question *q = currTest->next();
+}
+void QuestionViewUI::cb_nextBtn(fltk::Button* o, void* v) {
+  ((QuestionViewUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_nextBtn_i(o,v);
 }
 
 QuestionViewUI::QuestionViewUI() {
@@ -182,6 +208,7 @@ fltk::Button* o = validateBtn = new fltk::Button(15, 25, 300, 100, "Validate Ans
 fltk::Button* o = nextBtn = new fltk::Button(15, 150, 300, 100, "Next Question  @+1>@+1>[]");
             o->labeltype(fltk::EMBOSSED_LABEL);
             o->labelsize(16);
+            o->callback((fltk::Callback*)cb_nextBtn);
           }
           o->end();
           fltk::Group::current()->resizable(o);
@@ -195,6 +222,7 @@ fltk::Button* o = nextBtn = new fltk::Button(15, 150, 300, 100, "Next Question  
   }
   win_x = 0; win_y = 0;
   fullscreen_flag = false;
+  fltk::register_images();
 }
 
 void QuestionViewUI::show() {
@@ -208,4 +236,49 @@ int QuestionViewUI::selectedRB() {
   	return i;
   }
   return -1;
+}
+
+void QuestionViewUI::showQuestion(Question* q) {
+  questionDisplay->label(q->getBookSection());
+  //char qNo[150];
+  //sprintf(qNo, "Ερώτηση %i",currTest->getCursor()+1);
+  //mainWindow->label(qNo);
+  questionDisplay->text(q->title());
+  
+  // reset answer buttons
+  for (unsigned int i=0; i<4; i++) {
+  	answerRB[i]->state(false);
+  	answerRB[i]->labelcolor((fltk::Color)56);
+  	if ( i >= q->getAOA() ) answerRB[i]->hide();
+  	else answerRB[i]->show();
+  	
+  }
+   
+  for (unsigned int i=0; i<q->getAOA(); i++) 
+  {
+  	answerRB[i]->label(q->getAnswer(i));
+  }
+  answerRB[q->getSelectedAnswer()]->state(true);
+  answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
+  /*
+  char imgPath[MAXIMGFILESIZE];
+  sprintf(imgPath, "img/%s.jpg",q->image());
+  //cout << toLowerCase(imgPath) <<endl;
+  imageHolder->image( fltk::SharedImage::get(toLowerCase(imgPath)) );
+  imageHolder->redraw();*/
+  mainWindow->redraw();
+  
+  if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
+  {
+  	validateBtn->deactivate();
+  }
+  else 
+  {
+  	validateBtn->activate();
+  }
+}
+
+void QuestionViewUI::setTest(Test* t) {
+  currTest = t;
+  showQuestion(currTest->next());
 }

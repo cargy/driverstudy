@@ -9,10 +9,12 @@
 extern void cb_answerRB(fltk::RadioButton*, void*);
 #include <fltk/Button.h>
 #include <fltk/Widget.h>
+#include "test.h"
 
 class QuestionViewUI  {
   int win_x, win_y;
   bool fullscreen_flag;
+  Test* currTest;
 public:
   QuestionViewUI();
 private:
@@ -39,9 +41,14 @@ private:
           inline void cb_validateBtn_i(fltk::Button*, void*);
           static void cb_validateBtn(fltk::Button*, void*);
           fltk::Button *nextBtn;
+          inline void cb_nextBtn_i(fltk::Button*, void*);
+          static void cb_nextBtn(fltk::Button*, void*);
 public:
   void show();
 private:
   int selectedRB();
+  void showQuestion(Question* q);
+public:
+  void setTest(Test* t);
 };
 #endif
