@@ -35,7 +35,7 @@ Answer::Answer(const char* pText, bool xferCorrect, const char* pSndFile, int xf
 	answer[MAXANSWERSIZE - 1] = '\0';
 	correct = xferCorrect;
 	strncpy(sndFile, pSndFile, MAXSNDFILESIZE);
-	sndFile[MAXANSWERSIZE - 1] = '\0';			
+	sndFile[MAXSNDFILESIZE - 1] = '\0';			
 	selected = false;
 	porder = xferOrder;
 }

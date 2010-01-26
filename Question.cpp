@@ -22,6 +22,7 @@
 #include <iostream>
 #include <list>
 #include <ctime>
+#include <cassert>
 
 using namespace std;
 const int MAXQUESTIONSIZE = 500;
@@ -54,7 +55,7 @@ class Answer
 			answer[MAXANSWERSIZE - 1] = '\0';
 			correct = xferCorrect;
 			strncpy(sndFile, pSndFile, MAXSNDFILESIZE);
-			sndFile[MAXANSWERSIZE - 1] = '\0';			
+			sndFile[MAXSNDFILESIZE - 1] = '\0';			
 			selected = false;
 			order = xferOrder;
 		}
