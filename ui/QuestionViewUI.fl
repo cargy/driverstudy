@@ -8,13 +8,19 @@ gridy 5
 snap 3
 decl {\#include <fltk/ask.h>} {} 
 
+decl {\#include <fltk/Image.h>} {} 
+
+decl {\#include <fltk/SharedImage.h>} {} 
+
 decl {\#include <stdlib.h>} {} 
 
 class QuestionViewUI {open
 } {
   decl {int win_x, win_y;} {}
   decl {bool fullscreen_flag;} {}
-  Function {QuestionViewUI()} {} {
+  decl {Test* currTest;} {}
+  Function {QuestionViewUI()} {open selected
+  } {
     {fltk::Window} mainWindow {open
       private xywh {479 48 800 600} resizable visible
     } {
@@ -109,6 +115,24 @@ else fullscreen_flag=true;}
             }
             {fltk::Button} nextBtn {
               label {Next Question  @+1>@+1>[]}
+              callback {// get user input answer
+currTest->selectAnswerOfCurrentQuestion(selectedRB());
+
+// validate the answer of current question
+//if (validated) currTest->verifyAnswerOfCurrentQuestion();	  
+
+//check if test is completed
+if (currTest->completed()) 
+{
+  fltk::message("Απαντήσατε:\\n%d από τις %d ερωτήσεις σωστά.",currTest->getCorrect(), currTest->getAOQ());
+  
+  Test *w = new Test(currTest->wrongQuestions(),currTest->getAOQ()-currTest->getCorrect());
+  w->showResults();
+  setTest(w);
+}
+// load next question
+else 
+showQuestion(currTest->next());  //Question *q = currTest->next();}
               private xywh {15 150 300 100} labeltype EMBOSSED_LABEL labelsize 16
             }
           }
@@ -117,6 +141,7 @@ else fullscreen_flag=true;}
     }
     code {win_x = 0; win_y = 0;
 fullscreen_flag = false;} {}
+    code {fltk::register_images();} {}
   }
   Function {show()} {} {
     code {mainWindow->show();} {}
@@ -128,7 +153,51 @@ fullscreen_flag = false;} {}
   if ( answerRB[i]->visible() && answerRB[i]->state() )
 	return i;
 }
-return -1;} {selected
-    }
+return -1;} {}
+  }
+  Function {showQuestion(Question* q)} {open private
+  } {
+    code {questionDisplay->label(q->getBookSection());
+//char qNo[150];
+//sprintf(qNo, "Ερώτηση %i",currTest->getCursor()+1);
+//mainWindow->label(qNo);
+questionDisplay->text(q->title());
+
+// reset answer buttons
+for (unsigned int i=0; i<4; i++) {
+	answerRB[i]->state(false);
+	answerRB[i]->labelcolor((fltk::Color)56);
+	if ( i >= q->getAOA() ) answerRB[i]->hide();
+	else answerRB[i]->show();
+	
+}
+ 
+for (unsigned int i=0; i<q->getAOA(); i++) 
+{
+	answerRB[i]->label(q->getAnswer(i));
+}
+answerRB[q->getSelectedAnswer()]->state(true);
+answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
+/*
+char imgPath[MAXIMGFILESIZE];
+sprintf(imgPath, "img/%s.jpg",q->image());
+//cout << toLowerCase(imgPath) <<endl;
+imageHolder->image( fltk::SharedImage::get(toLowerCase(imgPath)) );
+imageHolder->redraw();*/
+mainWindow->redraw();
+
+if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
+{
+	validateBtn->deactivate();
+}
+else 
+{
+	validateBtn->activate();
+}} {}
+  }
+  Function {setTest(Test* t)} {open
+  } {
+    code {currTest = t;
+showQuestion(currTest->next());} {}
   }
 } 
