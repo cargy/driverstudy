@@ -42,26 +42,24 @@ all: QuestionWindow QuestionViewMain
 run: QuestionWindow
 	bash -c "cd build;./QuestionWindow"&
 
-ui: QuestionViewUI.cxx
+ui: cleanui QuestionViewUI.cxx
 
 QuestionViewUI.cxx: 
-	@echo Generate UI...
+	@echo === Generate UI... ===
 	fluid2 -c ui/QuestionViewUI.fl
 	mv ui/QuestionViewUI.h ./
 	mv ui/QuestionViewUI.cxx ./
-	@echo Patch UI classes...
-	patch -p1 -i ui/fluid_test_missinclude.patch QuestionViewUI.h
 
-QuestionViewMain: answer.o question.o test.o  QuestionViewUI.o QuestionViewMain.o
-	@echo Build $@...
+QuestionViewMain: answer.o question.o test.o sqlite3.o QuestionViewUI.o QuestionViewMain.o
+	@echo === Linking $@... ===
 	$(CXX) answer.o question.o test.o  QuestionViewUI.o QuestionViewMain.o -Wall \
-	$(IMGLIB) $(LDLIBS) -o build/QuestionViewMain	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/QuestionViewMain	
 	@echo Strip $@...
 	$(STRIP) build/$@
 	$(POSTBUILD) build/QuestionViewMain
 
 QuestionWindow: Question.o sqliteExerBase.o QuestionWindow.o 
-	@echo Build $@...
+	@echo === Linking $@... ===
 	$(CXX) QuestionWindow.o -Wall -o build/QuestionWindow \
 	$(IMGLIB) $(LDLIBS) -lsqlite3
 	@echo Strip $@...
@@ -98,6 +96,9 @@ clean:
 	rm -f build/QuestionWindow build/QuestionViewMain
 	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe
 
-deepclean: clean
+cleanui:
 	rm -f QuestionViewUI.cxx QuestionViewUI.h
+	
+deepclean: clean cleanui
+
 
