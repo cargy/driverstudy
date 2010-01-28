@@ -268,7 +268,7 @@ void QuestionViewUI::showQuestion(Question* q) {
   sprintf(imgPath, "img/%s.jpg",q->image());
   locale loc;
   use_facet< ctype<char> >(loc).tolower ( imgPath, imgPath+sizeof(imgPath) );
-  cout << imgPath <<endl;
+  
   imageHolder->image( fltk::SharedImage::get(imgPath) );
   imageHolder->redraw();
   mainWindow->redraw();
