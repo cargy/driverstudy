@@ -2,6 +2,7 @@
 
 #ifndef QuestionViewUI_h
 #define QuestionViewUI_h
+#include "test.h"
 #include <fltk/Window.h>
 #include <fltk/Group.h>
 #include <fltk/TextDisplay.h>
@@ -9,7 +10,6 @@
 extern void cb_answerRB(fltk::RadioButton*, void*);
 #include <fltk/Button.h>
 #include <fltk/Widget.h>
-#include "test.h"
 
 class QuestionViewUI  {
   int win_x, win_y;

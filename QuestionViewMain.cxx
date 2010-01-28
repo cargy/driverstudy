@@ -24,6 +24,8 @@
 #include <fltk/run.h>
 #include <fltk/visual.h>
 #include "QuestionViewUI.h"
+#include "sqlite3.cxx"
+
 using namespace std;
 
 int main(int argc, char** argv)
@@ -31,25 +33,15 @@ int main(int argc, char** argv)
 	// Initial global objects.
 	fltk::args(argc, argv);
 
+	SQLITE3 sql("ExerBase.db");
+	vector<int> *v = sql.testTemplate(1,1);
+	int *array = sql.createRandomTestFromTemplate(v);
+
+	Question *q = sql.getQuestionArray(array);
+
+	//t->answerRandomly();
 	
-	Answer a[3] = { Answer("Κανονική θερμοκρασία.", 0,"snd.wav", -1),
-					Answer("Θα προχωρήσετε μέχρι το ύψος της πινακίδας STOP, θα σταματήσετε εκεί και θα παραχωρήσετε προτεραιότητα στα οχήματα που βλέπετε ότι κινούνται σε κάθετη με σας πορεία. Όταν δεν βλέπετε να έρχονται άλλα οχήματα, θα διασχίσετε τη διασταύρωση.", 1,"snd.wav", -1),
-					Answer("O οδηγός του φορτηγού να φορτώσει το όχημα μέχρι το ανώτερο προβλεπόμενο ύψος και βάρος, αλλά επί πλέον να ελέγχει (από τις σχετικές πινακίδες) το ύψος κάθε γέφυρας (αν διέρχεται από κάτω) και το ανώτερο επιτρεπόμενο βάρος (αν τη διασχίζει).", 0,"snd.wav", -1)
-				};
-				
-	Answer b[3] = { Answer("- Answer 1", 0,"snd.wav", -1),
-					Answer("- Answer 2", 1,"snd.wav", -1),
-					Answer("- Answer 3", 0,"snd.wav", -1)
-				};
-								
-	//Question *q = new Question("What's up?", a, 3);
-	Question q[5] = { Question("Όταν σε ένα αυτοκίνητο υπάρχει έλλειψη ψυκτικού υγρού στο ψυγείο ή είναι κομμένος ή χαλαρωμένος ο ιμάντας του ανεμιστήρα ή υπάρχει έλλειψη λαδιού στον κινητήρα, ποια είναι η πιθανή ένδειξη που θα παρατηρήσετε στα όργανα του αυτοκινήτου:","img.jpg","snd.wav","ΣΥΝΤΗΡΗΣΗ 67",a, 3),
-					  Question("What's down","img.jpg","snd.wav","Section 01",b, 3),
-					  Question("What's left","img.jpg","snd.wav","Section 01",a, 3),
-					  Question("What's right","img.jpg","snd.wav","Section 01",a, 3),
-					  Question("What's that","img.jpg","snd.wav","Section 01",a, 3)
-				  };
-	Test* t = new Test(q,3);			  
+	Test* t = new Test(q,30);			  
 	QuestionViewUI qvui;
 	qvui.setTest(t);
 	qvui.show();

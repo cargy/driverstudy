@@ -14,15 +14,22 @@ decl {\#include <fltk/SharedImage.h>} {}
 
 decl {\#include <stdlib.h>} {} 
 
+decl {\#include <stdio.h>} {} 
+
+decl {\#include <locale>} {} 
+
+decl {\#include "test.h"} {public
+} 
+
 class QuestionViewUI {open
 } {
   decl {int win_x, win_y;} {}
   decl {bool fullscreen_flag;} {}
   decl {Test* currTest;} {}
-  Function {QuestionViewUI()} {open selected
+  Function {QuestionViewUI()} {open
   } {
     {fltk::Window} mainWindow {open
-      private xywh {479 48 800 600} resizable visible
+      private xywh {479 49 800 600} resizable visible
     } {
       {fltk::Group} {} {open
         private xywh {0 0 800 600} resizable
@@ -102,7 +109,6 @@ else fullscreen_flag=true;}
           private xywh {455 5 340 590} box THIN_DOWN_BOX
         } {
           {fltk::Widget} imageHolder {
-            label {I should load an image in here}
             private xywh {5 5 330 300}
           }
           {fltk::Group} QuestionControlsGroup {open
@@ -110,7 +116,7 @@ else fullscreen_flag=true;}
           } {
             {fltk::Button} validateBtn {
               label {Validate Answer  @+1+}
-              callback {fltk::message("RadioButton selected: %d",selectedRB());}
+              callback {nextBtn->do_callback(o);} selected
               private xywh {15 25 300 100} deactivate labeltype EMBOSSED_LABEL labelsize 16
             }
             {fltk::Button} nextBtn {
@@ -119,7 +125,7 @@ else fullscreen_flag=true;}
 currTest->selectAnswerOfCurrentQuestion(selectedRB());
 
 // validate the answer of current question
-//if (validated) currTest->verifyAnswerOfCurrentQuestion();	  
+if ( strcmp(o->label(), "Validate Answer  @+1+") == 0 ) currTest->verifyAnswerOfCurrentQuestion();	  
 
 //check if test is completed
 if (currTest->completed()) 
@@ -155,12 +161,13 @@ fullscreen_flag = false;} {}
 }
 return -1;} {}
   }
-  Function {showQuestion(Question* q)} {open private
+  Function {showQuestion(Question* q)} {private
   } {
-    code {questionDisplay->label(q->getBookSection());
-//char qNo[150];
-//sprintf(qNo, "Ερώτηση %i",currTest->getCursor()+1);
-//mainWindow->label(qNo);
+    code {//questionDisplay->label(q->getBookSection());
+char qNo[150];
+sprintf(qNo, "Ερώτηση %i/%i",currTest->getCursor()+1,currTest->getAOQ());
+mainWindow->label(qNo);
+questionDisplay->copy_label(qNo);
 questionDisplay->text(q->title());
 
 // reset answer buttons
@@ -178,12 +185,14 @@ for (unsigned int i=0; i<q->getAOA(); i++)
 }
 answerRB[q->getSelectedAnswer()]->state(true);
 answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
-/*
+
 char imgPath[MAXIMGFILESIZE];
 sprintf(imgPath, "img/%s.jpg",q->image());
-//cout << toLowerCase(imgPath) <<endl;
-imageHolder->image( fltk::SharedImage::get(toLowerCase(imgPath)) );
-imageHolder->redraw();*/
+locale loc;
+use_facet< ctype<char> >(loc).tolower ( imgPath, imgPath+sizeof(imgPath) );
+cout << imgPath <<endl;
+imageHolder->image( fltk::SharedImage::get(imgPath) );
+imageHolder->redraw();
 mainWindow->redraw();
 
 if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
@@ -195,8 +204,7 @@ else
 	validateBtn->activate();
 }} {}
   }
-  Function {setTest(Test* t)} {open
-  } {
+  Function {setTest(Test* t)} {} {
     code {currTest = t;
 showQuestion(currTest->next());} {}
   }
