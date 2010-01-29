@@ -23,8 +23,11 @@
 
 #include <fltk/run.h>
 #include <fltk/visual.h>
+#include "question.h"
+#include "test.h"
 #include "QuestionViewUI.h"
 #include "sqlite3.cxx"
+
 
 using namespace std;
 
@@ -34,16 +37,19 @@ int main(int argc, char** argv)
 	fltk::args(argc, argv);
 
 	SQLITE3 sql("ExerBase.db");
-	vector<int> *v = sql.testTemplate(1,1);
+
+	vector<int> *v = sql.testTemplate(3,1);
 	int *array = sql.createRandomTestFromTemplate(v);
 
-	Question *q = sql.getQuestionArray(array);
+	//Question *q = sql.getQuestionArray(array);
+	Test *ct = sql.getTest(array);
 
-	//t->answerRandomly();
 	
-	Test* t = new Test(q,30);			  
+	
+	//Test* t = new Test(q,30,35);
+	ct->answerRandomly();		  
 	QuestionViewUI qvui;
-	qvui.setTest(t);
+	qvui.setTest(ct);
 	qvui.show();
     
     return fltk::run();

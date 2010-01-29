@@ -1,4 +1,4 @@
-//      test.h
+//      questionCollection.cxx
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -17,31 +17,18 @@
 //      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //      MA 02110-1301, USA.
 
-
-#ifndef TEST_H
-#define TEST_H
-
 #include "questionCollection.h"
 
-class Test:public QuestionCollection
+QuestionCollection::QuestionCollection(Question *questionArray, int aoq)
 {
-	public:
-		Test(Question *xferQuestions, int aoq, int ttime);
-		void selectAnswerOfCurrentQuestion(int a);
-		void verifyAnswerOfCurrentQuestion();
-		bool completed();
-		int getCorrect();
-		Question *wrongQuestions();
-		Question *next();
-		int time();
-		#ifdef DEBUG
-		void answerRandomly();
-		void showResults();
-		#endif
-	
-	private:
-		int testTime;
+	tQuestions = questionArray;
+	csize = aoq;
+	ccursor = -1;
+}
 
-};
+Question* QuestionCollection::next()
+{			
+	if (ccursor >= csize-1) ccursor = -1;
 
-#endif /* TEST_H */ 
+	return &tQuestions[++ccursor];
+}

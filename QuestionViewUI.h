@@ -50,5 +50,7 @@ private:
   void showQuestion(Question* q);
 public:
   void setTest(Test* t);
+private:
+  void resizeAnswers(int no);
 };
 #endif

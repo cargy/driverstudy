@@ -62,9 +62,9 @@ inline void QuestionViewUI::cb_nextBtn_i(fltk::Button* o, void*) {
   //check if test is completed
   if (currTest->completed()) 
   {
-    fltk::message("Απαντήσατε:\n%d από τις %d ερωτήσεις σωστά.",currTest->getCorrect(), currTest->getAOQ());
+    fltk::message("Απαντήσατε:\n%d από τις %d ερωτήσεις σωστά.",currTest->getCorrect(), currTest->size());
     
-    Test *w = new Test(currTest->wrongQuestions(),currTest->getAOQ()-currTest->getCorrect());
+    Test *w = new Test(currTest->wrongQuestions(),currTest->size()-currTest->getCorrect(),35);
     w->showResults();
     setTest(w);
   }
@@ -241,49 +241,64 @@ int QuestionViewUI::selectedRB() {
 }
 
 void QuestionViewUI::showQuestion(Question* q) {
-  //questionDisplay->label(q->getBookSection());
   char qNo[150];
-  sprintf(qNo, "Ερώτηση %i/%i",currTest->getCursor()+1,currTest->getAOQ());
-  mainWindow->label(qNo);
-  questionDisplay->copy_label(qNo);
-  questionDisplay->text(q->title());
-  
-  // reset answer buttons
-  for (unsigned int i=0; i<4; i++) {
-  	answerRB[i]->state(false);
-  	answerRB[i]->labelcolor((fltk::Color)56);
-  	if ( i >= q->getAOA() ) answerRB[i]->hide();
-  	else answerRB[i]->show();
-  	
-  }
-   
-  for (unsigned int i=0; i<q->getAOA(); i++) 
-  {
-  	answerRB[i]->label(q->getAnswer(i));
-  }
-  answerRB[q->getSelectedAnswer()]->state(true);
-  answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
-  
-  char imgPath[MAXIMGFILESIZE];
-  sprintf(imgPath, "img/%s.jpg",q->image());
-  locale loc;
-  use_facet< ctype<char> >(loc).tolower ( imgPath, imgPath+sizeof(imgPath) );
-  
-  imageHolder->image( fltk::SharedImage::get(imgPath) );
-  imageHolder->redraw();
-  mainWindow->redraw();
-  
-  if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
-  {
-  	validateBtn->deactivate();
-  }
-  else 
-  {
-  	validateBtn->activate();
-  }
+    sprintf(qNo, "Ερώτηση %i/%i (%s)",currTest->cursor()+1,currTest->size(),q->getBookSection());
+    mainWindow->label(qNo);
+    questionDisplay->copy_label(qNo);
+    questionDisplay->text(q->title());
+    
+    // reset answer buttons
+    for (unsigned int i=0; i<4; i++) {
+    	answerRB[i]->state(false);
+    	answerRB[i]->labelcolor((fltk::Color)56);
+    	if ( i >= q->getAOA() ) answerRB[i]->hide();
+    	else answerRB[i]->show();
+    	
+    }
+     
+    for (unsigned int i=0; i<q->getAOA(); i++) 
+    {
+    	answerRB[i]->label(q->getAnswer(i));
+    }
+    answerRB[q->getSelectedAnswer()]->state(true);
+    answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
+    //resizeAnswers(q->getAOA());
+    
+    char imgPath[MAXIMGFILESIZE];
+    sprintf(imgPath, "img/%s.jpg",q->image());
+    locale loc;
+    use_facet< ctype<char> >(loc).tolower ( imgPath, imgPath+sizeof(imgPath) );
+    //cout << imgPath <<endl;
+    imageHolder->image( fltk::SharedImage::get(imgPath) );
+    imageHolder->redraw();
+    mainWindow->redraw();
+    
+    if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
+    {
+    	validateBtn->deactivate();
+    }
+    else 
+    {
+    	validateBtn->activate();
+    }
 }
 
 void QuestionViewUI::setTest(Test* t) {
   currTest = t;
   showQuestion(currTest->next());
+}
+
+void QuestionViewUI::resizeAnswers(int no) {
+  int rb_height = 0;
+    	const int space = 2;
+    	//int no = q->getAOA();
+    	rb_height = ( ( AnswerGroup->h() - (no)* space ) / no ) - 3;
+    	answerRB[0]->set_y(1);
+    	answerRB[0]->h(rb_height);
+    	for (int i = 1; i <=no; i++ ) 
+    	{
+    		answerRB[i]->h(rb_height);
+    		answerRB[i]->y( answerRB[i-1]->y() + answerRB[i-1]->h() + space  ); 
+    	}
+    	//AnswerGroup->redraw();
 }

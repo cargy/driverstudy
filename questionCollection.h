@@ -1,9 +1,12 @@
+#ifndef QUESTIONCOLLECTION_H
+#define QUESTIONCOLLECTION_H
+
 #include <iostream>
 #include "question.h"
 
 class QuestionCollection
 {
-	private:
+	protected:
 		Question *tQuestions;
 		int csize;
 		int ccursor;
@@ -16,17 +19,4 @@ class QuestionCollection
 	
 };
 
-
-
-QuestionCollection::QuestionCollection(Question *questionArray, int aoq)
-{
-	tQuestions = questionArray;
-	csize = aoq;
-	ccursor = -1;
-}
-Question* QuestionCollection::next()
-{			
-	if (ccursor >= csize-1) ccursor = -1;
-
-	return &tQuestions[++ccursor];
-}
+#endif /* QUESTIONCOLLECTION_H */ 
