@@ -20,10 +20,13 @@
 
 #include <iostream>
 #include <sqlite3.h>
+#include "test.h"
 #include <vector>
 #include <iterator>
 #include <stdio.h>
 #include "question.h"
+#include "questionCollection.h"
+
 using namespace std;
 
 class DBError {
@@ -52,11 +55,9 @@ private:
   int rc;
   int nrow,ncol;
   int db_open;
+  int qNo, tTime;
 
 public:
-
-  vector<string> vcol_head;
-  vector<string> vdata;
 
 
   SQLITE3 (string tablename="init.db"): zErrMsg(0), rc(0),db_open(0) {
@@ -86,25 +87,58 @@ public:
 	}
   
   int *createRandomTestFromTemplate ( vector<int> *v) {
-	  int *array = new int[30];
-	   for (int i=0;i<30;i++) {
+	  int *array = new int[qNo];
+	   for (int i=0;i<qNo;i++) {
 		   array[i] = v[i].at(random_range(0,v[i].size()));
 	   }
 	   return array;
 	  
   }
   
-  vector<int> *testTemplate ( int category, int language ) {
+int getTestTemplateNOQ (int category, int language) {
+	char buffer[1024];
+	sprintf(buffer,"Select COUNT(DISTINCT(Qpag)) FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
+	string s_exe(buffer);
+
+	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
+	qNo = atoi(result[1]);
+	sqlite3_free_table(result);
+	if( rc == SQLITE_OK )
+		return qNo;
+	else
+		throw -1;
+}
+
+int getTestTime (int category) {
+	char buffer[1024];
+	sprintf(buffer,"Select KTime FROM Kateg WHERE KCod = %d ;",category);
+	string s_exe(buffer);
+
+	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
+	tTime = atoi(result[1]);
+	sqlite3_free_table(result);
+	if( rc == SQLITE_OK )
+		return tTime;
+	else
+		throw -1;
+}
+
+vector<int> *testTemplate ( int category, int language ) {
+	
+	  qNo = getTestTemplateNOQ(category, language);
+	  tTime = getTestTime(category);
+
+	  //assert(qNo == 30);
+	  
 	  char buffer[1024];
 	  sprintf(buffer,"Select Qpag,qcod FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
 	  string s_exe(buffer);
 
 	  rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 
-
 	  if( rc == SQLITE_OK )
 	  {
-		  vector<int> *v = new vector<int>[31];
+		  vector<int> *v = new vector<int>[qNo+1];
 		  assert(nrow != 0);
 		  for(int i=1; i <= nrow;i++)
 			 v[atoi(result[ncol*i])-1].push_back(atoi(result[ncol*i+1]));
@@ -112,7 +146,7 @@ public:
 		 sqlite3_free_table(result);
 		 return v;
 		 
-		 for(int i=0; i < 30;i++) {
+		 for(int i=0; i < qNo;i++) {
 			 cout << endl << "v[" << i << "]=";
 			 copy(v[i].begin(),v[i].end(),ostream_iterator<int>(cout,","));
 		 }		 
@@ -123,12 +157,16 @@ public:
   }
   
   Question *getQuestionArray(int *array) {
-	  Question *q = new Question[30];
+	  Question *q = new Question[qNo];
 	  
-	  for (int i=0; i<30; i++)
+	  for (int i=0; i<qNo; i++)
 		q[i] = getQuestion(array[i]);
 		
 	  return q;
+  }
+
+  Test* getTest(int *array) {
+	  return new Test(getQuestionArray(array),qNo,tTime);
   }
 
   Question getQuestion(int qid) {
