@@ -40,7 +40,7 @@ class Question
 {
 	public:
 		Question();
-		Question(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook,Answer *xferAnswers, unsigned int aoa);
+		Question(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook, Answer *xferAnswers, unsigned int aoa);
 		bool isCorrect();
 		void selectAnswer(int selected);
 		const char *title();

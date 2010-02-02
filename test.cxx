@@ -49,11 +49,28 @@ Question* Test::wrongQuestions()
 	return wq;			
 }
 
+QuestionCollection* Test::wrongQuestionsCollection()
+{
+	return new QuestionCollection( wrongQuestions(),csize-getCorrect() );
+}
+
 Question* Test::next()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 	
 	while ( tQuestions[++ccursor].isVerified() && !completed() ) 
+	{
+		if (ccursor >= csize-1) ccursor = -1;
+	}
+	return &tQuestions[ccursor];
+	
+}
+
+Question* Test::nextWrong()
+{			
+	if (ccursor >= csize-1) ccursor = -1;
+	
+	while ( tQuestions[++ccursor].isCorrect() && !(csize-getCorrect() == 0) ) 
 	{
 		if (ccursor >= csize-1) ccursor = -1;
 	}

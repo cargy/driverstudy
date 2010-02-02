@@ -32,7 +32,9 @@ class Test:public QuestionCollection
 		bool completed();
 		int getCorrect();
 		Question *wrongQuestions();
+		QuestionCollection* wrongQuestionsCollection();
 		Question *next();
+		Question *nextWrong();
 		int time();
 		#ifdef DEBUG
 		void answerRandomly();
