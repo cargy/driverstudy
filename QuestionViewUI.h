@@ -2,30 +2,35 @@
 
 #ifndef QuestionViewUI_h
 #define QuestionViewUI_h
-#include "test.h"
 #include <fltk/Window.h>
 #include <fltk/Group.h>
 #include <fltk/TextDisplay.h>
 #include <fltk/RadioButton.h>
-extern void cb_answerRB(fltk::RadioButton*, void*);
 #include <fltk/Button.h>
 #include <fltk/Widget.h>
 
 class QuestionViewUI  {
-  int win_x, win_y;
-  bool fullscreen_flag;
-  Test* currTest;
 public:
   QuestionViewUI();
-private:
   fltk::Window *mainWindow;
+private:
       fltk::Group *LeftGroup;
         fltk::Group *QuestionGroup;
+public:
           fltk::TextDisplay *questionDisplay;
           fltk::Group *AnswerGroup;
-            inline void cb_answerRB_i(fltk::RadioButton*, void*);
-            static void cb_answerRB(fltk::RadioButton*, void*);
+private:
+            inline void cb_answerRB_i(fltk::RadioButton*, long);
+            static void cb_answerRB(fltk::RadioButton*, long);
+            inline void cb_answerRB1_i(fltk::RadioButton*, long);
+            static void cb_answerRB1(fltk::RadioButton*, long);
+            inline void cb_answerRB2_i(fltk::RadioButton*, long);
+            static void cb_answerRB2(fltk::RadioButton*, long);
+public:
             fltk::RadioButton *answerRB[4];
+private:
+            inline void cb_answerRB3_i(fltk::RadioButton*, long);
+            static void cb_answerRB3(fltk::RadioButton*, long);
         fltk::Group *MainControlsGroup;
           fltk::Button *exitBtn;
           inline void cb_exitBtn_i(fltk::Button*, void*);
@@ -35,22 +40,22 @@ private:
           static void cb_fullscreenBtn(fltk::Button*, void*);
           fltk::Button *auxBtn;
       fltk::Group *RightGroup;
+public:
         fltk::Widget *imageHolder;
+private:
         fltk::Group *QuestionControlsGroup;
+public:
           fltk::Button *validateBtn;
-          inline void cb_validateBtn_i(fltk::Button*, void*);
-          static void cb_validateBtn(fltk::Button*, void*);
+private:
+          inline void cb_validateBtn_i(fltk::Button*, const char*);
+          static void cb_validateBtn(fltk::Button*, const char*);
           fltk::Button *nextBtn;
-          inline void cb_nextBtn_i(fltk::Button*, void*);
-          static void cb_nextBtn(fltk::Button*, void*);
+          inline void cb_nextBtn_i(fltk::Button*, const char*);
+          static void cb_nextBtn(fltk::Button*, const char*);
 public:
-  void show();
-private:
-  int selectedRB();
-  void showQuestion(Question* q);
-public:
-  void setTest(Test* t);
-private:
-  void resizeAnswers(int no);
+  virtual void cb_close();
+  virtual void cb_fullscreen();
+  virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
+  virtual void cb_next(fltk::Widget* pBtn, const char* btn);
 };
 #endif

@@ -50,10 +50,10 @@ QuestionViewUI.cxx:
 	mv ui/QuestionViewUI.h ./
 	mv ui/QuestionViewUI.cxx ./
 
-QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o QuestionViewUI.o QuestionViewMain.o
+QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o
 	@echo === Linking $@... ===
 	$(CXX) answer.o question.o questionCollection.o test.o \
-	sqlite3.o QuestionViewUI.o QuestionViewMain.o \
+	sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/QuestionViewMain	
 	#@echo Strip $@...
 	#$(STRIP) build/$@
@@ -86,7 +86,7 @@ QuestionWindow.exe: QuestionWindow.cpp
 	-I/home/krizz/src/sqlite-3.6.22/cross_win32/include -L/home/krizz/src/sqlite-3.6.22/cross_win32/lib/ /home/krizz/src/sqlite-3.6.22/cross_win32/lib/libsqlite3.a
 
 QuestionViewMain.exe: QuestionViewUI.h QuestionViewUI.cxx
-	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
+	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
 	-o build/QuestionViewMain.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \

@@ -1,4 +1,4 @@
-//      main.cxx
+//      QuestionView.h
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -18,35 +18,35 @@
 //      MA 02110-1301, USA.
 
 
-#include <iostream>
+#ifndef QUESTIONVIEW_H
+#define QUESTIONVIEW_H
 
-
-#include <fltk/run.h>
-#include <fltk/visual.h>
+#include <QuestionViewUI.h>
 #include "question.h"
 #include "test.h"
-#include "QuestionView.h"
-#include "sqlite3.cxx"
 
-
-using namespace std;
-
-int main(int argc, char** argv)
+class QuestionView: public QuestionViewUI
 {
-	// Initial global objects.
-	fltk::args(argc, argv);
+	public:
+		QuestionView();
+		void show();
+		virtual void cb_close();
+		virtual void cb_fullscreen();
+		virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
+		virtual void cb_next(fltk::Widget* pBtn, const char* Btn);
+		int selectedRB();
+		void showQuestion(Question* q);
+		void previewQuestion(Question* q);
+		void setTest(Test* t, bool pmode=false);
+		
+			
+	private:
+		int win_x, win_y;
+		bool fullscreen_flag;
+		Test* currTest;
+		bool preview_mode;
+		void resizeAnswers(int no);
+		
+};
 
-	SQLITE3 sql("ExerBase.db");
-
-	vector<int> *v = sql.testTemplate(1,1);
-	int *array = sql.createRandomTestFromTemplate(v);
-
-	Test *ct = sql.getTest(array);
-
-	ct->answerRandomly();
-	QuestionView qvui;
-	qvui.setTest(ct);
-	qvui.show();
-    
-    return fltk::run();
-}
+#endif /* QUESTIONVIEW_H */ 
