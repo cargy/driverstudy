@@ -20,14 +20,11 @@
 
 #ifndef QUESTION_H
 #define QUESTION_H
-#define MAXQUESTIONSIZE 500
-#define MAXIMGFILESIZE 255
 
+#include "config.h"
 #include "answer.h"
 
 using namespace std;
-
-#define DEBUG
 
 #ifdef DEBUG
 #include <cstdlib>

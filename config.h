@@ -1,4 +1,4 @@
-//      answer.h
+//      config.c
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -17,32 +17,26 @@
 //      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //      MA 02110-1301, USA.
 
+#define DEBUG
 
-#ifndef ANSWER_H
-#define ANSWER_H
-#include "config.h"
-#include <cstring>
+// gettext
+#define PACKAGE "DriveStudy"
+#define LOCALEDIR "./po"
+#include <libintl.h>
+#define _(String) gettext (String)
+#define gettext_noop(String) String
+#define N_(String) gettext_noop (String)
+//#define _(String) (String)
+//#define N_(String) String
+//#define textdomain(Domain)
+//#define bindtextdomain(Package, Directory)
+     
 
-class Answer
-{
-	public:
-		Answer();
-		Answer(const char* pText, bool xferCorrect, const char* pSndFile, int xferOrder=-1);
-		void select();
-		void deselect();
-		bool isCorrect();
-		bool isSelected();
-		const char* text();
-		const char* soundFile();
-		int order();
-			
-	private:
-		char answer[MAXANSWERSIZE];
-		bool correct;
-		bool selected;
-		int porder;
-		char sndFile[MAXSNDFILESIZE];
 
-};
 
-#endif /* ANSWER_H */ 
+#define MAXANSWERSIZE 500
+#define MAXSNDFILESIZE 255
+
+#define MAXQUESTIONSIZE 500
+#define MAXIMGFILESIZE 255
+
