@@ -20,9 +20,11 @@
 
 #include <iostream>
 
-
+#include "config.h"
 #include <fltk/run.h>
 #include <fltk/visual.h>
+#include <locale.h>
+#include <libintl.h>
 #include "question.h"
 #include "test.h"
 #include "QuestionView.h"
@@ -33,6 +35,25 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+	setlocale (LC_ALL, "");
+    bindtextdomain (PACKAGE, LOCALEDIR);
+    textdomain (PACKAGE);
+    
+	/* Change language.  */
+	#ifdef _WIN32
+	putenv("LANGUAGE=el_GR");
+	#else
+	setenv ("LANGUAGE", "el_GR", 1);
+	#endif /* !_WIN32 */
+	
+  
+	/* Make change known.  */
+	{
+	  extern int  _nl_msg_cat_cntr;
+	  ++_nl_msg_cat_cntr;
+	}
+
+
 	// Initial global objects.
 	fltk::args(argc, argv);
 

@@ -49,6 +49,9 @@ QuestionViewUI.cxx:
 	fluid2 -c ui/QuestionViewUI.fl
 	mv ui/QuestionViewUI.h ./
 	mv ui/QuestionViewUI.cxx ./
+	# gettex fix for not being supported by Fluid2
+	# strings with "_string" raplced by _("string")
+	sed -i  's/"_\([^"]*\)"/_("\1") /g' QuestionViewUI.cxx
 
 QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o
 	@echo === Linking $@... ===
@@ -85,13 +88,19 @@ QuestionWindow.exe: QuestionWindow.cpp
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/sqlite-3.6.22/cross_win32/include -L/home/krizz/src/sqlite-3.6.22/cross_win32/lib/ /home/krizz/src/sqlite-3.6.22/cross_win32/lib/libsqlite3.a
 
-QuestionViewMain.exe: QuestionViewUI.h QuestionViewUI.cxx
+QuestionViewMain.exe: QuestionViewUI.cxx
+	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
 	-o build/QuestionViewMain.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
-	-I/home/krizz/src/sqlite-3.6.22/cross_win32/include -L/home/krizz/src/sqlite-3.6.22/cross_win32/lib/ /home/krizz/src/sqlite-3.6.22/cross_win32/lib/libsqlite3.a
+	-I/home/krizz/src/cross_win32/include -I./ \
+	/home/krizz/src/cross_win32/lib/libintl.a  \
+	/home/krizz/src/cross_win32/lib/libsqlite3.a
+	#@echo Strip $@...
+	#$(STRIP) build/$@
+	#$(POSTBUILD) build/QuestionViewMain.exe
 
 clean:
 	rm -f *.o

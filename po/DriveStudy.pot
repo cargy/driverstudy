@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-03 15:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: QuestionViewUI.cxx:160
+msgid "Aux"
+msgstr ""
+
+#: QuestionViewUI.cxx:147
+msgid "Cancel"
+msgstr ""
+
+#: QuestionView.cxx:43
+msgid "Do you want to cancel this Test?"
+msgstr ""
+
+#: QuestionViewUI.cxx:153
+msgid "Fullscreen"
+msgstr ""
+
+#: QuestionViewUI.cxx:191
+msgid "Next Question  @+1>@+1>[]"
+msgstr ""
+
+#: QuestionView.cxx:152
+#, c-format
+msgid "Question %i (%s)"
+msgstr ""
+
+#: QuestionView.cxx:106
+#, c-format
+msgid "Question %i/%i"
+msgstr ""
+
+#: QuestionView.cxx:80
+#, c-format
+msgid ""
+"Test Completed!\n"
+"\n"
+"You answered correctly:\n"
+"%d from %d questions."
+msgstr ""
+
+#: QuestionViewUI.cxx:183
+msgid "Validate Answer  @+1+"
+msgstr ""

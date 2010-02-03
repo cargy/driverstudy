@@ -40,7 +40,7 @@ void QuestionView::show()
 	
 void QuestionView::cb_close() 
 {
-	if (fltk::ask("Do you want to quit?")) exit(0);
+	if ( fltk::ask(_("Do you want to cancel this Test?")) ) exit(0);
 }
 
 void QuestionView::cb_fullscreen()
@@ -71,23 +71,14 @@ void QuestionView::cb_answerSelected(fltk::Widget *pRB, long rbId)
 	
 void QuestionView::cb_next(fltk::Widget* pBtn, const char* Btn)
 {
-	// get user input answer
-	//currTest->selectAnswerOfCurrentQuestion(selectedRB());
-	printf("btn: %s\n",Btn);
+	//printf("btn: %s\n",Btn);
 	if ( strcmp(Btn, "validate") == 0 ) currTest->verifyAnswerOfCurrentQuestion();	  
 
 	//check if test is completed
 	if (currTest->completed() && !preview_mode) 
 	{
-		fltk::message("Απαντήσατε:\n%d από τις %d ερωτήσεις σωστά.",currTest->getCorrect(), currTest->size());
+		fltk::message(_("Test Completed!\n\nYou answered correctly:\n%d from %d questions."),currTest->getCorrect(), currTest->size());
 
-		//Test *w = new Test(currTest->wrongQuestions(),currTest->size()-currTest->getCorrect(),35);
-		//w->showResults();
-		/*
-		QuestionCollection *qc = currTest->wrongQuestionsCollection();
-		setTest(qc);
-		previewQuestion(currQC->next());
-		*/
 		preview_mode = true;
 		previewQuestion(currTest->next());    
 	}
@@ -112,7 +103,7 @@ int QuestionView::selectedRB()
 void QuestionView::showQuestion(Question* q)
 {
 	char qNo[150];
-	sprintf(qNo, "Ερώτηση %i/%i",currTest->cursor()+1,currTest->size());
+	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
 	mainWindow->label(qNo);
 	questionDisplay->copy_label(qNo);
 	questionDisplay->text(q->title());
@@ -142,21 +133,23 @@ void QuestionView::showQuestion(Question* q)
 	imageHolder->image( fltk::SharedImage::get(imgPath) );
 	imageHolder->redraw();
 	mainWindow->redraw();
-
-	if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
-	{
-	validateBtn->deactivate();
-	}
-	else 
-	{
-	validateBtn->activate();
-	}
+	
+	// check if any answer is selected or if question is already validated
+	// to disable/enable validateBtn
+	if ( q->getSelectedAnswer() == -1 || q->isVerified()) validateBtn->deactivate();
+	else validateBtn->activate();
+	
+	// check if there is any other un-validated question
+	// to disable/enable nextBtn
+	if ( currTest->is_next() ) nextBtn->activate();
+	else nextBtn->deactivate();
+	
 }
 
 void QuestionView::previewQuestion(Question* q)
 {
 	char qNo[150];
-    sprintf(qNo, "Ερώτηση %i (%s)",currTest->cursor()+1,q->getBookSection());
+    sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
     mainWindow->label(qNo);
     questionDisplay->copy_label(qNo);
     questionDisplay->text(q->title());
@@ -187,14 +180,13 @@ void QuestionView::previewQuestion(Question* q)
     imageHolder->redraw();
     mainWindow->redraw();
     
-    if ( q->getSelectedAnswer() == -1 || q->isVerified()) 
-    {
-    	validateBtn->deactivate();
-    }
-    else 
-    {
-    	validateBtn->activate();
-    }
+    if ( q->getSelectedAnswer() == -1 || q->isVerified()) validateBtn->deactivate();
+    else validateBtn->activate();
+    
+    // activate nextBtn because it's probably
+    // deactivated from showQuestion()
+	if ( !nextBtn->active() ) nextBtn->activate();
+
 }
 
 void QuestionView::setTest(Test* t, bool pmode)
