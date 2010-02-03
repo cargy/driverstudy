@@ -66,6 +66,17 @@ Question* Test::next()
 	
 }
 
+bool Test::is_next()
+{
+	unsigned int flag = 0;
+	
+	for(int i=0;i<csize;i++) 
+		if (!tQuestions[i].isVerified()) flag++;
+	
+	if (flag > 1) return true;
+	else return false;
+}
+
 Question* Test::nextWrong()
 {			
 	if (ccursor >= csize-1) ccursor = -1;

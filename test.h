@@ -35,6 +35,7 @@ class Test:public QuestionCollection
 		QuestionCollection* wrongQuestionsCollection();
 		Question *next();
 		Question *nextWrong();
+		bool is_next();
 		int time();
 		#ifdef DEBUG
 		void answerRandomly();
