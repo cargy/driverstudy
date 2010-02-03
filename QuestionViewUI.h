@@ -2,6 +2,7 @@
 
 #ifndef QuestionViewUI_h
 #define QuestionViewUI_h
+#include "test.h"
 #include <fltk/Window.h>
 #include <fltk/Group.h>
 #include <fltk/TextDisplay.h>
@@ -49,7 +50,9 @@ public:
 private:
           inline void cb_validateBtn_i(fltk::Button*, const char*);
           static void cb_validateBtn(fltk::Button*, const char*);
+public:
           fltk::Button *nextBtn;
+private:
           inline void cb_nextBtn_i(fltk::Button*, const char*);
           static void cb_nextBtn(fltk::Button*, const char*);
 public:
