@@ -65,7 +65,11 @@ void QuestionView::cb_fullscreen()
 	
 void QuestionView::cb_answerSelected(fltk::Widget *pRB, long rbId)
 {
-	if (selectedRB() > -1) validateBtn->activate();
+	if (selectedRB() > -1)
+	{
+		validateBtn->activate();
+		currTest->selectAnswerOfCurrentQuestion(selectedRB());
+	}
 	else validateBtn->deactivate();	
 }
 	
@@ -180,8 +184,8 @@ void QuestionView::previewQuestion(Question* q)
     imageHolder->redraw();
     mainWindow->redraw();
     
-    if ( q->getSelectedAnswer() == -1 || q->isVerified()) validateBtn->deactivate();
-    else validateBtn->activate();
+	// hide validateBtn we are in preview_mode
+	if ( validateBtn->visible() ) validateBtn->hide();
     
     // activate nextBtn because it's probably
     // deactivated from showQuestion()
