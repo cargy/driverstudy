@@ -2,7 +2,6 @@
 
 #ifndef QuestionViewUI_h
 #define QuestionViewUI_h
-#include "test.h"
 #include <fltk/Window.h>
 #include <fltk/Group.h>
 #include <fltk/TextDisplay.h>

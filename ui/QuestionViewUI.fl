@@ -6,7 +6,7 @@ code_name {.cxx}
 gridx 5 
 gridy 5 
 snap 3
-decl {\#include "test.h"} {public
+decl {\#include "config.h"} {selected
 } 
 
 class QuestionViewUI {open
@@ -48,7 +48,7 @@ class QuestionViewUI {open
               {fltk::RadioButton} {answerRB[2]} {
                 label {Answer 2}
                 user_data 2 user_data_type long
-                callback {cb_answerSelected(o,v)} selected
+                callback {cb_answerSelected(o,v)}
                 xywh {5 178 420 85} align 164 buttonbox BORDER_BOX labelsize 16 textsize 16
               }
               {fltk::RadioButton} {answerRB[3]} {
