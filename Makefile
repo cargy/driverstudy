@@ -44,16 +44,21 @@ run: QuestionWindow
 
 ui: cleanui QuestionViewUI.cxx
 
-QuestionViewUI.cxx: 
+QuestionViewUI.cxx MainMenuUIAbstract.cxx: 
 	@echo === Generate UI... ===
 	fluid2 -c ui/QuestionViewUI.fl
+	fluid2 -c ui/MainMenuUIAbstract.fl
 	mv ui/QuestionViewUI.h ./
 	mv ui/QuestionViewUI.cxx ./
+	mv ui/MainMenuUIAbstract.h ./
+	mv ui/MainMenuUIAbstract.cxx ./
 	# gettex fix for not being supported by Fluid2
 	# strings with "_string" raplced by _("string")
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' QuestionViewUI.cxx
+	sed -i  's/"_\([^"]*\)"/_("\1") /g' MainMenuUIAbstract.cxx
 
-QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o
+QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o \
+				  QuestionViewUI.o QuestionView.o QuestionViewMain.o 
 	@echo === Linking $@... ===
 	$(CXX) answer.o question.o questionCollection.o test.o \
 	sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o \
@@ -61,6 +66,14 @@ QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o Ques
 	#@echo Strip $@...
 	#$(STRIP) build/$@
 	#$(POSTBUILD) build/QuestionViewMain
+	
+MainMenu: MainMenuUIAbstract.o MainMenuUI.o MainMenu.o
+	@echo === Linking $@... ===
+	$(CXX) MainMenuUIAbstract.o MainMenuUI.o MainMenu.o \
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/MainMenu	
+	#@echo Strip $@...
+	#$(STRIP) build/$@
+	#$(POSTBUILD) build/MainMenu
 
 QuestionWindow: Question.o sqliteExerBase.o QuestionWindow.o 
 	@echo === Linking $@... ===
@@ -101,14 +114,28 @@ QuestionViewMain.exe: QuestionViewUI.cxx
 	#@echo Strip $@...
 	#$(STRIP) build/$@
 	#$(POSTBUILD) build/QuestionViewMain.exe
+	
+MainMenu.exe: MainMenuUIAbstract.cxx
+	@echo === Compiling $@... ===
+	i586-mingw32msvc-g++ MainMenuUIAbstract.cxx MainMenuUI.cxx MainMenu.cxx \
+	-o build/MainMenu.exe \
+	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
+	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
+	-I/home/krizz/src/cross_win32/include -I./ \
+	/home/krizz/src/cross_win32/lib/libintl.a 
+	#@echo Strip $@...
+	#$(STRIP) build/$@
+	#$(POSTBUILD) build/QuestionViewMain.exe
 
 clean:
 	rm -f *.o
-	rm -f build/QuestionWindow build/QuestionViewMain
-	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe
+	rm -f build/QuestionWindow build/QuestionViewMain build/MainMenu
+	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe build/MainMenu.exe
 
 cleanui:
 	rm -f QuestionViewUI.cxx QuestionViewUI.h
+	rm -f MainMenuUIAbstract.cxx MainMenuUIAbstract.h
 	
 deepclean: clean cleanui
 

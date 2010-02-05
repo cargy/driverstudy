@@ -1,4 +1,4 @@
-//      config.c
+//      MainMenu.cxx
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -17,28 +17,23 @@
 //      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //      MA 02110-1301, USA.
 
-
-#define DRIVERSTUDYVERSION "0.6"
-#define DEBUG
-
-// gettext
-#define PACKAGE "DriveStudy"
-#define LOCALEDIR "./po"
+#include <fltk/Window.h>
+#include <fltk/Widget.h>
+#include <fltk/run.h>
+#include <locale.h>
 #include <libintl.h>
-#define _(String) gettext (String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-//#define _(String) (String)
-//#define N_(String) String
-//#define textdomain(Domain)
-//#define bindtextdomain(Package, Directory)
-     
+#include "MainMenuUI.h"
 
 
+int main(int argc, char** argv)
+{
+	setlocale (LC_ALL, "");
+    bindtextdomain (PACKAGE, LOCALEDIR);
+    textdomain (PACKAGE);
+    
+	MainMenuUI *window = new MainMenuUI(300, 180,640,480,"Driver Study 0.6");
+	window->resizable(window);
+	window->show();
+	return fltk::run();
 
-#define MAXANSWERSIZE 500
-#define MAXSNDFILESIZE 255
-
-#define MAXQUESTIONSIZE 500
-#define MAXIMGFILESIZE 255
-
+}

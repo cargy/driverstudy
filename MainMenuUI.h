@@ -1,4 +1,4 @@
-//      config.c
+//      MainMenuUI.h
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -18,27 +18,22 @@
 //      MA 02110-1301, USA.
 
 
-#define DRIVERSTUDYVERSION "0.6"
-#define DEBUG
+#ifndef MAINMENUUI_H
+#define MAINMENUUI_H
+#include "config.h"
+#include "MainMenuUIAbstract.h"
 
-// gettext
-#define PACKAGE "DriveStudy"
-#define LOCALEDIR "./po"
-#include <libintl.h>
-#define _(String) gettext (String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-//#define _(String) (String)
-//#define N_(String) String
-//#define textdomain(Domain)
-//#define bindtextdomain(Package, Directory)
-     
+class MainMenuUI: public MainMenuUIAbstract
+{
+	public:
+		MainMenuUI(int x, int y, int width, int height, const char* label);
+			
+	private:
+		virtual void cb_exit();
+		virtual void cb_help();
+		virtual void cb_fullscreen();
+		virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
+		virtual void cb_selectLanguage(fltk::Widget* sItem, void* userdata);
+};
 
-
-
-#define MAXANSWERSIZE 500
-#define MAXSNDFILESIZE 255
-
-#define MAXQUESTIONSIZE 500
-#define MAXIMGFILESIZE 255
-
+#endif /* MAINMENUUI_H */ 

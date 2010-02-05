@@ -16,16 +16,16 @@ class MainMenuUIAbstract {open : {public fltk::Window}
 } {
   Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
   } {
-    {fltk::Window} mainContainer {open selected
-      xywh {177 150 640 480} resizable
+    {fltk::Window} mainContainer {open
+      xywh {169 69 640 480} resizable
       class {fltk::Group} visible
     } {
       {fltk::Widget} {} {
-        label {_Application Title}
-        xywh {12 6 615 110}
+        label {_Application Title} selected
+        xywh {12 6 615 100} box BORDER_FRAME
       }
       {fltk::Group} {} {open
-        xywh {12 137 615 210} box THIN_UP_BOX
+        xywh {12 123 615 210} box THIN_UP_BOX
       } {
         {fltk::Group} {} {
           label {_Select a Test Category} open
@@ -58,21 +58,22 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
       }
       {fltk::Group} {} {open
-        xywh {12 369 615 100} box THIN_UP_BOX
+        xywh {12 340 615 113} box THIN_UP_BOX
       } {
         {fltk::Button} exitBtn {
           label _Exit
           callback {cb_exit()}
-          xywh {18 13 75 75}
+          xywh {18 18 75 75}
         }
         {fltk::Button} helpBtn {
           label _Help
           callback {cb_help()}
-          xywh {521 13 75 75}
+          xywh {521 18 75 75}
         }
         {fltk::PopupMenu} languagePUM {
           label {_Select Language}
-          xywh {213 30 178 41}
+          callback {cb_selectLanguage(o,v)}
+          xywh {230 13 178 41}
         } {
           {fltk::Item} {} {
             label _Greek
@@ -87,13 +88,26 @@ class MainMenuUIAbstract {open : {public fltk::Window}
             label _Albanian
             }
         }
+        {fltk::Button} fullscreenBtn {
+          label _Fullscreen
+          callback {cb_fullscreen()}
+          xywh {228 59 180 41}
+        }
+      }
+      {fltk::StatusBarGroup} {} {
+        label {This is the status bar}
+        xywh {0 460 640 20}
       }
     }
   }
   Function {cb_exit()} {open return_type void attributes virtual
   } {}
-  Function {cb_help()} {open return_type void attributes virtual
+  Function {cb_help()} {return_type void attributes virtual
+  } {}
+  Function {cb_fullscreen()} {return_type void attributes virtual
   } {}
   Function {cb_start(fltk::Widget* pBtn, const char* tCategory)} {return_type void attributes virtual
+  } {}
+  Function {cb_selectLanguage(fltk::Widget* sItem, void* userdata)} {open return_type void attributes virtual
   } {}
 } 
