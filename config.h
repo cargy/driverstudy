@@ -22,7 +22,7 @@
 #define DEBUG
 
 // gettext
-#define PACKAGE "DriveStudy"
+#define PACKAGE "DriverStudy"
 #define LOCALEDIR "./po"
 #include <libintl.h>
 #define _(String) gettext (String)
