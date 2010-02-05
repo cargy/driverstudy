@@ -1,0 +1,83 @@
+# data file for the FLTK User Interface Designer (FLUID)
+version 2.1000 
+images_dir  
+header_name {.h} 
+code_name {.cxx} 
+gridx 5 
+gridy 5 
+snap 3
+decl {\#include "config.h"} {public
+} 
+
+decl {\#include <fltk/Window.h>} {public
+} 
+
+class MainMenuUIAbstract {open : {public fltk::Window}
+} {
+  Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
+  } {
+    {fltk::Window} mainContainer {open
+      xywh {335 161 640 480}
+      class {fltk::Group} visible
+    } {
+      {fltk::Widget} {} {
+        label {_Application Title}
+        xywh {12 6 615 110}
+      }
+      {fltk::Group} {} {open
+        xywh {12 137 615 210} box THIN_UP_BOX
+      } {
+        {fltk::Group} {} {
+          label {_Select a Test Category} open
+          xywh {16 41 580 149} resizable
+        } {
+          {fltk::Button} {} {
+            label _Motorcycle
+            xywh {0 20 110 110}
+          }
+          {fltk::Button} {} {
+            label _Car
+            xywh {156 20 110 110}
+          }
+          {fltk::Button} {} {
+            label _Track
+            xywh {313 20 110 110}
+          }
+          {fltk::Button} {} {
+            label _Bus
+            xywh {470 20 110 110}
+          }
+        }
+      }
+      {fltk::Group} {} {open
+        xywh {12 369 615 100} box THIN_UP_BOX
+      } {
+        {fltk::Button} {} {
+          label _Exit
+          xywh {18 13 75 75}
+        }
+        {fltk::Button} {} {
+          label _Help
+          xywh {521 13 75 75}
+        }
+        {fltk::PopupMenu} languagePUM {
+          label {_Select Language} open
+          xywh {213 30 178 41}
+        } {
+          {fltk::Item} {} {
+            label _Greek
+            }
+          {fltk::Item} {} {
+            label _English
+            }
+          {fltk::Item} {} {
+            label _Russian
+            }
+          {fltk::Item} {} {
+            label _Albanian
+            }
+        }
+      }
+    }
+  }
+} 
