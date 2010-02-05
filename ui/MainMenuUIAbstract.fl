@@ -1,6 +1,6 @@
 # data file for the FLTK User Interface Designer (FLUID)
 version 2.1000 
-images_dir  
+images_dir header_name 
 header_name {.h} 
 code_name {.cxx} 
 gridx 5 
@@ -16,8 +16,8 @@ class MainMenuUIAbstract {open : {public fltk::Window}
 } {
   Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
   } {
-    {fltk::Window} mainContainer {open
-      xywh {335 161 640 480}
+    {fltk::Window} mainContainer {open selected
+      xywh {177 150 640 480} resizable
       class {fltk::Group} visible
     } {
       {fltk::Widget} {} {
@@ -31,20 +31,28 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           label {_Select a Test Category} open
           xywh {16 41 580 149} resizable
         } {
-          {fltk::Button} {} {
+          {fltk::Button} motorcycleBtn {
             label _Motorcycle
+            user_data {"motorcycle"} user_data_type {const char*}
+            callback {cb_start(o,v)}
             xywh {0 20 110 110}
           }
-          {fltk::Button} {} {
+          {fltk::Button} carBtn {
             label _Car
+            user_data {"car"} user_data_type {const char*}
+            callback {cb_start(o,v)}
             xywh {156 20 110 110}
           }
-          {fltk::Button} {} {
+          {fltk::Button} trackBtn {
             label _Track
+            user_data {"track"} user_data_type {const char*}
+            callback {cb_start(o,v)}
             xywh {313 20 110 110}
           }
-          {fltk::Button} {} {
+          {fltk::Button} busBtn {
             label _Bus
+            user_data {"bus"} user_data_type {const char*}
+            callback {cb_start(o,v)}
             xywh {470 20 110 110}
           }
         }
@@ -52,16 +60,18 @@ class MainMenuUIAbstract {open : {public fltk::Window}
       {fltk::Group} {} {open
         xywh {12 369 615 100} box THIN_UP_BOX
       } {
-        {fltk::Button} {} {
+        {fltk::Button} exitBtn {
           label _Exit
+          callback {cb_exit()}
           xywh {18 13 75 75}
         }
-        {fltk::Button} {} {
+        {fltk::Button} helpBtn {
           label _Help
+          callback {cb_help()}
           xywh {521 13 75 75}
         }
         {fltk::PopupMenu} languagePUM {
-          label {_Select Language} open
+          label {_Select Language}
           xywh {213 30 178 41}
         } {
           {fltk::Item} {} {
@@ -80,4 +90,10 @@ class MainMenuUIAbstract {open : {public fltk::Window}
       }
     }
   }
+  Function {cb_exit()} {open return_type void attributes virtual
+  } {}
+  Function {cb_help()} {open return_type void attributes virtual
+  } {}
+  Function {cb_start(fltk::Widget* pBtn, const char* tCategory)} {return_type void attributes virtual
+  } {}
 } 
