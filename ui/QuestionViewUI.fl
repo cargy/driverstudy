@@ -6,15 +6,14 @@ code_name {.cxx}
 gridx 5 
 gridy 5 
 snap 3
-decl {\#include "config.h"} {selected
-} 
+decl {\#include "config.h"} {} 
 
 class QuestionViewUI {open
 } {
   Function {QuestionViewUI()} {open
   } {
     {fltk::Window} mainWindow {open
-      xywh {109 68 800 600} resizable visible
+      xywh {360 54 800 600} resizable visible
     } {
       {fltk::Group} {} {open
         private xywh {0 0 800 600}
@@ -64,8 +63,8 @@ class QuestionViewUI {open
           } {
             {fltk::Button} exitBtn {
               label _Cancel
-              callback {cb_close()}
-              private xywh {9 8 130 40} labelfont 1
+              callback {cb_close()} selected
+              private xywh {9 8 130 40} labelfont 1 shortcut 0xff1b
             }
             {fltk::Button} fullscreenBtn {
               label _Fullscreen

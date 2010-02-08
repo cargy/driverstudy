@@ -70,16 +70,18 @@ fltk::Group* o = mainContainer = new fltk::Group(0, 0, 640, 480);
     
     {
 fltk::Widget* o = new fltk::Widget(12, 6, 615, 100, _("Application Title") );
-      o->box(fltk::BORDER_FRAME);
+      o->box(fltk::HIGHLIGHT_UP_BOX);
+      o->labeltype(fltk::EMBOSSED_LABEL);
     }
     
     {
 fltk::Group* o = new fltk::Group(12, 123, 615, 210);
-      o->box(fltk::THIN_UP_BOX);
+      o->box(fltk::ENGRAVED_BOX);
       o->begin();
       
       {
 fltk::Group* o = new fltk::Group(16, 41, 580, 149, _("Select a Test Category") );
+        o->labeltype(fltk::ENGRAVED_LABEL);
         o->begin();
         
         {
@@ -109,7 +111,7 @@ fltk::Button* o = busBtn = new fltk::Button(470, 20, 110, 110, _("Bus") );
     
     {
 fltk::Group* o = new fltk::Group(12, 340, 615, 113);
-      o->box(fltk::THIN_UP_BOX);
+      o->box(fltk::ENGRAVED_BOX);
       o->begin();
       
       {
@@ -126,15 +128,32 @@ fltk::Button* o = helpBtn = new fltk::Button(521, 18, 75, 75, _("Help") );
 fltk::PopupMenu* o = languagePUM = new fltk::PopupMenu(230, 13, 178, 41, _("Select Language") );
         o->callback((fltk::Callback*)cb_languagePUM);
         o->begin();
-        new fltk::Item(_("Greek") );
-        new fltk::Item(_("English") );
-        new fltk::Item(_("Russian") );
-        new fltk::Item(_("Albanian") );
+        
+        {
+fltk::Item* o = new fltk::Item(_("Greek") );
+          o->user_data((void*)("greek"));
+        }
+        
+        {
+fltk::Item* o = new fltk::Item(_("English") );
+          o->user_data((void*)("english"));
+        }
+        
+        {
+fltk::Item* o = new fltk::Item(_("Russian") );
+          o->user_data((void*)("russian"));
+        }
+        
+        {
+fltk::Item* o = new fltk::Item(_("Albanian") );
+          o->user_data((void*)("albanian"));
+        }
         o->end();
       }
       
       {
 fltk::Button* o = fullscreenBtn = new fltk::Button(228, 59, 180, 41, _("Fullscreen") );
+        o->type(fltk::Button::TOGGLE);
         o->callback((fltk::Callback*)cb_fullscreenBtn);
       }
       o->end();

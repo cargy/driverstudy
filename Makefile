@@ -2,7 +2,7 @@ FLTK2CONFIG=fltk2-config
 
 # flags for compiler:
 CFLAGS   = -Wall -O3 -I. $(shell $(FLTK2CONFIG) --cflags) -DFLTK2
-CXXFLAGS = -g -Wall -O3 -I. $(shell $(FLTK2CONFIG) --cxxflags) -DFLTK2
+CXXFLAGS = -g -Wall -O0 -I. $(shell $(FLTK2CONFIG) -g --cxxflags) -DFLTK2
 
 # Possible steps after linking...
 STRIP      = strip
@@ -23,17 +23,13 @@ CC      = $(shell $(FLTK2CONFIG) --cc)
 #########################################################
 # make sure the basic rules are in place, just in case...
 # Build commands and filename extensions...
-.SUFFIXES: .c .cxx .cpp .cc .h .fl .o
+.SUFFIXES: .cxx .h .fl .o
 
 # Rule to build an object file from a C++ source file
-%.o : %.cxx 
+%.o : %.cxx
 	@echo Compile $@...
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
-
-# Rule to build an object file from a C++ source file
-%.o : %.cpp
-	@echo Compile $@...
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+	
 
 #########################################################
 
@@ -56,6 +52,18 @@ QuestionViewUI.cxx MainMenuUIAbstract.cxx:
 	# strings with "_string" raplced by _("string")
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' QuestionViewUI.cxx
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' MainMenuUIAbstract.cxx
+	
+driverstudy: answer.o question.o questionCollection.o test.o sqlite3.o \
+			 MainMenuUIAbstract.o MainMenuUI.o  \
+			 QuestionViewUI.o QuestionView.o driverstudy.o 
+	@echo === Linking $@... ===
+	$(CXX) answer.o question.o questionCollection.o test.o \
+	sqlite3.o QuestionViewUI.o QuestionView.o MainMenuUIAbstract.o MainMenuUI.o  \
+	 driverstudy.o \
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/driverstudy	
+	#@echo Strip $@...
+	#$(STRIP) build/$@
+	#$(POSTBUILD) build/QuestionViewMain
 
 QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o \
 				  QuestionViewUI.o QuestionView.o QuestionViewMain.o 
@@ -93,6 +101,20 @@ allwin: QuestionWindow.exe QuestionViewMain.exe
 
 wrun: QuestionWindow.exe
 	bash -c "cd build;wine ./QuestionWindow.exe"&
+	
+driverstudy.exe: MainMenuUI.cxx QuestionViewUI.cxx
+	@echo === Compiling $@... ===
+	i586-mingw32msvc-g++ MainMenu.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
+	-o build/DriverStudy.exe \
+	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
+	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
+	-I/home/krizz/src/cross_win32/include -I./ \
+	/home/krizz/src/cross_win32/lib/libintl.a  \
+	/home/krizz/src/cross_win32/lib/libsqlite3.a
+	#@echo Strip $@...
+	#$(STRIP) build/$@
+	#$(POSTBUILD) build/QuestionViewMain.exe
 
 QuestionWindow.exe: QuestionWindow.cpp
 	i586-mingw32msvc-g++ QuestionWindow.cpp -o build/QuestionWindow.exe \

@@ -127,8 +127,6 @@ vector<int> *testTemplate ( int category, int language ) {
 	
 	  qNo = getTestTemplateNOQ(category, language);
 	  tTime = getTestTime(category);
-
-	  //assert(qNo == 30);
 	  
 	  char buffer[1024];
 	  sprintf(buffer,"Select Qpag,qcod FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);

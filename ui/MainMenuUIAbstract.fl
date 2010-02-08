@@ -17,19 +17,19 @@ class MainMenuUIAbstract {open : {public fltk::Window}
   Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
   } {
     {fltk::Window} mainContainer {open
-      xywh {169 69 640 480} resizable
+      xywh {238 86 640 480} resizable
       class {fltk::Group} visible
     } {
       {fltk::Widget} {} {
-        label {_Application Title} selected
-        xywh {12 6 615 100} box BORDER_FRAME
+        label {_Application Title}
+        xywh {12 6 615 100} box HIGHLIGHT_UP_BOX labeltype EMBOSSED_LABEL
       }
       {fltk::Group} {} {open
-        xywh {12 123 615 210} box THIN_UP_BOX
+        xywh {12 123 615 210} box ENGRAVED_BOX
       } {
         {fltk::Group} {} {
           label {_Select a Test Category} open
-          xywh {16 41 580 149} resizable
+          xywh {16 41 580 149} resizable labeltype ENGRAVED_LABEL
         } {
           {fltk::Button} motorcycleBtn {
             label _Motorcycle
@@ -58,7 +58,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
       }
       {fltk::Group} {} {open
-        xywh {12 340 615 113} box THIN_UP_BOX
+        xywh {12 340 615 113} box ENGRAVED_BOX
       } {
         {fltk::Button} exitBtn {
           label _Exit
@@ -72,26 +72,30 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
         {fltk::PopupMenu} languagePUM {
           label {_Select Language}
-          callback {cb_selectLanguage(o,v)}
+          callback {cb_selectLanguage(o,v)} open
           xywh {230 13 178 41}
         } {
           {fltk::Item} {} {
             label _Greek
+            user_data {"greek"} user_data_type {const char*}
             }
           {fltk::Item} {} {
             label _English
+            user_data {"english"} user_data_type {const char*}
             }
           {fltk::Item} {} {
             label _Russian
+            user_data {"russian"} user_data_type {const char*}
             }
           {fltk::Item} {} {
             label _Albanian
+            user_data {"albanian"} user_data_type {const char*} selected
             }
         }
         {fltk::Button} fullscreenBtn {
           label _Fullscreen
           callback {cb_fullscreen()}
-          xywh {228 59 180 41}
+          xywh {228 59 180 41} type TOGGLE
         }
       }
       {fltk::StatusBarGroup} {} {

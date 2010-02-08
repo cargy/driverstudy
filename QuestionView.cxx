@@ -33,6 +33,13 @@ QuestionView::QuestionView()
 	fltk::register_images();
 }
 
+QuestionView::~QuestionView()
+{
+	printf("QuestionView object Goind down!\n");
+	delete currTest;
+	mainWindow->destroy();
+}
+
 void QuestionView::show()
 {
 	mainWindow->show();
@@ -40,7 +47,7 @@ void QuestionView::show()
 	
 void QuestionView::cb_close() 
 {
-	if ( fltk::ask(_("Do you want to cancel this Test?")) ) exit(0);
+	if ( fltk::ask(_("Do you want to cancel this Test?")) ) mainWindow->hide();
 }
 
 void QuestionView::cb_fullscreen()

@@ -1,4 +1,4 @@
-//      MainMenu.cxx
+//      driverstudy.cxx
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -17,13 +17,16 @@
 //      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //      MA 02110-1301, USA.
 
+
+#include "config.h"
+#include <locale.h>
+#include <libintl.h>
+
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
 #include <fltk/run.h>
-#include <locale.h>
-#include <libintl.h>
 #include "MainMenuUI.h"
-
+#include "QuestionView.h"
 
 int main(int argc, char** argv)
 {
@@ -31,22 +34,10 @@ int main(int argc, char** argv)
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
-    /* Change language.  */
-	#ifdef _WIN32
-	putenv("LANGUAGE=el_GR");
-	#else
-	//setenv ("LANGUAGE", "el_GR", 1);
-	#endif /* !_WIN32 */
-	
-	/* Make change known.  */
-	{
-	  extern int  _nl_msg_cat_cntr;
-	  ++_nl_msg_cat_cntr;
-	}
-    
-	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,"Driver Study 0.6");
+    // Initial global objects.
+	fltk::args(argc, argv);
+	MainMenuUI *window = new MainMenuUI(300, 180,640,480,"Driver Study 0.6");
 	window->resizable(window);
 	window->show();
 	return fltk::run();
-
 }

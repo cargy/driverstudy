@@ -29,6 +29,7 @@ class QuestionView: public QuestionViewUI
 {
 	public:
 		QuestionView();
+		~QuestionView();
 		void show();
 		virtual void cb_close();
 		virtual void cb_fullscreen();

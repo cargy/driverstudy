@@ -22,11 +22,13 @@
 #define MAINMENUUI_H
 #include "config.h"
 #include "MainMenuUIAbstract.h"
+#include "QuestionView.h"
 
 class MainMenuUI: public MainMenuUIAbstract
 {
 	public:
 		MainMenuUI(int x, int y, int width, int height, const char* label);
+		QuestionView *qv;
 			
 	private:
 		virtual void cb_exit();
@@ -34,6 +36,7 @@ class MainMenuUI: public MainMenuUIAbstract
 		virtual void cb_fullscreen();
 		virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
 		virtual void cb_selectLanguage(fltk::Widget* sItem, void* userdata);
+		void changeUILocale(fltk::Group* o);
 };
 
 #endif /* MAINMENUUI_H */ 

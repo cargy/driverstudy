@@ -21,6 +21,19 @@
 #define DRIVERSTUDYVERSION "0.6"
 #define DEBUG
 
+
+#define DATABASE "ExerBase.db"
+// DATABASE MAPPINGS
+#define DBCARID 1
+#define DBMOTORCYCLEID 2
+#define DBTRUCKID 3
+#define DBBUSID 4
+
+#define DBGREEKID 1
+#define DBENGLISHID 2
+#define DBRUSSIAN 3
+#define DBALBANIANID 4
+
 // gettext
 #define PACKAGE "DriverStudy"
 #define LOCALEDIR "./po"

@@ -147,6 +147,7 @@ fltk::Group* o = MainControlsGroup = new fltk::Group(5, 530, 440, 57);
           {
 fltk::Button* o = exitBtn = new fltk::Button(9, 8, 130, 40, _("Cancel") );
             o->labelfont(fltk::HELVETICA_BOLD);
+            o->shortcut(0xff1b);
             o->callback((fltk::Callback*)cb_exitBtn);
           }
           
