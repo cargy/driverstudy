@@ -31,20 +31,7 @@ int main(int argc, char** argv)
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
-    /* Change language.  */
-	#ifdef _WIN32
-	putenv("LANGUAGE=el_GR");
-	#else
-	//setenv ("LANGUAGE", "el_GR", 1);
-	#endif /* !_WIN32 */
-	
-	/* Make change known.  */
-	{
-	  extern int  _nl_msg_cat_cntr;
-	  ++_nl_msg_cat_cntr;
-	}
-    
-	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,"Driver Study 0.6");
+	MainMenuUI *window = new MainMenuUI(300, 180,640,480,"Driver Study 0.6");
 	window->resizable(window);
 	window->show();
 	return fltk::run();

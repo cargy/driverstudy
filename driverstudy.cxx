@@ -25,19 +25,69 @@
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
 #include <fltk/run.h>
+
+#include <cstdio>
+#include <cstdlib>
 #include "MainMenuUI.h"
 #include "QuestionView.h"
 
+void force_locale(const char* f_locale)
+{
+	/* Change language.  */
+	#ifdef _WIN32
+	char buffer [15];
+	n=sprintf (buffer, "LANGUAGE=%s", f_locale);
+	putenv(buffer);
+	#else
+	setenv ("LANGUAGE", f_locale, 1);
+	#endif /* !_WIN32 */
+
+	/* Make change known.  */
+	{
+	extern int  _nl_msg_cat_cntr;
+	++_nl_msg_cat_cntr;
+	}
+}
+
+int set_locale(int argc, char** argv, int&i){
+
+   if (strcmp(argv[i],"-l")==0 || strcmp(argv[i],"-locale")==0 ) 
+   {
+	   if (i >= argc -1 || argv[i+1][0]=='-') return 0;
+	   //printf("argv[%d][0]= %c\n",i+1,argv[i+1][0]);
+	   i++;
+	   #ifdef DEBUG
+	   printf("locale = %s\n",argv[i]);
+	   #endif
+	   force_locale(argv[i]);
+	   i++;
+	   return i;
+   }
+  return 0;
+}
+
 int main(int argc, char** argv)
 {
+	// Initial global objects.
+	
+	// read locale from enviroment
 	setlocale (LC_ALL, "");
+	
+	int i;
+	if ( fltk::args(argc, argv, i, set_locale) < argc ) {
+		#ifdef DEBUG
+		fprintf(stderr,"args return %d (%d)\n",i,argc);
+		#endif
+		fprintf(stderr, "%s\n -l[ocale] uilocale\n", fltk::help);
+		return 1;
+	}
+	
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
-    // Initial global objects.
-	fltk::args(argc, argv);
-	MainMenuUI *window = new MainMenuUI(300, 180,640,480,"Driver Study 0.6");
-	window->resizable(window);
-	window->show();
+
+	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,"Driver Study 0.6");
+	window->show(argc, argv);
+	
 	return fltk::run();
-}
+};

@@ -18,6 +18,8 @@
 //      MA 02110-1301, USA.
 
 
+#include <cstdlib>
+#include <cassert>
 #include <iostream>
 #include <sqlite3.h>
 #include "test.h"

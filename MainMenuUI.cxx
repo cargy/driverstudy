@@ -30,7 +30,7 @@
 MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
-	
+	resizable(this);	
 }
 
 void MainMenuUI::cb_exit()
@@ -74,8 +74,10 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	int *array = sql.createRandomTestFromTemplate(v);
 
 	Test* ct = sql.getTest(array);
-
+	
+	#ifdef DEBUG
 	ct->answerRandomly();
+	#endif
 	if (qv) delete qv;
 	qv = new QuestionView();
 	qv->setTest(ct);
