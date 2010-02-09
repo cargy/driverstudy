@@ -57,7 +57,7 @@ private:
   int rc;
   int nrow,ncol;
   int db_open;
-  int qNo, tTime;
+  int qNo, tTime, tCategory;
 
 public:
 
@@ -129,6 +129,7 @@ vector<int> *testTemplate ( int category, int language ) {
 	
 	  qNo = getTestTemplateNOQ(category, language);
 	  tTime = getTestTime(category);
+	  tCategory = category;
 	  
 	  char buffer[1024];
 	  sprintf(buffer,"Select Qpag,qcod FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
@@ -166,7 +167,7 @@ vector<int> *testTemplate ( int category, int language ) {
   }
 
   Test* getTest(int *array) {
-	  return new Test(getQuestionArray(array),qNo,tTime);
+	  return new Test(getQuestionArray(array),qNo,tTime, tCategory);
   }
 
   Question getQuestion(int qid) {

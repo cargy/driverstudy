@@ -118,12 +118,12 @@ int main(int argc, char** argv)
 		return 1;
 	}
 	
-	
-
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
-
-	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,"Driver Study 0.6");
+    
+    char applicationTitle[50];
+    sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
+	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
 	window->show(argc, argv);
 	
 	return fltk::run();

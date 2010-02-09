@@ -25,10 +25,10 @@ private:
         inline void cb_carBtn_i(fltk::Button*, const char*);
         static void cb_carBtn(fltk::Button*, const char*);
 public:
-        fltk::Button *trackBtn;
+        fltk::Button *truckBtn;
 private:
-        inline void cb_trackBtn_i(fltk::Button*, const char*);
-        static void cb_trackBtn(fltk::Button*, const char*);
+        inline void cb_truckBtn_i(fltk::Button*, const char*);
+        static void cb_truckBtn(fltk::Button*, const char*);
 public:
         fltk::Button *busBtn;
 private:

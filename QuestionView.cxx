@@ -31,6 +31,7 @@ QuestionView::QuestionView()
 	win_x = 0; win_y = 0;
 	fullscreen_flag = false;
 	fltk::register_images();
+
 }
 
 QuestionView::~QuestionView()
@@ -52,18 +53,20 @@ void QuestionView::cb_close()
 
 void QuestionView::cb_fullscreen()
 {
+
 	if (this->fullscreen_flag) 
 	{
-		mainWindow->fullscreen_off( win_x, win_y,800,600);
+		mainWindow->fullscreen_off( win_x, win_y,win_w,win_h);
 		mainWindow->set_non_modal();
 	}
 	else 
 	{
 		win_x = mainWindow->x();
 		win_y = mainWindow->y();
+		win_w = mainWindow->w();
+		win_h = mainWindow->h();
 		mainWindow->fullscreen();
 		mainWindow->set_modal();
-		
 	}
 	  
 	if (fullscreen_flag) fullscreen_flag=false;
@@ -113,9 +116,9 @@ int QuestionView::selectedRB()
 
 void QuestionView::showQuestion(Question* q)
 {
+	
 	char qNo[150];
 	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
-	mainWindow->label(qNo);
 	questionDisplay->copy_label(qNo);
 	questionDisplay->text(q->title());
 
@@ -204,6 +207,18 @@ void QuestionView::setTest(Test* t, bool pmode)
 {
 	currTest = t;
 	preview_mode = false;
+	
+	// set window label
+	char tl[50];
+	char* tcl;
+	if (currTest->category_id() == DBCARID) tcl = _("Car");
+	if (currTest->category_id() == DBMOTORCYCLEID) tcl = _("Motorcycle");
+	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");
+	if (currTest->category_id() == DBBUSID) tcl = _("Bus");
+	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id(),tcl);
+	mainWindow->copy_label(tl);
+	
+	// show first question
 	showQuestion(currTest->next());
 }
 

@@ -26,7 +26,7 @@
 class Test:public QuestionCollection
 {
 	public:
-		Test(Question *xferQuestions, int aoq, int ttime);
+		Test(Question *xferQuestions, int aoq, int ttime, int tcategory);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();
 		bool completed();
@@ -37,6 +37,7 @@ class Test:public QuestionCollection
 		Question *nextWrong();
 		bool is_next();
 		int time();
+		int category_id();
 		#ifdef DEBUG
 		void answerRandomly();
 		void showResults();
@@ -44,6 +45,7 @@ class Test:public QuestionCollection
 	
 	private:
 		int testTime;
+		int testCategory;
 
 };
 

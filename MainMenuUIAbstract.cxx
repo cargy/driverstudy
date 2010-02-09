@@ -16,11 +16,11 @@ void MainMenuUIAbstract::cb_carBtn(fltk::Button* o, const char* v) {
   ((MainMenuUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_carBtn_i(o,v);
 }
 
-inline void MainMenuUIAbstract::cb_trackBtn_i(fltk::Button* o, const char* v) {
+inline void MainMenuUIAbstract::cb_truckBtn_i(fltk::Button* o, const char* v) {
   cb_start(o,v)
 ;}
-void MainMenuUIAbstract::cb_trackBtn(fltk::Button* o, const char* v) {
-  ((MainMenuUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_trackBtn_i(o,v);
+void MainMenuUIAbstract::cb_truckBtn(fltk::Button* o, const char* v) {
+  ((MainMenuUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_truckBtn_i(o,v);
 }
 
 inline void MainMenuUIAbstract::cb_busBtn_i(fltk::Button* o, const char* v) {
@@ -95,8 +95,8 @@ fltk::Button* o = carBtn = new fltk::Button(156, 20, 110, 110, _("Car") );
         }
         
         {
-fltk::Button* o = trackBtn = new fltk::Button(313, 20, 110, 110, _("Track") );
-          o->callback((fltk::Callback*)cb_trackBtn, (void*)("track"));
+fltk::Button* o = truckBtn = new fltk::Button(313, 20, 110, 110, _("Truck") );
+          o->callback((fltk::Callback*)cb_truckBtn, (void*)("truck"));
         }
         
         {

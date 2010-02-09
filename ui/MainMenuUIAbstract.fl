@@ -43,10 +43,10 @@ class MainMenuUIAbstract {open : {public fltk::Window}
             callback {cb_start(o,v)}
             xywh {156 20 110 110}
           }
-          {fltk::Button} trackBtn {
-            label _Track
-            user_data {"track"} user_data_type {const char*}
-            callback {cb_start(o,v)}
+          {fltk::Button} truckBtn {
+            label _Truck
+            user_data {"truck"} user_data_type {const char*}
+            callback {cb_start(o,v)} selected
             xywh {313 20 110 110}
           }
           {fltk::Button} busBtn {
@@ -89,7 +89,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
             }
           {fltk::Item} {} {
             label _Albanian
-            user_data {"albanian"} user_data_type {const char*} selected
+            user_data {"albanian"} user_data_type {const char*}
             }
         }
         {fltk::Button} fullscreenBtn {

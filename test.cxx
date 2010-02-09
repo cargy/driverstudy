@@ -1,10 +1,11 @@
 #include "test.h"
 
 
-Test::Test(Question *xferQuestions, int aoq, int ttime)
+Test::Test(Question *xferQuestions, int aoq, int ttime, int tcategory)
 	 :QuestionCollection(xferQuestions,aoq)
 {
-	testTime = ttime;	
+	testTime = ttime;
+	testCategory = tcategory;
 }
 
 void Test::selectAnswerOfCurrentQuestion(int a)
@@ -90,6 +91,7 @@ Question* Test::nextWrong()
 }
 
 int Test::time() { return testTime;};
+int Test::category_id() {return testCategory;};
 
 #ifdef DEBUG
 void Test::answerRandomly() 

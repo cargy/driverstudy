@@ -18,7 +18,8 @@
 //      MA 02110-1301, USA.
 
 
-#define DRIVERSTUDYVERSION "0.6.1"
+#define APPLICATIONTITLE "Driver Study"
+#define DRIVERSTUDYVERSION "0.6.5"
 #define DEBUG
 
 

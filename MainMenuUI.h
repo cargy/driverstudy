@@ -29,9 +29,12 @@ class MainMenuUI: public MainMenuUIAbstract
 	public:
 		MainMenuUI(int x, int y, int width, int height, const char* label);
 		QuestionView *qv;
-		int convLangtoMenuItemIndexNo();
-			
+		
+				
 	private:
+		int win_x, win_y, win_w, win_h;
+		bool fullscreen_flag;
+		int convLangtoMenuItemIndexNo();
 		virtual void cb_exit();
 		virtual void cb_help();
 		virtual void cb_fullscreen();

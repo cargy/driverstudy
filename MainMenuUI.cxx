@@ -31,9 +31,11 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
 	resizable(this);
-	
+	fullscreen_flag = false;
 	languagePUM->value(convLangtoMenuItemIndexNo());
 	languagePUM->label(languagePUM->get_item()->label());
+	
+	
 }
 
 int MainMenuUI::convLangtoMenuItemIndexNo() {
@@ -55,13 +57,28 @@ void MainMenuUI::cb_exit()
 
 void MainMenuUI::cb_help()
 {
-	fltk::message(_("@c;Driver Study ver.%s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), DRIVERSTUDYVERSION );
+	fltk::message(_("@c;%s ver.%s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
 }
 
 void MainMenuUI::cb_fullscreen()
 {
-	fullscreen();
-	set_modal();
+	if (fullscreen_flag) 
+	{
+		fullscreen_off( win_x, win_y,win_w,win_h);
+		set_non_modal();
+	}
+	else 
+	{
+		win_x = x();
+		win_y = y();
+		win_w = w();
+		win_h = h();
+		fullscreen();
+		//set_modal();
+	}
+	  
+	if (fullscreen_flag) fullscreen_flag=false;
+	else fullscreen_flag=true;
 }
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
@@ -72,7 +89,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	int catid = 0;
 	if (strcmp(tCategory, "car")==0) catid = DBCARID;
 	if (strcmp(tCategory, "motorcycle")==0) catid = DBMOTORCYCLEID;
-	if (strcmp(tCategory, "track")==0) catid = DBTRUCKID;
+	if (strcmp(tCategory, "truck")==0) catid = DBTRUCKID;
 	if (strcmp(tCategory, "bus")==0) catid = DBBUSID;
 	assert(catid>0);
 	
