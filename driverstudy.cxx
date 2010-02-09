@@ -25,11 +25,14 @@
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
 #include <fltk/run.h>
+#include <fltk/error.h>
 
 #include <cstdio>
 #include <cstdlib>
 #include "MainMenuUI.h"
 #include "QuestionView.h"
+
+bool fullscreen_flag=false;
 
 void force_locale(const char* f_locale)
 {
@@ -49,10 +52,18 @@ void force_locale(const char* f_locale)
 	}
 }
 
-int set_locale(int argc, char** argv, int&i){
-
-   if (strcmp(argv[i],"-l")==0 || strcmp(argv[i],"-locale")==0 ) 
-   {
+int handle_args(int argc, char** argv, int&i){
+	
+	if (strcmp(argv[i],"-f")==0 || strcmp(argv[i],"-fullscreen")==0 )
+	{
+		#ifdef DEBUG
+		printf("fullscreen mode enabled by arg = %s\n",argv[i]);
+		#endif
+		fullscreen_flag = true;
+		return ++i;
+	}
+	if (strcmp(argv[i],"-l")==0 || strcmp(argv[i],"-locale")==0 ) 
+	{
 	   if (i >= argc -1 || argv[i+1][0]=='-') return 0;
 	   //printf("argv[%d][0]= %c\n",i+1,argv[i+1][0]);
 	   i++;
@@ -62,19 +73,10 @@ int set_locale(int argc, char** argv, int&i){
 	   force_locale(argv[i]);
 	   i++;
 	   return i;
-   }
+	}
+   
   return 0;
 }
-/*
-static char *
-_nl_find_language (const char *name)
-{
-  while (name[0] != '\0' && name[0] != '_' && name[0] != '@' && name[0] != '.')
-	++name;
-
-  return (char *) name;
-}
-*/
 
 /* try to determine the ui locale
  * respecting the bellow order as gettext
@@ -110,12 +112,11 @@ int main(int argc, char** argv)
 	// read locale from enviroment
 	setlocale (LC_ALL, "");
 	int i;
-	if ( fltk::args(argc, argv, i, set_locale) < argc ) {
+	if ( fltk::args(argc, argv, i, handle_args) < argc ) {
 		#ifdef DEBUG
 		fprintf(stderr,"args return %d (%d)\n",i,argc);
 		#endif
-		fprintf(stderr, "%s\n -l[ocale] uilocale\n", fltk::help);
-		return 1;
+		fltk::fatal("%s\n -l[ocale] uilocale\n -f[ullscreen]\n", fltk::help);
 	}
 	
     bindtextdomain (PACKAGE, LOCALEDIR);
@@ -124,6 +125,9 @@ int main(int argc, char** argv)
     char applicationTitle[50];
     sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
 	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
+	
+	// if fullscreen requested by command line
+	if (fullscreen_flag) { window->fullscreenBtn->do_callback(); window->fullscreenBtn->state(true);}
 	window->show(argc, argv);
 	
 	return fltk::run();
