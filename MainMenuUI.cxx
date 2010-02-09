@@ -30,7 +30,22 @@
 MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
-	resizable(this);	
+	resizable(this);
+	
+	languagePUM->value(convLangtoMenuItemIndexNo());
+	languagePUM->label(languagePUM->get_item()->label());
+}
+
+int MainMenuUI::convLangtoMenuItemIndexNo() {
+	extern char* getUILanguage();
+	const char* lang = getUILanguage();
+	
+	if ( strcmp(lang,"el") == 0 || strcmp(lang,"Greek") == 0 ) return 0;
+	else if ( strcmp(lang,"en") == 0 || strcmp(lang,"English") == 0 ) return 1;
+	else if ( strcmp(lang,"ru") == 0 || strcmp(lang,"Russian") == 0 ) return 2;
+	else if ( strcmp(lang,"sq") == 0 || strcmp(lang,"Albanian") == 0 ) return 3;
+	else return 0;
+	
 }
 
 void MainMenuUI::cb_exit()
@@ -87,7 +102,10 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	
 }
 
-
+// debrecated method
+// it was supposed to update the provided fltk::Group
+// and it's childs label to languagePUM selected language
+// using gettext
 void MainMenuUI::changeUILocale(fltk::Group* o)
 {
 
@@ -110,25 +128,15 @@ void MainMenuUI::cb_selectLanguage(fltk::Widget* sItem, void* userdata)
 {
 	fltk::Menu* menu = (fltk::Menu*)sItem;
 	fltk::Widget* item = menu->get_item();
-	//fltk::message("Item selected: %s->%s",menu->label(),item->user_data() );
+	
+	// set languagePUM label to selected item label
 	menu->label(item->label());
 	
-	const char* slang = (const char*)item->user_data();
+	//fltk::message("Item selected: %s->%s",menu->label(),item->user_data() );
+	//fltk::message("Item selected: %s->%s\n LANG= %s\nLC_ALL= %s\nLC_MESSAGES = %s\n LANGUAGE= %s\n gettext Domain=%s\n",
+	//	menu->label(),menu->user_data(),getenv( "LANG" ),setlocale( LC_ALL, NULL ), setlocale( LC_MESSAGES, NULL ),getenv("LANGUAGE"),textdomain(NULL) );
 	
-	const char* langLOCALE = "el_GR";
-	if (strcmp(slang,"greek") == 0) langLOCALE = "el_GR";
-	if (strcmp(slang,"english") == 0 ) langLOCALE = "en_US";
-	/* Change language.  */
-	#ifdef _WIN32
-	putenv("LANGUAGE=el_GR");
-	#else
-	setenv ("LANGUAGE", langLOCALE, 1);
-	#endif /* !_WIN32 */
-	
-	/* Make change known.  */
-	{
-	  extern int  _nl_msg_cat_cntr;
-	  ++_nl_msg_cat_cntr;
-	}
+
+
 	//changeUILocale(mainContainer);
 }

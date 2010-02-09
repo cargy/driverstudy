@@ -18,7 +18,7 @@
 //      MA 02110-1301, USA.
 
 
-#define DRIVERSTUDYVERSION "0.6"
+#define DRIVERSTUDYVERSION "0.6.1"
 #define DEBUG
 
 

@@ -104,7 +104,7 @@ wrun: QuestionWindow.exe
 	
 driverstudy.exe: MainMenuUI.cxx QuestionViewUI.cxx
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ MainMenu.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
+	i586-mingw32msvc-g++ driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
 	-o build/DriverStudy.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
@@ -152,8 +152,8 @@ MainMenu.exe: MainMenuUIAbstract.cxx
 
 clean:
 	rm -f *.o
-	rm -f build/QuestionWindow build/QuestionViewMain build/MainMenu
-	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe build/MainMenu.exe
+	rm -f build/QuestionWindow build/QuestionViewMain build/MainMenu build/driverstudy
+	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe build/MainMenu.exe build/DriverStudy.exe
 
 cleanui:
 	rm -f QuestionViewUI.cxx QuestionViewUI.h

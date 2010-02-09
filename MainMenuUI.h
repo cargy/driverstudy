@@ -29,6 +29,7 @@ class MainMenuUI: public MainMenuUIAbstract
 	public:
 		MainMenuUI(int x, int y, int width, int height, const char* label);
 		QuestionView *qv;
+		int convLangtoMenuItemIndexNo();
 			
 	private:
 		virtual void cb_exit();
