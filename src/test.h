@@ -20,10 +20,9 @@
 
 #ifndef TEST_H
 #define TEST_H
+#include "question.h"
 
-#include "questionCollection.h"
-
-class Test:public QuestionCollection
+class Test
 {
 	public:
 		Test(Question *xferQuestions, int aoq, int ttime, int tcategory);
@@ -32,16 +31,22 @@ class Test:public QuestionCollection
 		bool completed();
 		int getCorrect();
 		Question *wrongQuestions();
-		QuestionCollection* wrongQuestionsCollection();
 		Question *next();
 		Question *nextWrong();
 		bool is_next();
+		int size(){	return csize;}	
+		int cursor(){return ccursor;}
 		int time();
 		int category_id();
 		#ifdef DEBUG
 		void answerRandomly();
 		void showResults();
 		#endif
+		
+	protected:
+		Question *tQuestions;
+		int csize;
+		int ccursor;
 	
 	private:
 		int testTime;

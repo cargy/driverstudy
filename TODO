@@ -9,7 +9,7 @@
 + set question window title label to Test Category
 + rename QuestionView and QuestionViewUI to meet MainMenuUIAbstract
 - make QuestionView class deriving from fltk::Window class
-- release relation between test and questionCollection class
++ release relation between test and questionCollection class
 - fix fullscreen inconsistency between two windows
   |+ add command line argument to start in fullscreen
    |- BUG: WIN32 fullscreen_off after -f doesn't restore correctly window

@@ -1,9 +1,10 @@
 #include "test.h"
 
-
 Test::Test(Question *xferQuestions, int aoq, int ttime, int tcategory)
-	 :QuestionCollection(xferQuestions,aoq)
 {
+	tQuestions = xferQuestions;
+	csize = aoq;
+	ccursor = -1;
 	testTime = ttime;
 	testCategory = tcategory;
 }
@@ -48,11 +49,6 @@ Question* Test::wrongQuestions()
 		}
 	}
 	return wq;			
-}
-
-QuestionCollection* Test::wrongQuestionsCollection()
-{
-	return new QuestionCollection( wrongQuestions(),csize-getCorrect() );
 }
 
 Question* Test::next()

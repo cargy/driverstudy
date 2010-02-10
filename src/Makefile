@@ -53,11 +53,11 @@ QuestionUIAbstract.cxx MainMenuUIAbstract.cxx:
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' QuestionUIAbstract.cxx
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' MainMenuUIAbstract.cxx
 	
-driverstudy: answer.o question.o questionCollection.o test.o sqlite3.o \
+driverstudy: answer.o question.o test.o sqlite3.o \
 			 MainMenuUIAbstract.o MainMenuUI.o  \
 			 QuestionUIAbstract.o QuestionUI.o driverstudy.o 
 	@echo === Linking $@... ===
-	$(CXX) answer.o question.o questionCollection.o test.o \
+	$(CXX) answer.o question.o test.o \
 	sqlite3.o QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	 driverstudy.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/driverstudy	
@@ -65,10 +65,10 @@ driverstudy: answer.o question.o questionCollection.o test.o sqlite3.o \
 	#$(STRIP) build/$@
 	#$(POSTBUILD) build/QuestionViewMain
 
-QuestionViewMain: answer.o question.o questionCollection.o test.o sqlite3.o \
+QuestionViewMain: answer.o question.o test.o sqlite3.o \
 				  QuestionViewUI.o QuestionView.o QuestionViewMain.o 
 	@echo === Linking $@... ===
-	$(CXX) answer.o question.o questionCollection.o test.o \
+	$(CXX) answer.o question.o test.o \
 	sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/QuestionViewMain	
 	#@echo Strip $@...
@@ -104,7 +104,7 @@ wrun: QuestionWindow.exe
 	
 driverstudy.exe: MainMenuUI.cxx QuestionUI.cxx
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
+	i586-mingw32msvc-g++ driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx test.cxx question.cxx answer.cxx \
 	-o build/DriverStudy.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
@@ -125,7 +125,7 @@ QuestionWindow.exe: QuestionWindow.cpp
 
 QuestionViewMain.exe: QuestionViewUI.cxx
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
+	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx question.cxx answer.cxx \
 	-o build/QuestionViewMain.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \

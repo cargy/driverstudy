@@ -23,7 +23,33 @@
 #include <locale.h>
 #include <libintl.h>
 #include "MainMenuUI.h"
+#include "config.h"
 
+/* try to determine the ui locale
+ * respecting the bellow order as gettext
+ * 1. LANGUAGE
+ * 2. LC_ALL
+ * 3. LC_xxx, according to selected locale category: LC_CTYPE, LC_NUMERIC, LC_TIME, LC_COLLATE, LC_MONETARY, LC_MESSAGES, ...
+ * 4. LANG 
+ * 
+ * returns only the language only (truncates before _)
+*/
+const char* getUILanguage() {
+	char* default_test_language;
+	
+	if ( getenv("LANG") )default_test_language = getenv("LANG");
+	if ( setlocale (LC_MESSAGES, NULL) ) default_test_language = setlocale (LC_MESSAGES, NULL);
+	if ( setlocale (LC_ALL, NULL) ) 
+	{
+		if ( setlocale (LC_MESSAGES, NULL) ) default_test_language = setlocale (LC_MESSAGES, NULL);
+		else default_test_language = setlocale (LC_ALL, NULL);
+	}
+	if ( getenv("LANGUAGE") ) default_test_language = getenv("LANGUAGE");
+	
+	strtok(default_test_language, "_" );
+	
+	return default_test_language;
+}
 
 int main(int argc, char** argv)
 {
