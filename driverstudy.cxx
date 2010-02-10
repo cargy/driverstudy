@@ -30,7 +30,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include "MainMenuUI.h"
-#include "QuestionView.h"
+
 
 bool fullscreen_flag=false;
 

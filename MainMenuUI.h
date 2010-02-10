@@ -22,13 +22,13 @@
 #define MAINMENUUI_H
 #include "config.h"
 #include "MainMenuUIAbstract.h"
-#include "QuestionView.h"
+#include "QuestionUI.h"
 
 class MainMenuUI: public MainMenuUIAbstract
 {
 	public:
 		MainMenuUI(int x, int y, int width, int height, const char* label);
-		QuestionView *qv;
+		QuestionUI *qv;
 		
 				
 	private:

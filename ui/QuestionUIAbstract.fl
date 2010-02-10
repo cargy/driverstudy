@@ -8,9 +8,9 @@ gridy 5
 snap 3
 decl {\#include "config.h"} {} 
 
-class QuestionViewUI {open
+class QuestionUIAbstract {open
 } {
-  Function {QuestionViewUI()} {open
+  Function {QuestionUIAbstract()} {selected
   } {
     {fltk::Window} mainWindow {open
       xywh {360 54 800 600} resizable visible
@@ -63,7 +63,7 @@ class QuestionViewUI {open
           } {
             {fltk::Button} exitBtn {
               label _Cancel
-              callback {cb_close()} selected
+              callback {cb_close()}
               private xywh {9 8 130 40} labelfont 1 shortcut 0xff1b
             }
             {fltk::Button} fullscreenBtn {

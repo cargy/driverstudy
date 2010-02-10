@@ -1,4 +1,4 @@
-//      QuestionView.cpp
+//      QuestionUI.cxx
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -18,15 +18,15 @@
 //      MA 02110-1301, USA.
 
 
-#include "QuestionView.h"
+#include "QuestionUI.h"
 #include <cstdio>
 #include <fltk/ask.h>
 #include <fltk/Image.h>
 #include <fltk/SharedImage.h>
 
 
-QuestionView::QuestionView()
-	: QuestionViewUI()
+QuestionUI::QuestionUI()
+	: QuestionUIAbstract()
 {
 	win_x = 0; win_y = 0;
 	fullscreen_flag = false;
@@ -34,24 +34,24 @@ QuestionView::QuestionView()
 
 }
 
-QuestionView::~QuestionView()
+QuestionUI::~QuestionUI()
 {
-	printf("QuestionView object Goind down!\n");
+	printf("QuestionUI object Goind down!\n");
 	delete currTest;
 	mainWindow->destroy();
 }
 
-void QuestionView::show()
+void QuestionUI::show()
 {
 	mainWindow->show();
 }
 	
-void QuestionView::cb_close() 
+void QuestionUI::cb_close() 
 {
 	if ( fltk::ask(_("Do you want to cancel this Test?")) ) mainWindow->hide();
 }
 
-void QuestionView::cb_fullscreen()
+void QuestionUI::cb_fullscreen()
 {
 
 	if (this->fullscreen_flag) 
@@ -73,7 +73,7 @@ void QuestionView::cb_fullscreen()
 	else fullscreen_flag=true;
 }
 	
-void QuestionView::cb_answerSelected(fltk::Widget *pRB, long rbId)
+void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)
 {
 	if (selectedRB() > -1)
 	{
@@ -83,7 +83,7 @@ void QuestionView::cb_answerSelected(fltk::Widget *pRB, long rbId)
 	else validateBtn->deactivate();	
 }
 	
-void QuestionView::cb_next(fltk::Widget* pBtn, const char* Btn)
+void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 {
 	//printf("btn: %s\n",Btn);
 	if ( strcmp(Btn, "validate") == 0 ) currTest->verifyAnswerOfCurrentQuestion();	  
@@ -104,7 +104,7 @@ void QuestionView::cb_next(fltk::Widget* pBtn, const char* Btn)
 	}
 }
 
-int QuestionView::selectedRB()
+int QuestionUI::selectedRB()
 {
 	for (int i=0; i<4; i++) 
 	{
@@ -114,7 +114,7 @@ int QuestionView::selectedRB()
 	return -1;
 }
 
-void QuestionView::showQuestion(Question* q)
+void QuestionUI::showQuestion(Question* q)
 {
 	
 	char qNo[150];
@@ -160,7 +160,7 @@ void QuestionView::showQuestion(Question* q)
 	
 }
 
-void QuestionView::previewQuestion(Question* q)
+void QuestionUI::previewQuestion(Question* q)
 {
 	char qNo[150];
     sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
@@ -203,7 +203,7 @@ void QuestionView::previewQuestion(Question* q)
 
 }
 
-void QuestionView::setTest(Test* t, bool pmode)
+void QuestionUI::setTest(Test* t, bool pmode)
 {
 	currTest = t;
 	preview_mode = false;
@@ -222,7 +222,7 @@ void QuestionView::setTest(Test* t, bool pmode)
 	showQuestion(currTest->next());
 }
 
-void QuestionView::resizeAnswers(int no)
+void QuestionUI::resizeAnswers(int no)
 {
 	int rb_height = 0;
   	const int space = 2;

@@ -1,4 +1,4 @@
-//      QuestionView.h
+//      QuestionUI.h
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -18,18 +18,18 @@
 //      MA 02110-1301, USA.
 
 
-#ifndef QUESTIONVIEW_H
-#define QUESTIONVIEW_H
+#ifndef QUESTIONUI_H
+#define QUESTIONUI_H
 
-#include <QuestionViewUI.h>
+#include "QuestionUIAbstract.h"
 #include "question.h"
 #include "test.h"
 
-class QuestionView: public QuestionViewUI
+class QuestionUI: public QuestionUIAbstract
 {
 	public:
-		QuestionView();
-		~QuestionView();
+		QuestionUI();
+		~QuestionUI();
 		void show();
 		virtual void cb_close();
 		virtual void cb_fullscreen();
@@ -50,4 +50,4 @@ class QuestionView: public QuestionViewUI
 		
 };
 
-#endif /* QUESTIONVIEW_H */ 
+#endif /* QUESTIONUI_H */ 

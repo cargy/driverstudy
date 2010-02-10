@@ -38,27 +38,27 @@ all: QuestionWindow QuestionViewMain
 run: QuestionWindow
 	bash -c "cd build;./QuestionWindow"&
 
-ui: cleanui QuestionViewUI.cxx
+ui: cleanui QuestionUIAbstract.cxx
 
-QuestionViewUI.cxx MainMenuUIAbstract.cxx: 
+QuestionUIAbstract.cxx MainMenuUIAbstract.cxx: 
 	@echo === Generate UI... ===
-	fluid2 -c ui/QuestionViewUI.fl
+	fluid2 -c ui/QuestionUIAbstract.fl
 	fluid2 -c ui/MainMenuUIAbstract.fl
-	mv ui/QuestionViewUI.h ./
-	mv ui/QuestionViewUI.cxx ./
+	mv ui/QuestionUIAbstract.h ./
+	mv ui/QuestionUIAbstract.cxx ./
 	mv ui/MainMenuUIAbstract.h ./
 	mv ui/MainMenuUIAbstract.cxx ./
 	# gettex fix for not being supported by Fluid2
 	# strings with "_string" raplced by _("string")
-	sed -i  's/"_\([^"]*\)"/_("\1") /g' QuestionViewUI.cxx
+	sed -i  's/"_\([^"]*\)"/_("\1") /g' QuestionUIAbstract.cxx
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' MainMenuUIAbstract.cxx
 	
 driverstudy: answer.o question.o questionCollection.o test.o sqlite3.o \
 			 MainMenuUIAbstract.o MainMenuUI.o  \
-			 QuestionViewUI.o QuestionView.o driverstudy.o 
+			 QuestionUIAbstract.o QuestionUI.o driverstudy.o 
 	@echo === Linking $@... ===
 	$(CXX) answer.o question.o questionCollection.o test.o \
-	sqlite3.o QuestionViewUI.o QuestionView.o MainMenuUIAbstract.o MainMenuUI.o  \
+	sqlite3.o QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	 driverstudy.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/driverstudy	
 	#@echo Strip $@...
@@ -102,9 +102,9 @@ allwin: QuestionWindow.exe QuestionViewMain.exe
 wrun: QuestionWindow.exe
 	bash -c "cd build;wine ./QuestionWindow.exe"&
 	
-driverstudy.exe: MainMenuUI.cxx QuestionViewUI.cxx
+driverstudy.exe: MainMenuUI.cxx QuestionUI.cxx
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
+	i586-mingw32msvc-g++ driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx test.cxx questionCollection.cxx question.cxx answer.cxx \
 	-o build/DriverStudy.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
@@ -114,7 +114,7 @@ driverstudy.exe: MainMenuUI.cxx QuestionViewUI.cxx
 	/home/krizz/src/cross_win32/lib/libsqlite3.a
 	#@echo Strip $@...
 	#$(STRIP) build/$@
-	#$(POSTBUILD) build/QuestionViewMain.exe
+	#$(POSTBUILD) build/DriverStudy.exe
 
 QuestionWindow.exe: QuestionWindow.cpp
 	i586-mingw32msvc-g++ QuestionWindow.cpp -o build/QuestionWindow.exe \
@@ -156,7 +156,7 @@ clean:
 	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe build/MainMenu.exe build/DriverStudy.exe
 
 cleanui:
-	rm -f QuestionViewUI.cxx QuestionViewUI.h
+	rm -f QuestionUIAbstract.cxx QuestionUIAbstract.h
 	rm -f MainMenuUIAbstract.cxx MainMenuUIAbstract.h
 	
 deepclean: clean cleanui

@@ -25,7 +25,7 @@
 #include "question.h"
 #include "test.h"
 #include "sqlite3.cxx"
-#include "QuestionView.h"
+#include "QuestionUI.h"
 
 MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
@@ -111,7 +111,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	ct->answerRandomly();
 	#endif
 	if (qv) delete qv;
-	qv = new QuestionView();
+	qv = new QuestionUI();
 	qv->setTest(ct);
 	//qv->mainWindow->show_inside(this);
 	qv->mainWindow->child_of(this);
