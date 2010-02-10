@@ -1,0 +1,42 @@
+0.7
+- default language from LC_ALL
+  |+ override LC_ALL by command argument --l[ocale] el/en
+    |+ BUG: doesn't seem to work on win32 (it does)
+  |- from config file after cmd arg not set
+  |+ set languagePUM default value to LC_ALL
++ change select language pop up menu to set just test language
+  |+ don't touch LC_ALL value!!!!
++ set question window title label to Test Category
++ rename QuestionView and QuestionViewUI to meet MainMenuUIAbstract
+- make QuestionView class deriving from fltk::Window class
+- release relation between test and questionCollection class
+- fix fullscreen inconsistency between two windows
+  |+ add command line argument to start in fullscreen
+   |- BUG: WIN32 fullscreen_off after -f doesn't restore correctly window
+  
+0.8
+- add MainMenuUI images to category buttons
+- hide imageHolder when no image available in question
+- use menu group for answer radio buttons
+- add timer progress widget
+- use ini file to save application configuration (default ui lang, 
+  font size, window position, fullscreen flag)
+- make able to increase font size 
+- create a start up window to select language interface
+- add icon to window
+
+0.9
+- re-organize sqlite3.cxx class (it's a mess)
+- handle high io load on test creation
+- test database connection on startup
+- 
+
+1.0
+- remove answerRandomly() on test creation
+- remove blue color from correct question showQuestion() (only in previewQuestion())
+- create installer
+- make rule for deploy (that removes debug symbols and takes care o static linking)
+- automatic update with notepad++'s gup
+
+
+
