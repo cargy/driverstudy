@@ -65,7 +65,7 @@ void MainMenuUI::cb_fullscreen()
 	if (fullscreen_flag) 
 	{
 		fullscreen_off( win_x, win_y,win_w,win_h);
-		set_non_modal();
+		//set_non_modal();
 	}
 	else 
 	{
