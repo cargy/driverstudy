@@ -33,7 +33,7 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	: QuestionUIAbstract(x,y,width,height,label)
 {
 	resizable(this);
-	win_x = x; win_y = y; win_w = width; win_h = height;
+	win_x = 150; win_y = 50; win_w = width; win_h = height;
 	fltk::register_images();
 	
 	extern bool fullscreen_flag;
@@ -57,8 +57,11 @@ void QuestionUI::cb_close()
 
 void QuestionUI::fullscreen()
 {
-	win_x = x();
-	win_y = y();
+	// store last position of window before going fullscreen
+	// ONLY if Window is already show or else x(), y() are
+	// not set by ftlk::USEDAFAULT yet.
+	if ( shown() ) { win_x = x(); win_y = y(); }
+	
 	win_w = w();
 	win_h = h();
 	fltk::Window::fullscreen();

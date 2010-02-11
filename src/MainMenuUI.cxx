@@ -22,6 +22,7 @@
 #include <cstdlib>
 #include <fltk/ask.h>
 #include <fltk/Menu.h>
+#include <fltk/run.h>
 #include "question.h"
 #include "test.h"
 #include "sqlite3.cxx"
@@ -31,6 +32,7 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
 	resizable(this);
+	win_x = 100; win_y = 100;
 	win_w = width; win_h = height;
 	// set defaut value of languagePUM
 	languagePUM->value(convLangtoMenuItemIndexNo());
@@ -68,13 +70,16 @@ void MainMenuUI::cb_fullscreen()
 	
 	if (fullscreen_flag) 
 	{
-		fullscreen_off( win_x, win_y,win_w,win_h);
+		fullscreen_off( win_x, win_y, win_w, win_h);
 		if (qv) qv->fullscreen_off();
 	}
 	else 
 	{
-		win_x = x();
-		win_y = y();
+		// store last position of window before going fullscreen
+		// ONLY if Window is already show or else x(), y() are
+		// not set by ftlk::USEDAFAULT yet.
+		if ( shown() ) { win_x = x(); win_y = y(); }
+		
 		win_w = w();
 		win_h = h();
 		fullscreen();
@@ -103,11 +108,14 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	if (strcmp(slang,"russian") == 0) langid = DBRUSSIAN;
 	if (strcmp(slang,"albanian") == 0) langid = DBALBANIANID;
 	assert(langid>0);
-
+	
+	
 	vector<int> *v = sql.testTemplate(catid,langid);
+	
 	int *array = sql.createRandomTestFromTemplate(v);
-
+	
 	Test* ct = sql.getTest(array);
+	fltk::check();
 	
 	#ifdef DEBUG
 	ct->answerRandomly();
