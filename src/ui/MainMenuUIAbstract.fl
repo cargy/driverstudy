@@ -46,7 +46,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           {fltk::Button} truckBtn {
             label _Truck
             user_data {"truck"} user_data_type {const char*}
-            callback {cb_start(o,v)} selected
+            callback {cb_start(o,v)}
             xywh {313 20 110 110}
           }
           {fltk::Button} busBtn {
@@ -94,8 +94,8 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
         {fltk::Button} fullscreenBtn {
           label _Fullscreen
-          callback {cb_fullscreen()}
-          xywh {228 59 180 41} type TOGGLE
+          callback {cb_fullscreen()} selected
+          xywh {228 59 180 41} type TOGGLE shortcut 0xffc8
         }
       }
       {fltk::StatusBarGroup} {} {

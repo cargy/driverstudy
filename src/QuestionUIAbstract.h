@@ -35,7 +35,9 @@ private:
         fltk::Button *exitBtn;
         inline void cb_exitBtn_i(fltk::Button*, void*);
         static void cb_exitBtn(fltk::Button*, void*);
+public:
         fltk::Button *fullscreenBtn;
+private:
         inline void cb_fullscreenBtn_i(fltk::Button*, void*);
         static void cb_fullscreenBtn(fltk::Button*, void*);
         fltk::Button *auxBtn;

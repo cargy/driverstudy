@@ -33,8 +33,10 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 {
 	resizable(this);
 	win_x = x; win_y = y; win_w = width; win_h = height;
-	fullscreen_flag = false;
 	fltk::register_images();
+	extern bool fullscreen_flag;
+	fullscreenBtn->hide();
+	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);fullscreen_flag=true;}
 
 }
 
@@ -52,6 +54,7 @@ void QuestionUI::cb_close()
 
 void QuestionUI::cb_fullscreen()
 {
+	extern bool fullscreen_flag;
 
 	if (fullscreen_flag) 
 	{
@@ -68,8 +71,7 @@ void QuestionUI::cb_fullscreen()
 		set_modal();
 	}
 	  
-	if (fullscreen_flag) fullscreen_flag=false;
-	else fullscreen_flag=true;
+	//fullscreen_flag = !fullscreen_flag;
 }
 	
 void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)

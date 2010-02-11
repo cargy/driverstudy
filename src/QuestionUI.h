@@ -42,7 +42,7 @@ class QuestionUI: public QuestionUIAbstract
 			
 	private:
 		int win_x, win_y, win_w, win_h;
-		bool fullscreen_flag;
+		//bool fullscreen_flag;
 		Test* currTest;
 		bool preview_mode;
 		void resizeAnswers(int no);

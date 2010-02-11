@@ -154,6 +154,7 @@ fltk::Item* o = new fltk::Item(_("Albanian") );
       {
 fltk::Button* o = fullscreenBtn = new fltk::Button(228, 59, 180, 41, _("Fullscreen") );
         o->type(fltk::Button::TOGGLE);
+        o->shortcut(0xffc8);
         o->callback((fltk::Callback*)cb_fullscreenBtn);
       }
       o->end();

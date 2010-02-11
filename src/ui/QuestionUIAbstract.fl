@@ -19,7 +19,7 @@ class QuestionUIAbstract {open : {public fltk::Window}
       xywh {127 64 800 600} resizable
       class {fltk::Group} visible
     } {
-      {fltk::Group} LeftGroup {
+      {fltk::Group} LeftGroup {open
         private xywh {5 5 450 590} box THIN_DOWN_BOX
       } {
         {fltk::Group} QuestionGroup {open
@@ -69,8 +69,8 @@ class QuestionUIAbstract {open : {public fltk::Window}
           }
           {fltk::Button} fullscreenBtn {
             label _Fullscreen
-            callback {cb_fullscreen()}
-            private xywh {157 8 130 40} type TOGGLE labelfont 1
+            callback {cb_fullscreen()} selected
+            xywh {157 8 130 40} type TOGGLE labelfont 1
           }
           {fltk::Button} auxBtn {
             label _Aux
@@ -109,6 +109,6 @@ class QuestionUIAbstract {open : {public fltk::Window}
   } {}
   Function {cb_answerSelected(fltk::Widget *pRB, long rbId)} {open return_type void attributes virtual
   } {}
-  Function {cb_next(fltk::Widget* pBtn, const char* btn)} {selected return_type void attributes virtual
+  Function {cb_next(fltk::Widget* pBtn, const char* btn)} {return_type void attributes virtual
   } {}
 } 

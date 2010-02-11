@@ -32,10 +32,10 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include "MainMenuUI.h"
-
 
 bool fullscreen_flag=false;
+
+#include "MainMenuUI.h"
 
 void force_locale(const char* f_locale)
 {
@@ -132,9 +132,9 @@ int main(int argc, char** argv)
     sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
 	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
 	
-	// if fullscreen requested by command line
-	if (fullscreen_flag) { window->fullscreenBtn->do_callback(); window->fullscreenBtn->state(true);}
+
 	window->show(argc, argv);
-	
+	// if fullscreen requested by command line
+	//if (fullscreen_flag) { window->fullscreenBtn->do_callback(); window->fullscreenBtn->state(true);}	
 	return fltk::run();
 };

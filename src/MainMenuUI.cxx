@@ -31,11 +31,12 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
 	resizable(this);
-	fullscreen_flag = false;
+	win_w = width; win_h = height;
 	// set defaut value of languagePUM
 	languagePUM->value(convLangtoMenuItemIndexNo());
 	languagePUM->label(languagePUM->get_item()->label());
-	
+	extern bool fullscreen_flag;
+	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);}		
 	
 }
 
@@ -63,10 +64,12 @@ void MainMenuUI::cb_help()
 
 void MainMenuUI::cb_fullscreen()
 {
+	extern bool fullscreen_flag;
+	
 	if (fullscreen_flag) 
 	{
 		fullscreen_off( win_x, win_y,win_w,win_h);
-		//set_non_modal();
+		if (qv) {qv->fullscreenBtn->do_callback(); qv->fullscreenBtn->state(false);}
 	}
 	else 
 	{
@@ -75,11 +78,9 @@ void MainMenuUI::cb_fullscreen()
 		win_w = w();
 		win_h = h();
 		fullscreen();
-		//set_modal();
+		if (qv) {qv->fullscreenBtn->do_callback(); qv->fullscreenBtn->state(true);}
 	}
-	  
-	if (fullscreen_flag) fullscreen_flag=false;
-	else fullscreen_flag=true;
+	fullscreen_flag = !fullscreen_flag; 
 }
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)

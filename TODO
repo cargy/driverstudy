@@ -9,13 +9,14 @@
 + rename QuestionView and QuestionViewUI to meet MainMenuUIAbstract
 + make QuestionUIAbstract class deriving from fltk::Window class
 + release relation between test and questionCollection class
-- fix fullscreen inconsistency between two windows
++ fix fullscreen inconsistency between two windows
   |+ add command line argument to start in fullscreen
    |- BUG: WIN32 fullscreen_off after -f doesn't restore correctly window
   
 0.8
 - add MainMenuUI images to category buttons
 - hide imageHolder when no image available in question
+- in showPreview set answerBtn to output() (set_ouput()/clear_output()) to become readony
 - use menu group for answer radio buttons
 - add timer progress widget
 - use ini file to save application configuration (default ui lang, 

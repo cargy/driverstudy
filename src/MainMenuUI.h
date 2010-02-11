@@ -33,7 +33,7 @@ class MainMenuUI: public MainMenuUIAbstract
 				
 	private:
 		int win_x, win_y, win_w, win_h;
-		bool fullscreen_flag;
+		//bool fullscreen_flag;
 		int convLangtoMenuItemIndexNo();
 		virtual void cb_exit();
 		virtual void cb_help();
