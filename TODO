@@ -7,7 +7,7 @@
   |+ don't touch LC_ALL value!!!!
 + set question window title label to Test Category
 + rename QuestionView and QuestionViewUI to meet MainMenuUIAbstract
-- make QuestionView class deriving from fltk::Window class
++ make QuestionUIAbstract class deriving from fltk::Window class
 + release relation between test and questionCollection class
 - fix fullscreen inconsistency between two windows
   |+ add command line argument to start in fullscreen

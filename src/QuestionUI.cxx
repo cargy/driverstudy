@@ -28,10 +28,11 @@
 #include <cctype>
 using namespace std;
 
-QuestionUI::QuestionUI()
-	: QuestionUIAbstract()
+QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
+	: QuestionUIAbstract(x,y,width,height,label)
 {
-	win_x = 0; win_y = 0;
+	resizable(this);
+	win_x = x; win_y = y; win_w = width; win_h = height;
 	fullscreen_flag = false;
 	fltk::register_images();
 
@@ -41,35 +42,30 @@ QuestionUI::~QuestionUI()
 {
 	printf("QuestionUI object Goind down!\n");
 	delete currTest;
-	mainWindow->destroy();
-}
-
-void QuestionUI::show()
-{
-	mainWindow->show();
+	destroy();
 }
 	
 void QuestionUI::cb_close() 
 {
-	if ( fltk::ask(_("Do you want to cancel this Test?")) ) mainWindow->hide();
+	if ( fltk::ask(_("Do you want to cancel this Test?")) ) hide();
 }
 
 void QuestionUI::cb_fullscreen()
 {
 
-	if (this->fullscreen_flag) 
+	if (fullscreen_flag) 
 	{
-		mainWindow->fullscreen_off( win_x, win_y,win_w,win_h);
-		mainWindow->set_non_modal();
+		fullscreen_off( win_x, win_y,win_w,win_h);
+		set_non_modal();
 	}
 	else 
 	{
-		win_x = mainWindow->x();
-		win_y = mainWindow->y();
-		win_w = mainWindow->w();
-		win_h = mainWindow->h();
-		mainWindow->fullscreen();
-		mainWindow->set_modal();
+		win_x = x();
+		win_y = y();
+		win_w = w();
+		win_h = h();
+		fullscreen();
+		set_modal();
 	}
 	  
 	if (fullscreen_flag) fullscreen_flag=false;
@@ -157,7 +153,7 @@ void QuestionUI::showQuestion(Question* q)
 #endif
 	imageHolder->image( fltk::SharedImage::get(imgPath) );
 	imageHolder->redraw();
-	mainWindow->redraw();
+	redraw();
 	
 	// check if any answer is selected or if question is already validated
 	// to disable/enable validateBtn
@@ -175,7 +171,7 @@ void QuestionUI::previewQuestion(Question* q)
 {
 	char qNo[150];
     sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
-    mainWindow->label(qNo);
+    label(qNo);
     questionDisplay->copy_label(qNo);
     questionDisplay->text(q->title());
     
@@ -206,7 +202,7 @@ void QuestionUI::previewQuestion(Question* q)
 #endif
     imageHolder->image( fltk::SharedImage::get(imgPath) );
     imageHolder->redraw();
-    mainWindow->redraw();
+    redraw();
     
 	// hide validateBtn we are in preview_mode
 	if ( validateBtn->visible() ) validateBtn->hide();
@@ -230,7 +226,7 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");
 	if (currTest->category_id() == DBBUSID) tcl = _("Bus");
 	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id(),tcl);
-	mainWindow->copy_label(tl);
+	copy_label(tl);
 	
 	// show first question
 	showQuestion(currTest->next());

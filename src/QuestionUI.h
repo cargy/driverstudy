@@ -20,7 +20,7 @@
 
 #ifndef QUESTIONUI_H
 #define QUESTIONUI_H
-
+#include "config.h"
 #include "QuestionUIAbstract.h"
 #include "question.h"
 #include "test.h"
@@ -28,9 +28,8 @@
 class QuestionUI: public QuestionUIAbstract
 {
 	public:
-		QuestionUI();
+		QuestionUI(int x, int y, int width, int height, const char* label);
 		~QuestionUI();
-		void show();
 		virtual void cb_close();
 		virtual void cb_fullscreen();
 		virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);

@@ -32,6 +32,7 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 {
 	resizable(this);
 	fullscreen_flag = false;
+	// set defaut value of languagePUM
 	languagePUM->value(convLangtoMenuItemIndexNo());
 	languagePUM->label(languagePUM->get_item()->label());
 	
@@ -111,10 +112,10 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	ct->answerRandomly();
 	#endif
 	if (qv) delete qv;
-	qv = new QuestionUI();
+	qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always can happen :(");
 	qv->setTest(ct);
-	//qv->mainWindow->show_inside(this);
-	qv->mainWindow->child_of(this);
+	//qv->show_inside(this);
+	qv->child_of(this);
 	qv->show();
 	
 }
