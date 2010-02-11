@@ -20,10 +20,13 @@
 
 #include "QuestionUI.h"
 #include <cstdio>
+
 #include <fltk/ask.h>
 #include <fltk/Image.h>
 #include <fltk/SharedImage.h>
 
+#include <cctype>
+using namespace std;
 
 QuestionUI::QuestionUI()
 	: QuestionUIAbstract()
@@ -124,10 +127,12 @@ void QuestionUI::showQuestion(Question* q)
 
 	// reset answer buttons
 	for (unsigned int i=0; i<4; i++) {
-	answerRB[i]->state(false);
-	answerRB[i]->labelcolor((fltk::Color)56);
-	if ( i >= q->getAOA() ) answerRB[i]->hide();
-	else answerRB[i]->show();
+		answerRB[i]->state(false);
+#ifdef	DEBUG
+		answerRB[i]->labelcolor((fltk::Color)56);
+#endif
+		if ( i >= q->getAOA() ) answerRB[i]->hide();
+		else answerRB[i]->show();
 
 	}
 
@@ -136,14 +141,20 @@ void QuestionUI::showQuestion(Question* q)
 	answerRB[i]->label(q->getAnswer(i));
 	}
 	answerRB[q->getSelectedAnswer()]->state(true);
+#ifdef	DEBUG
 	answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
+#endif
 	//resizeAnswers(q->getAOA());
-
+	
 	char imgPath[MAXIMGFILESIZE];
 	sprintf(imgPath, "img/%s.jpg",q->image());
-	locale loc;
-	use_facet< ctype<char> >(loc).tolower ( imgPath, imgPath+sizeof(imgPath) );
-	//cout << imgPath <<endl;
+
+	int i = -1;
+	// make imgPath lowercase
+	while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
+#ifdef	DEBUG
+	printf("imgPath = %s\n",imgPath);
+#endif
 	imageHolder->image( fltk::SharedImage::get(imgPath) );
 	imageHolder->redraw();
 	mainWindow->redraw();
@@ -187,9 +198,12 @@ void QuestionUI::previewQuestion(Question* q)
     
     char imgPath[MAXIMGFILESIZE];
     sprintf(imgPath, "img/%s.jpg",q->image());
-    locale loc;
-    use_facet< ctype<char> >(loc).tolower ( imgPath, imgPath+sizeof(imgPath) );
-    //cout << imgPath <<endl;
+	int i = -1;
+	// make imgPath lowercase
+	while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
+#ifdef	DEBUG
+	printf("imgPath = %s\n",imgPath);
+#endif
     imageHolder->image( fltk::SharedImage::get(imgPath) );
     imageHolder->redraw();
     mainWindow->redraw();

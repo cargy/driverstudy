@@ -1,8 +1,7 @@
 0.7
-- default language from LC_ALL
++ default language from LC_ALL
   |+ override LC_ALL by command argument --l[ocale] el/en
     |+ BUG: doesn't seem to work on win32 (it does)
-  |- from config file after cmd arg not set
   |+ set languagePUM default value to LC_ALL
 + change select language pop up menu to set just test language
   |+ don't touch LC_ALL value!!!!
@@ -21,6 +20,7 @@
 - add timer progress widget
 - use ini file to save application configuration (default ui lang, 
   font size, window position, fullscreen flag)
+  |- from config file after cmd arg not set
 - make able to increase font size 
 - create a start up window to select language interface
 - add icon to window

@@ -90,6 +90,7 @@ int Test::time() { return testTime;};
 int Test::category_id() {return testCategory;};
 
 #ifdef DEBUG
+#include <cstdio>
 void Test::answerRandomly() 
 {
 	for(int i=0;i<csize;i++)
@@ -99,7 +100,7 @@ void Test::answerRandomly()
 void Test::showResults() {
 	int i=0;
 	for(i=0;i<csize;i++) {
-		cout << "\nQuestion " << i+1 << "\n";
+		printf("\nQuestion %i\n",i+1);
 		tQuestions[i].showAnswers();
 	}
 }

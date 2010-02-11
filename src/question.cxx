@@ -21,6 +21,12 @@
 #include "question.h"
 
 
+#ifdef DEBUG
+#include <cstdlib>
+#include <iostream>
+#include <cassert>
+#endif /* DEBUG */ 
+
 
 Question::Question()
 {
@@ -95,6 +101,7 @@ void Question::verify()
 }
 
 #ifdef DEBUG
+using namespace std;
 void Question::answerRandomly() {
 	unsigned int s;
 	//cin >> s;

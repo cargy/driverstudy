@@ -25,6 +25,9 @@
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
 #include <fltk/run.h>
+#ifdef DEBUG
+#include <fltk/ask.h>
+#endif
 #include <fltk/error.h>
 
 #include <cstdio>
@@ -100,7 +103,10 @@ const char* getUILanguage() {
 	if ( getenv("LANGUAGE") ) default_test_language = getenv("LANGUAGE");
 	
 	strtok(default_test_language, "_" );
-	
+	#ifdef DEBUG
+	fltk::message("LANG=%s\nLC_MESSAGES=%s\nLC_ALL=%s\nLANGUAGE=%s\nWe take=%s",
+		getenv("LANG"),setlocale (LC_MESSAGES, NULL),setlocale (LC_ALL, NULL),getenv("LANGUAGE"),default_test_language);
+	#endif
 	return default_test_language;
 }
 

@@ -24,15 +24,6 @@
 #include "config.h"
 #include "answer.h"
 
-using namespace std;
-
-#ifdef DEBUG
-#include <cstdlib>
-#include <iostream>
-#include <cassert>
-#endif /* DEBUG */ 
-
-
 class Question
 {
 	public:
