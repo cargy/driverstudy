@@ -19,7 +19,7 @@
 
 
 #define APPLICATIONTITLE "Driver Study"
-#define DRIVERSTUDYVERSION "0.6.7"
+#define DRIVERSTUDYVERSION "0.6.9"
 #define DEBUG
 
 

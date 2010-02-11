@@ -163,6 +163,7 @@ fltk::Button* o = auxBtn = new fltk::Button(302, 8, 130, 40, _("Aux") );
         o->end();
       }
       o->end();
+      fltk::Group::current()->resizable(o);
     }
     
     {
@@ -197,7 +198,6 @@ fltk::Button* o = nextBtn = new fltk::Button(15, 150, 300, 100, _("Next Question
       o->end();
     }
     o->end();
-    o->resizable(o);
   }
 }
 

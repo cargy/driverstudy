@@ -59,7 +59,7 @@ void MainMenuUI::cb_exit()
 
 void MainMenuUI::cb_help()
 {
-	fltk::message(_("@c;%s ver.%s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
+	fltk::message(_("@c;%s ver. %s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
 }
 
 void MainMenuUI::cb_fullscreen()

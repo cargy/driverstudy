@@ -19,10 +19,10 @@ class QuestionUIAbstract {open : {public fltk::Window}
       xywh {127 64 800 600} resizable
       class {fltk::Group} visible
     } {
-      {fltk::Group} LeftGroup {open
-        private xywh {5 5 450 590} box THIN_DOWN_BOX
+      {fltk::Group} LeftGroup {
+        private xywh {5 5 450 590} resizable box THIN_DOWN_BOX
       } {
-        {fltk::Group} QuestionGroup {open
+        {fltk::Group} QuestionGroup {
           private xywh {5 5 440 520} box THIN_UP_BOX
         } {
           {fltk::TextDisplay} questionDisplay {
@@ -59,7 +59,7 @@ class QuestionUIAbstract {open : {public fltk::Window}
             }
           }
         }
-        {fltk::Group} MainControlsGroup {open
+        {fltk::Group} MainControlsGroup {
           private xywh {5 530 440 57} box THIN_UP_BOX
         } {
           {fltk::Button} exitBtn {
@@ -69,7 +69,7 @@ class QuestionUIAbstract {open : {public fltk::Window}
           }
           {fltk::Button} fullscreenBtn {
             label _Fullscreen
-            callback {cb_fullscreen()} selected
+            callback {cb_fullscreen()}
             xywh {157 8 130 40} type TOGGLE labelfont 1 shortcut 0xffc8
           }
           {fltk::Button} auxBtn {
@@ -78,7 +78,7 @@ class QuestionUIAbstract {open : {public fltk::Window}
           }
         }
       }
-      {fltk::Group} RightGroup {open
+      {fltk::Group} RightGroup {open selected
         private xywh {455 5 340 590} box THIN_DOWN_BOX
       } {
         {fltk::Widget} imageHolder {

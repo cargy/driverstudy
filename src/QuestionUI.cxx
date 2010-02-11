@@ -43,7 +43,9 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 
 QuestionUI::~QuestionUI()
 {
+#ifdef DEBUG
 	printf("QuestionUI object Goind down!\n");
+#endif
 	delete currTest;
 	destroy();
 }
