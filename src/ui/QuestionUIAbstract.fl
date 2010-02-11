@@ -70,7 +70,7 @@ class QuestionUIAbstract {open : {public fltk::Window}
           {fltk::Button} fullscreenBtn {
             label _Fullscreen
             callback {cb_fullscreen()} selected
-            xywh {157 8 130 40} type TOGGLE labelfont 1
+            xywh {157 8 130 40} type TOGGLE labelfont 1 shortcut 0xffc8
           }
           {fltk::Button} auxBtn {
             label _Aux

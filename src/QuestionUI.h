@@ -31,6 +31,8 @@ class QuestionUI: public QuestionUIAbstract
 		QuestionUI(int x, int y, int width, int height, const char* label);
 		~QuestionUI();
 		virtual void cb_close();
+		void fullscreen();
+		void fullscreen_off();
 		virtual void cb_fullscreen();
 		virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
 		virtual void cb_next(fltk::Widget* pBtn, const char* Btn);

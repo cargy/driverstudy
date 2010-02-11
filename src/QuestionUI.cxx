@@ -27,6 +27,7 @@
 
 #include <cctype>
 using namespace std;
+#include "MainMenuUI.h"
 
 QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	: QuestionUIAbstract(x,y,width,height,label)
@@ -34,9 +35,9 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	resizable(this);
 	win_x = x; win_y = y; win_w = width; win_h = height;
 	fltk::register_images();
+	
 	extern bool fullscreen_flag;
-	fullscreenBtn->hide();
-	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);fullscreen_flag=true;}
+	if (fullscreen_flag) fullscreen();
 
 }
 
@@ -52,26 +53,26 @@ void QuestionUI::cb_close()
 	if ( fltk::ask(_("Do you want to cancel this Test?")) ) hide();
 }
 
+void QuestionUI::fullscreen()
+{
+	win_x = x();
+	win_y = y();
+	win_w = w();
+	win_h = h();
+	fltk::Window::fullscreen();
+	fullscreenBtn->state(true);
+}
+
+void QuestionUI::fullscreen_off()
+{
+	fltk::Window::fullscreen_off( win_x, win_y,win_w,win_h);
+	fullscreenBtn->state(false);
+}
+
 void QuestionUI::cb_fullscreen()
 {
-	extern bool fullscreen_flag;
-
-	if (fullscreen_flag) 
-	{
-		fullscreen_off( win_x, win_y,win_w,win_h);
-		set_non_modal();
-	}
-	else 
-	{
-		win_x = x();
-		win_y = y();
-		win_w = w();
-		win_h = h();
-		fullscreen();
-		set_modal();
-	}
-	  
-	//fullscreen_flag = !fullscreen_flag;
+	((MainMenuUI*)child_of())->fullscreenBtn->do_callback();
+	((MainMenuUI*)child_of())->fullscreenBtn->state(!((MainMenuUI*)child_of())->fullscreenBtn->state());
 }
 	
 void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)

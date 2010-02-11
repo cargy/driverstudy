@@ -69,7 +69,7 @@ void MainMenuUI::cb_fullscreen()
 	if (fullscreen_flag) 
 	{
 		fullscreen_off( win_x, win_y,win_w,win_h);
-		if (qv) {qv->fullscreenBtn->do_callback(); qv->fullscreenBtn->state(false);}
+		if (qv) qv->fullscreen_off();
 	}
 	else 
 	{
@@ -78,7 +78,7 @@ void MainMenuUI::cb_fullscreen()
 		win_w = w();
 		win_h = h();
 		fullscreen();
-		if (qv) {qv->fullscreenBtn->do_callback(); qv->fullscreenBtn->state(true);}
+		if (qv) qv->fullscreen(); 
 	}
 	fullscreen_flag = !fullscreen_flag; 
 }

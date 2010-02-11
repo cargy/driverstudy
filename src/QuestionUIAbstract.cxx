@@ -151,6 +151,7 @@ fltk::Button* o = exitBtn = new fltk::Button(9, 8, 130, 40, _("Cancel") );
 fltk::Button* o = fullscreenBtn = new fltk::Button(157, 8, 130, 40, _("Fullscreen") );
           o->type(fltk::Button::TOGGLE);
           o->labelfont(fltk::HELVETICA_BOLD);
+          o->shortcut(0xffc8);
           o->callback((fltk::Callback*)cb_fullscreenBtn);
         }
         
