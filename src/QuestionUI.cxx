@@ -150,18 +150,24 @@ void QuestionUI::showQuestion(Question* q)
 #endif
 	//resizeAnswers(q->getAOA());
 	
-	char imgPath[MAXIMGFILESIZE];
-	sprintf(imgPath, "img/%s.jpg",q->image());
+	// load question image if available
+	if ( strcmp(q->image(), "0") != 0 )
+	{
+		char imgPath[MAXIMGFILESIZE];
+		sprintf(imgPath, "img/%s.jpg",q->image());
 
-	int i = -1;
-	// make imgPath lowercase
-	while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
-#ifdef	DEBUG
-	printf("imgPath = %s\n",imgPath);
-#endif
-	imageHolder->image( fltk::SharedImage::get(imgPath) );
-	imageHolder->redraw();
-	redraw();
+		int i = -1;
+		// make imgPath lowercase
+		while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
+	#ifdef	DEBUG
+		printf("imgPath = %s\n",imgPath);
+	#endif
+		if ( !imageHolder->visible() ) imageHolder->show();
+		imageHolder->image( fltk::SharedImage::get(imgPath) );
+		imageHolder->redraw();
+	}
+	else 
+		if ( imageHolder->visible() ) imageHolder->hide();
 	
 	// check if any answer is selected or if question is already validated
 	// to disable/enable validateBtn
@@ -173,6 +179,7 @@ void QuestionUI::showQuestion(Question* q)
 	if ( currTest->is_next() ) nextBtn->activate();
 	else nextBtn->deactivate();
 	
+	redraw();	
 }
 
 void QuestionUI::previewQuestion(Question* q)
@@ -200,17 +207,24 @@ void QuestionUI::previewQuestion(Question* q)
     answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
     //resizeAnswers(q->getAOA());
     
-    char imgPath[MAXIMGFILESIZE];
-    sprintf(imgPath, "img/%s.jpg",q->image());
-	int i = -1;
-	// make imgPath lowercase
-	while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
-#ifdef	DEBUG
-	printf("imgPath = %s\n",imgPath);
-#endif
-    imageHolder->image( fltk::SharedImage::get(imgPath) );
-    imageHolder->redraw();
-    redraw();
+	// load question image if available
+	if ( strcmp(q->image(), "0") != 0 )
+	{
+		char imgPath[MAXIMGFILESIZE];
+		sprintf(imgPath, "img/%s.jpg",q->image());
+
+		int i = -1;
+		// make imgPath lowercase
+		while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
+	#ifdef	DEBUG
+		printf("imgPath = %s\n",imgPath);
+	#endif
+		if ( !imageHolder->visible() ) imageHolder->show();
+		imageHolder->image( fltk::SharedImage::get(imgPath) );
+		imageHolder->redraw();
+	}
+	else 
+		if ( imageHolder->visible() ) imageHolder->hide();
     
 	// hide validateBtn we are in preview_mode
 	if ( validateBtn->visible() ) validateBtn->hide();
@@ -218,7 +232,8 @@ void QuestionUI::previewQuestion(Question* q)
     // activate nextBtn because it's probably
     // deactivated from showQuestion()
 	if ( !nextBtn->active() ) nextBtn->activate();
-
+	
+	redraw();
 }
 
 void QuestionUI::setTest(Test* t, bool pmode)

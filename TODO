@@ -11,20 +11,27 @@
 + release relation between test and questionCollection class
 + fix fullscreen inconsistency between two windows
   |+ add command line argument to start in fullscreen
-   |+ BUG: WIN32 fullscreen_off after -f doesn't restore correctly window
+   |+ BUG #001: WIN32 fullscreen_off after -f doesn't restore correctly window
   
 0.8
 - add MainMenuUI images to category buttons
-- hide imageHolder when no image available in question
++ hide imageHolder when no image available in question
 - in showPreview set answerBtn to output() (set_ouput()/clear_output()) to become readony
+- in showPreview make correct answers border green and pused & wrong red texted (Strike?)
 - use menu group for answer radio buttons
 - add timer progress widget
+- add question slider
+- reconsider showPreview behaivour on end
 - use ini file to save application configuration (default ui lang, 
   font size, window position, fullscreen flag)
   |- from config file after cmd arg not set
 - make able to increase font size 
 - create a start up window to select language interface
 - add icon to window
+BUG #002: after a completed test in preview_mode the first question appears 
+		  no matter user answer correctly or not
+BUG #003: NextButton doesn't disable correctly in preview mode
+BUG #004: Seem's that there are question with more than 4 asnwer (bikes)
 
 0.9
 - re-organize sqlite3.cxx class (it's a mess)
