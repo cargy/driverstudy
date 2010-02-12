@@ -184,6 +184,7 @@ void QuestionUI::showQuestion(Question* q)
 
 void QuestionUI::previewQuestion(Question* q)
 {
+	AnswerGroup->set_output();
 	char qNo[150];
     sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
     label(qNo);
