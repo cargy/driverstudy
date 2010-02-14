@@ -20,7 +20,7 @@
 
 #include "QuestionUI.h"
 #include <cstdio>
-
+#include <cassert>
 #include <fltk/ask.h>
 #include <fltk/Image.h>
 #include <fltk/SharedImage.h>
@@ -101,12 +101,52 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 		fltk::message(_("Test Completed!\n\nYou answered correctly:\n%d from %d questions."),currTest->getCorrect(), currTest->size());
 
 		preview_mode = true;
-		previewQuestion(currTest->next());    
+		if ( currTest->getWrong() > 0 ) previewQuestion(currTest->nextWrong());
+		else hide();
 	}
 	// load next question
-	else 
+	else if (preview_mode && !currTest->is_nextWrong() )
 	{
-		if (!preview_mode )showQuestion(currTest->next());  //Question *q = currTest->next();
+		int c = fltk::choice(_("All wrong questions were shown!\n\n"
+							   "You can:\n"
+							   "- see again the wrong questions [Show me again]\n"
+							   "- start a new Test[New Test]\n"
+							   "- return to home page [Cancel]\n"),
+							   _("Show me again"), _("New Test"),_("Cancel")
+							);
+		switch (c) 
+		{
+			case 0:
+				// Show me again
+				previewQuestion(currTest->nextWrong());
+				break;
+			case 1:
+				// New Test
+				switch ( currTest->category_id() )
+				{
+					case DBCARID:
+						((MainMenuUI*)child_of())->carBtn->do_callback();
+						break;
+					case DBMOTORCYCLEID:
+						((MainMenuUI*)child_of())->motorcycleBtn->do_callback();
+						break;
+					case DBTRUCKID:
+						((MainMenuUI*)child_of())->truckBtn->do_callback();
+						break;
+					case DBBUSID:
+						((MainMenuUI*)child_of())->busBtn->do_callback();
+						break;
+				}
+				break;
+			case 2:
+				// Cacnel
+				hide();
+				break;
+		}
+	}
+	else
+	{
+		if (!preview_mode )showQuestion(currTest->next());
 		else previewQuestion(currTest->nextWrong());
 	}
 }
@@ -191,7 +231,7 @@ void QuestionUI::previewQuestion(Question* q)
     label(qNo);
     questionDisplay->copy_label(qNo);
     questionDisplay->text(q->title());
-    
+    assert(q->getSelectedAnswer() != q->getCorrectAnswer());
     // reset answer buttons
     for (unsigned int i=0; i<4; i++) {
     	answerRB[i]->state(false);

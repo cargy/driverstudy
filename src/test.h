@@ -30,10 +30,12 @@ class Test
 		void verifyAnswerOfCurrentQuestion();
 		bool completed();
 		int getCorrect();
+		int getWrong();
 		Question *wrongQuestions();
 		Question *next();
 		Question *nextWrong();
 		bool is_next();
+		bool is_nextWrong();
 		int size(){	return csize;}	
 		int cursor(){return ccursor;}
 		int time();

@@ -33,10 +33,17 @@ bool Test::completed()
 int Test::getCorrect() {
 	int correctQuestions = 0;
 	for(int i=0;i<csize;i++) {
-		if ( tQuestions[i].isCorrect() ) correctQuestions++;
+		if ( tQuestions[i].isVerified() && tQuestions[i].isCorrect() ) correctQuestions++;
 	}
-	//cout << endl << correctQuestions << " out of " << amountOfQuestions << " correct Questions" << endl;
 	return correctQuestions;
+}
+
+int Test::getWrong() {
+	int wrongQuestion = 0;
+	for(int i=0;i<csize;i++) {
+		if ( tQuestions[i].isVerified() && !tQuestions[i].isCorrect() ) wrongQuestion++;
+	}
+	return wrongQuestion;
 }
 
 Question* Test::wrongQuestions() 
@@ -74,11 +81,19 @@ bool Test::is_next()
 	else return false;
 }
 
+bool Test::is_nextWrong()
+{
+	for (int i=ccursor+1; i < csize; i++ )
+		if ( !tQuestions[i].isCorrect() ) return true;
+		
+	return false;
+}
+
 Question* Test::nextWrong()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 	
-	while ( tQuestions[++ccursor].isCorrect() && !(csize-getCorrect() == 0) ) 
+	while ( tQuestions[++ccursor].isCorrect() && ( getWrong() != 0 ) ) 
 	{
 		if (ccursor >= csize-1) ccursor = -1;
 	}
