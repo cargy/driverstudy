@@ -16,8 +16,8 @@
 0.8
 - add MainMenuUI images to category buttons
 + hide imageHolder when no image available in question
-- in showPreview set answerBtn to output() (set_ouput()/clear_output()) to become readony
-- in showPreview make correct answers border green and pused & wrong red texted (Strike?)
++ in showPreview set answerBtn to output() (set_ouput()/clear_output()) to become readony
++ in showPreview make correct answers border green and pused & wrong red texted (Strike?)
 - use menu group for answer radio buttons
 - add timer progress widget
 - add question slider

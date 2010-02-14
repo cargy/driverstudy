@@ -142,11 +142,12 @@ void QuestionUI::showQuestion(Question* q)
 
 	for (unsigned int i=0; i<q->getAOA(); i++) 
 	{
-	answerRB[i]->label(q->getAnswer(i));
+		answerRB[i]->label(q->getAnswer(i));
 	}
 	answerRB[q->getSelectedAnswer()]->state(true);
 #ifdef	DEBUG
-	answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
+	answerRB[q->getCorrectAnswer()]->labelcolor(fltk::color(81,118,17));
+	//answerRB[q->getCorrectAnswer()]->buttoncolor((fltk::Color)0xb60000);
 #endif
 	//resizeAnswers(q->getAOA());
 	
@@ -195,6 +196,9 @@ void QuestionUI::previewQuestion(Question* q)
     for (unsigned int i=0; i<4; i++) {
     	answerRB[i]->state(false);
     	answerRB[i]->labelcolor((fltk::Color)56);
+    	answerRB[i]->box(fltk::NO_BOX);
+    	answerRB[i]->image(NULL);
+    	answerRB[i]->image(fltk::SharedImage::get("icons/wrong_24x24.png"));
     	if ( i >= q->getAOA() ) answerRB[i]->hide();
     	else answerRB[i]->show();
     	
@@ -204,8 +208,10 @@ void QuestionUI::previewQuestion(Question* q)
     {
     	answerRB[i]->label(q->getAnswer(i));
     }
-    answerRB[q->getSelectedAnswer()]->state(true);
-    answerRB[q->getCorrectAnswer()]->labelcolor((fltk::Color)0xff00);
+    //answerRB[q->getSelectedAnswer()]->state(true);
+    answerRB[q->getSelectedAnswer()]->labelcolor(fltk::color(190,47,10));
+    answerRB[q->getCorrectAnswer()]->labelcolor(fltk::color(81,118,17));
+    answerRB[q->getCorrectAnswer()]->image(fltk::SharedImage::get("icons/tick_24x24.png"));
     //resizeAnswers(q->getAOA());
     
 	// load question image if available
@@ -244,7 +250,7 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	
 	// set window label
 	char tl[50];
-	char* tcl;
+	const char* tcl = "no category?? what the heal?";
 	if (currTest->category_id() == DBCARID) tcl = _("Car");
 	if (currTest->category_id() == DBMOTORCYCLEID) tcl = _("Motorcycle");
 	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");

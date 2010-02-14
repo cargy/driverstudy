@@ -2,7 +2,7 @@ FLTK2CONFIG=fltk2-config
 
 # flags for compiler:
 CFLAGS   = -Wall -O3 -I. $(shell $(FLTK2CONFIG) --cflags) -DFLTK2
-CXXFLAGS = -g -Wall -O0 -I. $(shell $(FLTK2CONFIG) -g --cxxflags) -DFLTK2
+CXXFLAGS = -g -Wall -O2 -I. $(shell $(FLTK2CONFIG) -g --cxxflags) -DFLTK2
 
 # Possible steps after linking...
 STRIP      = strip

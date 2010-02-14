@@ -97,7 +97,7 @@ fltk::Group* o = AnswerGroup = new fltk::Group(5, 155, 430, 355);
           
           {
 fltk::RadioButton* o = answerRB[0] = new fltk::RadioButton(5, 4, 420, 85, "Answer 0");
-            o->buttonbox(fltk::BORDER_BOX);
+            o->buttonbox(fltk::RSHADOW_BOX);
             o->labelsize(16);
             o->textsize(16);
             o->callback((fltk::Callback*)cb_answerRB, (void*)(0));
@@ -106,7 +106,7 @@ fltk::RadioButton* o = answerRB[0] = new fltk::RadioButton(5, 4, 420, 85, "Answe
           
           {
 fltk::RadioButton* o = answerRB[1] = new fltk::RadioButton(5, 91, 420, 85, "Answer 1");
-            o->buttonbox(fltk::BORDER_BOX);
+            o->buttonbox(fltk::RSHADOW_BOX);
             o->labelsize(16);
             o->textsize(16);
             o->callback((fltk::Callback*)cb_answerRB1, (void*)(1));
@@ -115,7 +115,7 @@ fltk::RadioButton* o = answerRB[1] = new fltk::RadioButton(5, 91, 420, 85, "Answ
           
           {
 fltk::RadioButton* o = answerRB[2] = new fltk::RadioButton(5, 178, 420, 85, "Answer 2");
-            o->buttonbox(fltk::BORDER_BOX);
+            o->buttonbox(fltk::RSHADOW_BOX);
             o->labelsize(16);
             o->textsize(16);
             o->callback((fltk::Callback*)cb_answerRB2, (void*)(2));
@@ -124,7 +124,7 @@ fltk::RadioButton* o = answerRB[2] = new fltk::RadioButton(5, 178, 420, 85, "Ans
           
           {
 fltk::RadioButton* o = answerRB[3] = new fltk::RadioButton(5, 265, 420, 85, "Answer 3");
-            o->buttonbox(fltk::BORDER_BOX);
+            o->buttonbox(fltk::RSHADOW_BOX);
             o->labelsize(16);
             o->textsize(16);
             o->callback((fltk::Callback*)cb_answerRB3, (void*)(3));
