@@ -16,7 +16,8 @@
 //      along with this program; if not, write to the Free Software
 //      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //      MA 02110-1301, USA.
-
+#ifndef CONFIG_H
+#define CONFIG_H
 
 #define APPLICATIONTITLE "Driver Study"
 #define DRIVERSTUDYVERSION "0.7.5"
@@ -56,3 +57,4 @@
 #define MAXQUESTIONSIZE 500
 #define MAXIMGFILESIZE 255
 
+#endif /* CONFIG_H */ 

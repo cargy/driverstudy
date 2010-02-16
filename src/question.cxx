@@ -82,7 +82,7 @@ unsigned int Question::getAOA(){return amountOfAnswers;}
 
 int Question::getSelectedAnswer(){return selectedAnswer;}
 
-unsigned int Question::getCorrectAnswer()
+int Question::getCorrectAnswer()
 {
 	for (unsigned int i=0; i<amountOfAnswers;i++) 
 	{

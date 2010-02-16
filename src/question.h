@@ -37,7 +37,7 @@ class Question
 		const char *getAnswer(unsigned int i);
 		unsigned int getAOA();
 		int getSelectedAnswer();
-		unsigned int getCorrectAnswer();
+		int getCorrectAnswer();
 		bool isVerified();
 		void verify();
 		#ifdef DEBUG

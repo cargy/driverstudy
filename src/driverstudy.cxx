@@ -91,7 +91,7 @@ int handle_args(int argc, char** argv, int&i){
  * returns only the language only (truncates before _)
 */
 const char* getUILanguage() {
-	char* default_test_language;
+	char* default_test_language = ((char*)"el");
 	
 	if ( getenv("LANG") )default_test_language = getenv("LANG");
 	if ( setlocale (LC_MESSAGES, NULL) ) default_test_language = setlocale (LC_MESSAGES, NULL);
