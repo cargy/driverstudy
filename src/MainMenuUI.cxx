@@ -23,6 +23,8 @@
 #include <fltk/ask.h>
 #include <fltk/Menu.h>
 #include <fltk/run.h>
+#include <fltk/Image.h>
+#include <fltk/SharedImage.h>
 #include "question.h"
 #include "test.h"
 #include "sqlite3.cxx"
@@ -38,8 +40,24 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	languagePUM->value(convLangtoMenuItemIndexNo());
 	languagePUM->label(languagePUM->get_item()->label());
 	extern bool fullscreen_flag;
-	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);}		
+	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);}
 	
+	fltk::register_images();
+	motorcycleBtn->image( fltk::SharedImage::get("icons/Biz-Eve_256x182.png") );
+	//motorcycleBtn->align(fltk::ALIGN_CLIP);
+    motorcycleBtn->align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
+    
+    carBtn->image( fltk::SharedImage::get("icons/car_256x182.png") );
+	//carBtn->align(fltk::ALIGN_CLIP);
+    carBtn->align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
+
+    truckBtn->image( fltk::SharedImage::get("icons/truck_256x182.png") );
+	//truckBtn->align(fltk::ALIGN_CLIP);
+    truckBtn->align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
+	
+	busBtn->image( fltk::SharedImage::get("icons/bus_256x182.png") );
+	//truckBtn->align(fltk::ALIGN_CLIP);
+    busBtn->align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
 }
 
 int MainMenuUI::convLangtoMenuItemIndexNo() {
@@ -86,6 +104,7 @@ void MainMenuUI::cb_fullscreen()
 		if (qv) qv->fullscreen(); 
 	}
 	fullscreen_flag = !fullscreen_flag; 
+	
 }
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
@@ -109,7 +128,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	if (strcmp(slang,"albanian") == 0) langid = DBALBANIANID;
 	assert(langid>0);
 	
-	
+	if (qv) delete qv;
 	vector<int> *v = sql.testTemplate(catid,langid);
 	
 	int *array = sql.createRandomTestFromTemplate(v);
@@ -120,7 +139,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	#ifdef DEBUG
 	ct->answerRandomly();
 	#endif
-	if (qv) delete qv;
+	
 	qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always can happen :(");
 	qv->setTest(ct);
 	//qv->show_inside(this);
