@@ -40,6 +40,7 @@ class QuestionUI: public QuestionUIAbstract
 		void showQuestion(Question* q);
 		void previewQuestion(Question* q);
 		void setTest(Test* t, bool pmode=false);
+		void show();
 		
 			
 	private:
@@ -47,7 +48,9 @@ class QuestionUI: public QuestionUIAbstract
 		//bool fullscreen_flag;
 		Test* currTest;
 		bool preview_mode;
-		void resizeAnswers(int no);
+		inline void cb_answerRB_i(fltk::Widget*, long);
+		static void cb_answerRB(fltk::Widget*, long);
+		void createAnswerRB(int no);
 		
 };
 

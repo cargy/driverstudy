@@ -19,7 +19,7 @@
 + hide imageHolder when no image available in question
 + in showPreview set answerBtn to output() (set_ouput()/clear_output()) to become readony
 + in showPreview make correct answers border green and pused & wrong red texted (Strike?)
-- use menu group for answer radio buttons
++ createAnswerRB method creates and aligns dynamicaly the answerRBs
 - add timer progress widget
 - add question slider
 + reconsider showPreview behaivour on end
@@ -32,7 +32,7 @@
 Fixed - BUG #002: after a completed test in preview_mode the first question appears 
 				  no matter user answer correctly or not
 BUG #003: NextButton doesn't disable correctly in preview mode
-BUG #004: Seem's that there are question with more than 4 asnwer (bikes)
+Fixed BUG #004: Seem's that there are question with more than 4 asnwer (bikes)
 
 0.9
 - re-organize sqlite3.cxx class (it's a mess)

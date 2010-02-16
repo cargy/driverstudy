@@ -35,9 +35,6 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	resizable(this);
 	win_x = 150; win_y = 50; win_w = width; win_h = height;
 	fltk::register_images();
-	
-	extern bool fullscreen_flag;
-	if (fullscreen_flag) fullscreen();
 
 }
 
@@ -66,8 +63,15 @@ void QuestionUI::fullscreen()
 	win_h = h();
 	fltk::Window::fullscreen();
 	fullscreenBtn->state(true);
+
 }
 
+void QuestionUI::show()
+{
+	extern bool fullscreen_flag;
+	if (fullscreen_flag) fullscreen();
+	fltk::Window::show();
+}
 void QuestionUI::fullscreen_off()
 {
 	fltk::Window::fullscreen_off( win_x, win_y,win_w,win_h);
@@ -80,6 +84,13 @@ void QuestionUI::cb_fullscreen()
 	((MainMenuUI*)child_of())->fullscreenBtn->state(!((MainMenuUI*)child_of())->fullscreenBtn->state());
 }
 	
+inline void QuestionUI::cb_answerRB_i(fltk::Widget* o, long v) {
+  cb_answerSelected(o,v)
+;}
+void QuestionUI::cb_answerRB(fltk::Widget* o, long v) {
+  ((QuestionUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_answerRB_i(o,v);
+}
+
 void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)
 {
 	if (selectedRB() > -1)
@@ -89,7 +100,7 @@ void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)
 	}
 	else validateBtn->deactivate();	
 }
-	
+
 void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 {
 	//printf("btn: %s\n",Btn);
@@ -168,17 +179,8 @@ void QuestionUI::showQuestion(Question* q)
 	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
 	questionDisplay->copy_label(qNo);
 	questionDisplay->text(q->title());
-
-	// reset answer buttons
-	for (unsigned int i=0; i<4; i++) {
-		answerRB[i]->state(false);
-#ifdef	DEBUG
-		answerRB[i]->labelcolor((fltk::Color)56);
-#endif
-		if ( i >= q->getAOA() ) answerRB[i]->hide();
-		else answerRB[i]->show();
-
-	}
+	
+	createAnswerRB(q->getAOA());
 
 	for (unsigned int i=0; i<q->getAOA(); i++) 
 	{
@@ -189,7 +191,6 @@ void QuestionUI::showQuestion(Question* q)
 	answerRB[q->getCorrectAnswer()]->labelcolor(fltk::color(81,118,17));
 	//answerRB[q->getCorrectAnswer()]->buttoncolor((fltk::Color)0xb60000);
 #endif
-	//resizeAnswers(q->getAOA());
 	
 	// load question image if available
 	if ( strcmp(q->image(), "0") != 0 )
@@ -223,6 +224,29 @@ void QuestionUI::showQuestion(Question* q)
 	redraw();	
 }
 
+void QuestionUI::createAnswerRB(int no)
+{
+	AnswerGroup->clear();
+  	
+	int rb_height = 0;
+	int rb_y = 10;
+  	const int space = 10;
+  	rb_height = ( ( AnswerGroup->h() - (no)* space ) / no ) - 3;
+
+	for (int i=0; i<no; i++) 
+	{
+		answerRB[i] = new fltk::RadioButton(5,rb_y,AnswerGroup->w()-space,rb_height,"booo");
+		answerRB[i]->buttonbox(fltk::RSHADOW_BOX);
+		answerRB[i]->labelsize(16);
+		answerRB[i]->textsize(16);
+		answerRB[i]->callback((fltk::Callback*)cb_answerRB, (void*)(i));
+		answerRB[i]->align(fltk::ALIGN_LEFT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP);
+		AnswerGroup->add(answerRB[i]);
+
+		rb_y = (answerRB[i]->y() + answerRB[i]->h() + space);
+	}
+	
+}
 void QuestionUI::previewQuestion(Question* q)
 {
 	AnswerGroup->set_output();
@@ -232,27 +256,19 @@ void QuestionUI::previewQuestion(Question* q)
     questionDisplay->copy_label(qNo);
     questionDisplay->text(q->title());
     assert(q->getSelectedAnswer() != q->getCorrectAnswer());
-    // reset answer buttons
-    for (unsigned int i=0; i<4; i++) {
-    	answerRB[i]->state(false);
-    	answerRB[i]->labelcolor((fltk::Color)56);
+    
+  	createAnswerRB(q->getAOA());
+    for (unsigned int i=0; i<q->getAOA(); i++) 
+    {
+		answerRB[i]->label(q->getAnswer(i));
     	answerRB[i]->box(fltk::NO_BOX);
     	answerRB[i]->image(NULL);
     	answerRB[i]->image(fltk::SharedImage::get("icons/wrong_24x24.png"));
-    	if ( i >= q->getAOA() ) answerRB[i]->hide();
-    	else answerRB[i]->show();
-    	
     }
-     
-    for (unsigned int i=0; i<q->getAOA(); i++) 
-    {
-    	answerRB[i]->label(q->getAnswer(i));
-    }
-    //answerRB[q->getSelectedAnswer()]->state(true);
+
     answerRB[q->getSelectedAnswer()]->labelcolor(fltk::color(190,47,10));
     answerRB[q->getCorrectAnswer()]->labelcolor(fltk::color(81,118,17));
     answerRB[q->getCorrectAnswer()]->image(fltk::SharedImage::get("icons/tick_24x24.png"));
-    //resizeAnswers(q->getAOA());
     
 	// load question image if available
 	if ( strcmp(q->image(), "0") != 0 )
@@ -300,20 +316,4 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	
 	// show first question
 	showQuestion(currTest->next());
-}
-
-void QuestionUI::resizeAnswers(int no)
-{
-	int rb_height = 0;
-  	const int space = 2;
-  	//int no = q->getAOA();
-  	rb_height = ( ( AnswerGroup->h() - (no)* space ) / no ) - 3;
-  	answerRB[0]->set_y(1);
-  	answerRB[0]->h(rb_height);
-  	for (int i = 1; i <=no; i++ ) 
-  	{
-  		answerRB[i]->h(rb_height);
-  		answerRB[i]->y( answerRB[i-1]->y() + answerRB[i-1]->h() + space  ); 
-  	}
-  	//AnswerGroup->redraw();
 }

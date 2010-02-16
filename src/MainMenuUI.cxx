@@ -109,6 +109,7 @@ void MainMenuUI::cb_fullscreen()
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 {
+	deactivate();
 	//fltk::message("Starting %s Test in %s",tCategory, languagePUM->get_item()->label() );
 	//fltk::message("languagePUM->item->userdata() == %s",languagePUM->get_item()->user_data() );
 	SQLITE3 sql(DATABASE);
@@ -145,7 +146,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	//qv->show_inside(this);
 	qv->child_of(this);
 	qv->show();
-	
+	activate();
 }
 
 // debrecated method

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Driver Study ver 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-05 18:23+0200\n"
+"POT-Creation-Date: 2010-02-16 22:55+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Argyriadis Christos <c.argyriadis@locusta.gr>\n"
 "Language-Team: Locusta <c.argyriadis@locusta.gr>\n"
@@ -12,90 +12,16 @@ msgstr ""
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: _\n"
+"X-Poedit-KeywordsList: _;N_\n"
 "X-Poedit-Basepath: ../\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../QuestionViewUI.cxx:148
-msgid "Cancel"
-msgstr "Άκυρο"
-
-#: ../QuestionViewUI.cxx:154
-#: ../MainMenuUIAbstract.cxx:137
-msgid "Fullscreen"
-msgstr "Πλήρης Οθόνη"
-
-#: ../QuestionViewUI.cxx:161
-msgid "Aux"
-msgstr "Εφεδρικό"
-
-#: ../QuestionViewUI.cxx:184
-msgid "Validate Answer  @+1+"
-msgstr "Επιβεβαίωση Απάντησης  @+1+"
-
-#: ../QuestionViewUI.cxx:192
-msgid "Next Question  @+1>@+1>[]"
-msgstr "Επόμενη Ερώτηση  @+1>@+1>[]"
-
-#: ../MainMenuUIAbstract.cxx:72
-msgid "Application Title"
-msgstr "Τίτλος Εφαρμογής"
-
-#: ../MainMenuUIAbstract.cxx:82
-msgid "Select a Test Category"
-msgstr "Επιλέξτε κατηγορία"
-
-#: ../MainMenuUIAbstract.cxx:86
-msgid "Motorcycle"
-msgstr "Μοτοσικλέτα"
-
-#: ../MainMenuUIAbstract.cxx:91
-msgid "Car"
-msgstr "Αυτοκίνητο"
-
-#: ../MainMenuUIAbstract.cxx:96
-msgid "Track"
-msgstr "Φορτηγό"
-
-#: ../MainMenuUIAbstract.cxx:101
-msgid "Bus"
-msgstr "Λεωφορείο"
-
-#: ../MainMenuUIAbstract.cxx:116
-msgid "Exit"
-msgstr "Έξοδος"
-
-#: ../MainMenuUIAbstract.cxx:121
-msgid "Help"
-msgstr "Σχετικά"
-
-#: ../MainMenuUIAbstract.cxx:126
-msgid "Select Language"
-msgstr "Επιλογή Γλώσσας"
-
-#: ../MainMenuUIAbstract.cxx:129
-msgid "Greek"
-msgstr "Ελληνικά"
-
-#: ../MainMenuUIAbstract.cxx:130
-msgid "English"
-msgstr "Αγγλικά"
-
-#: ../MainMenuUIAbstract.cxx:131
-msgid "Russian"
-msgstr "Ρώσικα"
-
-#: ../MainMenuUIAbstract.cxx:132
-msgid "Albanian"
-msgstr "Αλβανικά"
-
-#: ../QuestionView.cxx:43
-#: ../MainMenuUI.cxx:34
+#: ../QuestionUI.cxx:52
 msgid "Do you want to cancel this Test?"
 msgstr "Είστε σίγουρος ότι θέλετε να ακυρώσετε το Τεστ;"
 
-#: ../QuestionView.cxx:84
+#: ../QuestionUI.cxx:112
 #, c-format
 msgid ""
 "Test Completed!\n"
@@ -108,25 +34,130 @@ msgstr ""
 "Απαντήσατε σωστά:\n"
 "%d από τις %d ερωτήσεις."
 
-#: ../QuestionView.cxx:110
+#: ../QuestionUI.cxx:121
+msgid ""
+"All wrong questions were shown!\n"
+"\n"
+"You can:\n"
+"- see again the wrong questions [Show me again]\n"
+"- start a new Test[New Test]\n"
+"- return to home page [Cancel]\n"
+msgstr ""
+"Όλα σας τα λάθη εμφανίστηκαν!\n"
+"\n"
+"Μπορείτε:\n"
+"- να δείτε ξανά τα λάθη σας [Ξανά δείξε μου]\n"
+"- να ξεκινήσετε νέο Τεστ [Νέο Τεστ]\n"
+"- να επιστρέψετε στην αρχική οθόνη [Άκυρο]\n"
+
+#: ../QuestionUI.cxx:126
+msgid "Show me again"
+msgstr "Ξανά δείξε μου"
+
+#: ../QuestionUI.cxx:126
+msgid "New Test"
+msgstr "Νέο Τεστ"
+
+#: ../QuestionUI.cxx:126
+msgid "Cancel"
+msgstr "Άκυρο"
+
+#: ../QuestionUI.cxx:179
 #, c-format
 msgid "Question %i/%i"
 msgstr "Ερώτηση %i/%i"
 
-#: ../QuestionView.cxx:156
+#: ../QuestionUI.cxx:254
 #, c-format
 msgid "Question %i (%s)"
 msgstr "Ερώτηση %i (%s)"
 
-#: ../MainMenuUI.cxx:39
+#: ../QuestionUI.cxx:310
+#: ../MainMenuUIAbstract.cxx:93
+msgid "Car"
+msgstr "Αυτοκίνητο"
+
+#: ../QuestionUI.cxx:311
+#: ../MainMenuUIAbstract.cxx:88
+msgid "Motorcycle"
+msgstr "Μοτοσικλέτα"
+
+#: ../QuestionUI.cxx:312
+#: ../MainMenuUIAbstract.cxx:98
+msgid "Truck"
+msgstr "Φορτηγό"
+
+#: ../QuestionUI.cxx:313
+#: ../MainMenuUIAbstract.cxx:103
+msgid "Bus"
+msgstr "Λεωφορείο"
+
+#: ../QuestionUI.cxx:314
+#, c-format
+msgid "Questionnaire %i - %s"
+msgstr "Ερωτηματολόγιο %i - %s"
+
+#: ../MainMenuUIAbstract.cxx:72
+msgid "Application Title"
+msgstr "Τίτλος Εφαρμογής"
+
+#: ../MainMenuUIAbstract.cxx:83
+msgid "Select a Test Category"
+msgstr "Επιλέξτε κατηγορία"
+
+#: ../MainMenuUIAbstract.cxx:118
+msgid "Exit"
+msgstr "Έξοδος"
+
+#: ../MainMenuUIAbstract.cxx:123
+msgid "Help"
+msgstr "Σχετικά"
+
+#: ../MainMenuUIAbstract.cxx:128
+msgid "Select Language"
+msgstr "Επιλογή Γλώσσας"
+
+#: ../MainMenuUIAbstract.cxx:133
+msgid "Greek"
+msgstr "Ελληνικά"
+
+#: ../MainMenuUIAbstract.cxx:138
+msgid "English"
+msgstr "Αγγλικά"
+
+#: ../MainMenuUIAbstract.cxx:143
+msgid "Russian"
+msgstr "Ρώσικα"
+
+#: ../MainMenuUIAbstract.cxx:148
+msgid "Albanian"
+msgstr "Αλβανικά"
+
+#: ../MainMenuUIAbstract.cxx:155
+msgid "Fullscreen"
+msgstr "Πλήρης Οθόνη"
+
+#: ../QuestionUIAbstract.cxx:159
+msgid "Aux"
+msgstr "Εφεδρικό"
+
+#: ../QuestionUIAbstract.cxx:182
+msgid "Validate Answer  @+1+"
+msgstr "Επιβεβαίωση Απάντησης  @+1+"
+
+#: ../QuestionUIAbstract.cxx:190
+msgid "Next Question  @+1>@+1>[]"
+msgstr "Επόμενη Ερώτηση  @+1>@+1>[]"
+
+#: ../MainMenuUI.cxx:82
 #, c-format
 msgid ""
-"@c;Driver Study ver.%s\n"
+"@c;%s ver. %s\n"
 "Copyright(c) 2010\n"
 "Argyriadis Christos\n"
 "c.argyriadis@@locusta.gr"
 msgstr ""
-"@c;Driver Study έκδοση %s\n"
+"@c;%s εκδ. %s\n"
 "Copyright(c) 2010\n"
 "Αργυριάδης Χρήστος\n"
 "c.argyriadis@@locusta.gr"
