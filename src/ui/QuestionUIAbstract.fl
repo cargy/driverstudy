@@ -11,18 +11,21 @@ decl {\#include "config.h"} {}
 decl {\#include <fltk/Window.h>} {public
 } 
 
+decl {\#include "TimerProgressBar.h"} {public
+} 
+
 class QuestionUIAbstract {open : {public fltk::Window}
 } {
   Function {QuestionUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
   } {
     {fltk::Window} mainContainer {open
-      xywh {127 64 800 600} resizable
+      xywh {79 92 800 600} resizable
       class {fltk::Group} visible
     } {
       {fltk::Group} LeftGroup {open
         private xywh {5 5 450 590} resizable box THIN_DOWN_BOX
       } {
-        {fltk::Group} QuestionGroup {open
+        {fltk::Group} QuestionGroup {
           private xywh {5 5 440 520} box THIN_UP_BOX
         } {
           {fltk::TextDisplay} questionDisplay {
@@ -36,25 +39,25 @@ class QuestionUIAbstract {open : {public fltk::Window}
             {fltk::RadioButton} {answerRB[0]} {
               label {Answer 0}
               user_data 0 user_data_type long
-              callback {cb_answerSelected(o,v)} selected
+              callback {cb_answerSelected(o,v)}
               xywh {5 4 420 85} align 164 buttonbox RSHADOW_BOX labelsize 16 textsize 16
             }
             {fltk::RadioButton} {answerRB[1]} {
               label {Answer 1}
               user_data 1 user_data_type long
-              callback {cb_answerSelected(o,v)} selected
+              callback {cb_answerSelected(o,v)}
               xywh {5 91 420 85} align 164 buttonbox RSHADOW_BOX labelsize 16 textsize 16
             }
             {fltk::RadioButton} {answerRB[2]} {
               label {Answer 2}
               user_data 2 user_data_type long
-              callback {cb_answerSelected(o,v)} selected
+              callback {cb_answerSelected(o,v)}
               xywh {5 178 420 85} align 164 buttonbox RSHADOW_BOX labelsize 16 textsize 16
             }
             {fltk::RadioButton} {answerRB[3]} {
               label {Answer 3}
               user_data 3 user_data_type long
-              callback {cb_answerSelected(o,v)} selected
+              callback {cb_answerSelected(o,v)}
               xywh {5 265 420 85} align 164 buttonbox RSHADOW_BOX labelsize 16 textsize 16
             }
           }
@@ -87,17 +90,21 @@ class QuestionUIAbstract {open : {public fltk::Window}
         {fltk::Group} QuestionControlsGroup {open
           private xywh {5 310 330 275} resizable box THIN_UP_BOX
         } {
+          {fltk::ProgressBar} timer {selected
+            xywh {15 16 300 30}
+            class TimerProgressBar
+          }
           {fltk::Button} validateBtn {
             label {_Validate Answer  @+1+}
             user_data {"validate"} user_data_type {const char*}
             callback {cb_next(o,v)}
-            xywh {15 25 300 100} deactivate labeltype EMBOSSED_LABEL labelsize 16
+            xywh {15 60 300 100} deactivate labeltype EMBOSSED_LABEL labelsize 16
           }
           {fltk::Button} nextBtn {
             label {_Next Question  @+1>@+1>[]}
             user_data {"next"} user_data_type {const char*}
             callback {cb_next(o,v)}
-            xywh {15 150 300 100} labeltype EMBOSSED_LABEL labelsize 16
+            xywh {15 167 300 100} labeltype EMBOSSED_LABEL labelsize 16
           }
         }
       }

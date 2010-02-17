@@ -3,6 +3,7 @@
 #ifndef QuestionUIAbstract_h
 #define QuestionUIAbstract_h
 #include <fltk/Window.h>
+#include "TimerProgressBar.h"
 #include <fltk/Group.h>
 #include <fltk/TextDisplay.h>
 #include <fltk/RadioButton.h>
@@ -47,6 +48,7 @@ public:
 private:
       fltk::Group *QuestionControlsGroup;
 public:
+        TimerProgressBar *timer;
         fltk::Button *validateBtn;
 private:
         inline void cb_validateBtn_i(fltk::Button*, const char*);

@@ -49,7 +49,9 @@ QuestionUI::~QuestionUI()
 	
 void QuestionUI::cb_close() 
 {
+	timer->stop();
 	if ( fltk::ask(_("Do you want to cancel this Test?")) ) hide();
+	else timer->start();
 }
 
 void QuestionUI::fullscreen()
@@ -109,6 +111,7 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 	//check if test is completed
 	if (currTest->completed() && !preview_mode) 
 	{
+		timer->stop();
 		fltk::message(_("Test Completed!\n\nYou answered correctly:\n%d from %d questions."),currTest->getCorrect(), currTest->size());
 
 		preview_mode = true;
@@ -250,6 +253,7 @@ void QuestionUI::createAnswerRB(int no)
 void QuestionUI::previewQuestion(Question* q)
 {
 	AnswerGroup->set_output();
+	timer->hide();
 	char qNo[150];
     sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
     label(qNo);

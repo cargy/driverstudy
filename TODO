@@ -20,7 +20,7 @@
 + in showPreview set answerBtn to output() (set_ouput()/clear_output()) to become readony
 + in showPreview make correct answers border green and pused & wrong red texted (Strike?)
 + createAnswerRB method creates and aligns dynamicaly the answerRBs
-- add timer progress widget
++ add timer progress widget
 - add question slider
 + reconsider showPreview behaivour on end
 - use ini file to save application configuration (default ui lang, 

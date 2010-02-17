@@ -177,9 +177,10 @@ fltk::Group* o = RightGroup = new fltk::Group(455, 5, 340, 590);
 fltk::Group* o = QuestionControlsGroup = new fltk::Group(5, 310, 330, 275);
         o->box(fltk::THIN_UP_BOX);
         o->begin();
+        timer = new TimerProgressBar(15, 16, 300, 30);
         
         {
-fltk::Button* o = validateBtn = new fltk::Button(15, 25, 300, 100, _("Validate Answer  @+1+") );
+fltk::Button* o = validateBtn = new fltk::Button(15, 60, 300, 100, _("Validate Answer  @+1+") );
           o->labeltype(fltk::EMBOSSED_LABEL);
           o->labelsize(16);
           o->callback((fltk::Callback*)cb_validateBtn, (void*)("validate"));
@@ -187,7 +188,7 @@ fltk::Button* o = validateBtn = new fltk::Button(15, 25, 300, 100, _("Validate A
         }
         
         {
-fltk::Button* o = nextBtn = new fltk::Button(15, 150, 300, 100, _("Next Question  @+1>@+1>[]") );
+fltk::Button* o = nextBtn = new fltk::Button(15, 167, 300, 100, _("Next Question  @+1>@+1>[]") );
           o->labeltype(fltk::EMBOSSED_LABEL);
           o->labelsize(16);
           o->callback((fltk::Callback*)cb_nextBtn, (void*)("next"));
