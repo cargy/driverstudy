@@ -35,7 +35,7 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	resizable(this);
 	win_x = 150; win_y = 50; win_w = width; win_h = height;
 	fltk::register_images();
-
+	fltk::beep_on_dialog(true);
 }
 
 QuestionUI::~QuestionUI()
@@ -73,11 +73,17 @@ void QuestionUI::show()
 	extern bool fullscreen_flag;
 	if (fullscreen_flag) fullscreen();
 	fltk::Window::show();
+	timer->start();
 }
 void QuestionUI::fullscreen_off()
 {
 	fltk::Window::fullscreen_off( win_x, win_y,win_w,win_h);
 	fullscreenBtn->state(false);
+}
+
+void QuestionUI::cb_timeout()
+{
+	fltk::alert(_("You are out of time!"));
 }
 
 void QuestionUI::cb_fullscreen()
@@ -317,7 +323,12 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	if (currTest->category_id() == DBBUSID) tcl = _("Bus");
 	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id(),tcl);
 	copy_label(tl);
-	
+	#ifdef DEBUG
+	timer->starttime(currTest->time());
+	#else
+	timer->starttime(currTest->time()*60);
+	#endif
+	timer->warningtime(timer->starttime()*0.25);
 	// show first question
 	showQuestion(currTest->next());
 }

@@ -45,6 +45,13 @@ void QuestionUIAbstract::cb_fullscreenBtn(fltk::Button* o, void* v) {
   ((QuestionUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_fullscreenBtn_i(o,v);
 }
 
+inline void QuestionUIAbstract::cb_timer_i(TimerProgressBar*, void*) {
+  cb_timeout()
+;}
+void QuestionUIAbstract::cb_timer(TimerProgressBar* o, void* v) {
+  ((QuestionUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_timer_i(o,v);
+}
+
 inline void QuestionUIAbstract::cb_validateBtn_i(fltk::Button* o, const char* v) {
   cb_next(o,v)
 ;}
@@ -177,7 +184,11 @@ fltk::Group* o = RightGroup = new fltk::Group(455, 5, 340, 590);
 fltk::Group* o = QuestionControlsGroup = new fltk::Group(5, 310, 330, 275);
         o->box(fltk::THIN_UP_BOX);
         o->begin();
-        timer = new TimerProgressBar(15, 16, 300, 30);
+        
+        {
+TimerProgressBar* o = timer = new TimerProgressBar(15, 16, 300, 30);
+          o->callback((fltk::Callback*)cb_timer);
+        }
         
         {
 fltk::Button* o = validateBtn = new fltk::Button(15, 60, 300, 100, _("Validate Answer  @+1+") );
@@ -212,4 +223,7 @@ void QuestionUIAbstract::cb_answerSelected(fltk::Widget *pRB, long rbId) {
 }
 
 void QuestionUIAbstract::cb_next(fltk::Widget* pBtn, const char* btn) {
+}
+
+void QuestionUIAbstract::cb_timeout() {
 }

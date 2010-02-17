@@ -25,7 +25,7 @@
 
 using namespace fltk;
 	
-class TimerProgressBar: protected fltk::ProgressBar
+class TimerProgressBar: public fltk::ProgressBar
 {
 	protected:
 		  Color warningColor; // warning progressbar color
@@ -36,15 +36,15 @@ class TimerProgressBar: protected fltk::ProgressBar
 		TimerProgressBar(int x, int y, int w, int h);
 		void warning_color(Color col)	{ warningColor = col; }
 		Color warning_color() 	{ return warningColor; }
-		void starttime(int stime) { mMax = (double)stime; }
+		void starttime(int stime) { mMax = mPresent = (double)stime; }
 		void stoptime(int stime) { mMin = (double)stime; }
 		void settime(int stime) { mPresent = (double)stime; redraw();}
 		int gettime() { return (int)mPresent; }
+		int starttime() { return mMax; }
 		void warningtime(int stime) { mWarning = stime; }
 		void start();
 		void stop();
 		bool status() { return run; }
-		void hide() { fltk::ProgressBar::hide(); }
 			
 	private:
 		/* add your private declarations */

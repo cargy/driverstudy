@@ -106,7 +106,7 @@ wrun: QuestionWindow.exe
 	
 driverstudy.exe: MainMenuUI.cxx QuestionUI.cxx
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
+	i586-mingw32msvc-g++ -O1 -Wall driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
 	TimerProgressBar.cxx test.cxx question.cxx answer.cxx \
 	-o build/DriverStudy.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \

@@ -49,6 +49,10 @@ private:
       fltk::Group *QuestionControlsGroup;
 public:
         TimerProgressBar *timer;
+private:
+        inline void cb_timer_i(TimerProgressBar*, void*);
+        static void cb_timer(TimerProgressBar*, void*);
+public:
         fltk::Button *validateBtn;
 private:
         inline void cb_validateBtn_i(fltk::Button*, const char*);
@@ -63,5 +67,6 @@ public:
   virtual void cb_fullscreen();
   virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
   virtual void cb_next(fltk::Widget* pBtn, const char* btn);
+  virtual void cb_timeout();
 };
 #endif

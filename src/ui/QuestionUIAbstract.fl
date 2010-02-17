@@ -62,7 +62,7 @@ class QuestionUIAbstract {open : {public fltk::Window}
             }
           }
         }
-        {fltk::Group} MainControlsGroup {
+        {fltk::Group} MainControlsGroup {open
           private xywh {5 530 440 57} box THIN_UP_BOX
         } {
           {fltk::Button} exitBtn {
@@ -90,7 +90,8 @@ class QuestionUIAbstract {open : {public fltk::Window}
         {fltk::Group} QuestionControlsGroup {open
           private xywh {5 310 330 275} resizable box THIN_UP_BOX
         } {
-          {fltk::ProgressBar} timer {selected
+          {fltk::ProgressBar} timer {
+            callback {cb_timeout()}
             xywh {15 16 300 30}
             class TimerProgressBar
           }
@@ -110,12 +111,14 @@ class QuestionUIAbstract {open : {public fltk::Window}
       }
     }
   }
-  Function {cb_close()} {return_type void attributes virtual
+  Function {cb_close()} {open return_type void attributes virtual
   } {}
-  Function {cb_fullscreen()} {return_type void attributes virtual
+  Function {cb_fullscreen()} {open return_type void attributes virtual
   } {}
   Function {cb_answerSelected(fltk::Widget *pRB, long rbId)} {open return_type void attributes virtual
   } {}
-  Function {cb_next(fltk::Widget* pBtn, const char* btn)} {return_type void attributes virtual
+  Function {cb_next(fltk::Widget* pBtn, const char* btn)} {open return_type void attributes virtual
+  } {}
+  Function {cb_timeout()} {selected return_type void attributes virtual
   } {}
 } 

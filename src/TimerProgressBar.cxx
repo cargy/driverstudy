@@ -43,12 +43,13 @@ TimerProgressBar::TimerProgressBar(int x, int y, int w, int h)
 	warning_color(RED);
 	color(WHITE);
 	textcolor(BLACK);
-	run = true;
+	run = false;
 }
 
 void TimerProgressBar::start()
 {
   #ifdef _WIN32
+	step(2);
     repeat_timeout(1.0f);
   #else
     {struct timeval t; gettimeofday(&t, 0);
@@ -71,19 +72,28 @@ int TimerProgressBar::handle(int event) {
     remove_timeout();
     if (!run) break;
   case TIMEOUT:
-  #ifdef _WIN32
-    step(-1);
-    repeat_timeout(1.0f);
-  #else
-    {struct timeval t; gettimeofday(&t, 0);
-    step(-1);
-    float delay = 1.0f-float(t.tv_usec)*.000001f;
-    if (delay < .1f || delay > .9f) delay = 1.0f;
-    #ifdef DEBUG 
-    printf("delay: %f\n", delay );
-    #endif
-    add_timeout(delay);}
-  #endif
+	if (gettime() < 1 )
+	{
+		stop();
+		//callbak
+		do_callback();
+	}
+	else
+	{
+		#ifdef _WIN32
+		step(-1);
+		repeat_timeout(1.0f);
+		#else
+		{struct timeval t; gettimeofday(&t, 0);
+		step(-1);
+		float delay = 1.0f-float(t.tv_usec)*.000001f;
+		if (delay < .1f || delay > .9f) delay = 1.0f;
+		#ifdef DEBUG 
+		printf("delay: %f\n", delay );
+		#endif
+		add_timeout(delay);}
+		#endif
+	}
     break;
   case HIDE:
     remove_timeout();
