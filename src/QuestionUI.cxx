@@ -315,8 +315,8 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	preview_mode = false;
 	
 	// set window label
-	char tl[50];
-	const char* tcl = "no category?? what the heal?";
+	char tl[100];
+	const char* tcl = "";
 	if (currTest->category_id() == DBCARID) tcl = _("Car");
 	if (currTest->category_id() == DBMOTORCYCLEID) tcl = _("Motorcycle");
 	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");

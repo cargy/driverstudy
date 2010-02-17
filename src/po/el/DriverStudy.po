@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Driver Study ver 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-16 22:55+0200\n"
+"POT-Creation-Date: 2010-02-17 23:29+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Argyriadis Christos <c.argyriadis@locusta.gr>\n"
 "Language-Team: Locusta <c.argyriadis@locusta.gr>\n"
@@ -17,11 +17,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../QuestionUI.cxx:52
+#: ../QuestionUI.cxx:53
 msgid "Do you want to cancel this Test?"
 msgstr "Είστε σίγουρος ότι θέλετε να ακυρώσετε το Τεστ;"
 
-#: ../QuestionUI.cxx:112
+#: ../QuestionUI.cxx:86
+msgid "You are out of time!"
+msgstr "Ο διαθέσιμος χρόνος εξαντλήθηκε!"
+
+#: ../QuestionUI.cxx:121
 #, c-format
 msgid ""
 "Test Completed!\n"
@@ -34,7 +38,7 @@ msgstr ""
 "Απαντήσατε σωστά:\n"
 "%d από τις %d ερωτήσεις."
 
-#: ../QuestionUI.cxx:121
+#: ../QuestionUI.cxx:130
 msgid ""
 "All wrong questions were shown!\n"
 "\n"
@@ -50,49 +54,49 @@ msgstr ""
 "- να ξεκινήσετε νέο Τεστ [Νέο Τεστ]\n"
 "- να επιστρέψετε στην αρχική οθόνη [Άκυρο]\n"
 
-#: ../QuestionUI.cxx:126
+#: ../QuestionUI.cxx:135
 msgid "Show me again"
 msgstr "Ξανά δείξε μου"
 
-#: ../QuestionUI.cxx:126
+#: ../QuestionUI.cxx:135
 msgid "New Test"
 msgstr "Νέο Τεστ"
 
-#: ../QuestionUI.cxx:126
+#: ../QuestionUI.cxx:135
 msgid "Cancel"
 msgstr "Άκυρο"
 
-#: ../QuestionUI.cxx:179
+#: ../QuestionUI.cxx:188
 #, c-format
 msgid "Question %i/%i"
 msgstr "Ερώτηση %i/%i"
 
-#: ../QuestionUI.cxx:254
+#: ../QuestionUI.cxx:264
 #, c-format
 msgid "Question %i (%s)"
 msgstr "Ερώτηση %i (%s)"
 
-#: ../QuestionUI.cxx:310
+#: ../QuestionUI.cxx:320
 #: ../MainMenuUIAbstract.cxx:93
 msgid "Car"
 msgstr "Αυτοκίνητο"
 
-#: ../QuestionUI.cxx:311
+#: ../QuestionUI.cxx:321
 #: ../MainMenuUIAbstract.cxx:88
 msgid "Motorcycle"
 msgstr "Μοτοσικλέτα"
 
-#: ../QuestionUI.cxx:312
+#: ../QuestionUI.cxx:322
 #: ../MainMenuUIAbstract.cxx:98
 msgid "Truck"
 msgstr "Φορτηγό"
 
-#: ../QuestionUI.cxx:313
+#: ../QuestionUI.cxx:323
 #: ../MainMenuUIAbstract.cxx:103
 msgid "Bus"
 msgstr "Λεωφορείο"
 
-#: ../QuestionUI.cxx:314
+#: ../QuestionUI.cxx:324
 #, c-format
 msgid "Questionnaire %i - %s"
 msgstr "Ερωτηματολόγιο %i - %s"
@@ -137,15 +141,15 @@ msgstr "Αλβανικά"
 msgid "Fullscreen"
 msgstr "Πλήρης Οθόνη"
 
-#: ../QuestionUIAbstract.cxx:159
+#: ../QuestionUIAbstract.cxx:166
 msgid "Aux"
 msgstr "Εφεδρικό"
 
-#: ../QuestionUIAbstract.cxx:182
+#: ../QuestionUIAbstract.cxx:194
 msgid "Validate Answer  @+1+"
 msgstr "Επιβεβαίωση Απάντησης  @+1+"
 
-#: ../QuestionUIAbstract.cxx:190
+#: ../QuestionUIAbstract.cxx:202
 msgid "Next Question  @+1>@+1>[]"
 msgstr "Επόμενη Ερώτηση  @+1>@+1>[]"
 
