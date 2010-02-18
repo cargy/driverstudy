@@ -43,7 +43,7 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);}
 	
 	fltk::register_images();
-	motorcycleBtn->image( fltk::SharedImage::get("icons/Biz-Eve_256x182.png") );
+	motorcycleBtn->image( fltk::SharedImage::get("icons/motorcycle_256x182.png") );
 	//motorcycleBtn->align(fltk::ALIGN_CLIP);
     motorcycleBtn->align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
     
@@ -109,7 +109,9 @@ void MainMenuUI::cb_fullscreen()
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 {
+	statusBar->label("Creating Test...");
 	deactivate();
+	fltk::check();
 	//fltk::message("Starting %s Test in %s",tCategory, languagePUM->get_item()->label() );
 	//fltk::message("languagePUM->item->userdata() == %s",languagePUM->get_item()->user_data() );
 	SQLITE3 sql(DATABASE);
@@ -147,6 +149,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	qv->child_of(this);
 	qv->show();
 	activate();
+	statusBar->label("Test created Successfully!");
 }
 
 // debrecated method

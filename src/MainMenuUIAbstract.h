@@ -55,6 +55,7 @@ private:
       inline void cb_fullscreenBtn_i(fltk::Button*, void*);
       static void cb_fullscreenBtn(fltk::Button*, void*);
 public:
+    fltk::StatusBarGroup *statusBar;
   virtual void cb_exit();
   virtual void cb_help();
   virtual void cb_fullscreen();

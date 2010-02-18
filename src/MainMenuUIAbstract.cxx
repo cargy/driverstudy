@@ -159,7 +159,7 @@ fltk::Button* o = fullscreenBtn = new fltk::Button(228, 59, 180, 41, _("Fullscre
       }
       o->end();
     }
-    new fltk::StatusBarGroup(0, 460, 640, 20, "This is the status bar");
+    statusBar = new fltk::StatusBarGroup(0, 460, 640, 20, "This is the status bar");
     o->end();
     o->resizable(o);
   }

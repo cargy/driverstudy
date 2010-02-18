@@ -29,6 +29,7 @@
 #include <fltk/ask.h>
 #endif
 #include <fltk/error.h>
+#include <fltk/x.h>
 
 #include <cstdio>
 #include <cstdlib>
@@ -131,9 +132,15 @@ int main(int argc, char** argv)
     char applicationTitle[50];
     sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
 	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
-	
+	//window->icon((char *)LoadIcon(fltk::xdisplay, MAKEINTRESOURCE(101)));
 
 	window->show(argc, argv);
+#ifdef _WIN32
+	HANDLE bigicon = LoadImage(GetModuleHandle(0), MAKEINTRESOURCE(101), IMAGE_ICON, 32, 32, 0);
+	SendMessage(xid(window), WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(bigicon));
+	HANDLE smallicon = LoadImage(GetModuleHandle(0), MAKEINTRESOURCE(101), IMAGE_ICON, 16, 16, 0);
+	SendMessage(xid(window), WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(smallicon));
+#endif
 	// if fullscreen requested by command line
 	//if (fullscreen_flag) { window->fullscreenBtn->do_callback(); window->fullscreenBtn->state(true);}	
 	return fltk::run();
