@@ -1,0 +1,26 @@
+BEGIN TRANSACTION;
+CREATE TABLE Answer(	AQCod INTEGER, 
+			AAA INTEGER,
+			ALect TEXT,
+			ACorr BOOLEAN,
+			ASound TEXT);
+
+CREATE TABLE Kateg(	KCod INTEGER PRIMARY KEY,
+			KLect TEXT,
+			KTime INTEGER,
+			KPict TEXT);
+
+CREATE TABLE Numbs(	KCod INTEGER,
+			PCod INTEGER,
+			Lect TEXT,
+			Numb INTEGER);
+
+CREATE TABLE Quest(	QCod INTEGER PRIMARY KEY,
+			QKateg INTEGER,
+			QPag INTEGER,
+			QLang INTEGER,
+			QLect TEXT,
+			QPhoto TEXT,
+			QSound TEXT,
+			QBook TEXT );
+COMMIT;

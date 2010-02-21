@@ -28,7 +28,8 @@
   |- from config file after cmd arg not set
 - make able to increase font size 
 - create a start up window to select language interface
-- add icon to window
++ add icon to window
+|- what about X ?
 Fixed - BUG #002: after a completed test in preview_mode the first question appears 
 				  no matter user answer correctly or not
 BUG #003: NextButton doesn't disable correctly in preview mode
