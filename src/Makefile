@@ -110,7 +110,7 @@ driver_res.o: driverstudy.rc
 	
 driverstudy.exe: driver_res.o MainMenuUI.cxx QuestionUI.cxx
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ -O2 -Wall driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
+	i586-mingw32msvc-g++ -static -O2 -Wall driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
 	TimerProgressBar.cxx test.cxx question.cxx answer.cxx driver_res.o \
 	-o build/DriverStudy.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
