@@ -30,6 +30,20 @@ void MainMenuUIAbstract::cb_busBtn(fltk::Button* o, const char* v) {
   ((MainMenuUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_busBtn_i(o,v);
 }
 
+inline void MainMenuUIAbstract::cb_smotorcycleBtn_i(fltk::Button* o, const char* v) {
+  cb_start(o,v)
+;}
+void MainMenuUIAbstract::cb_smotorcycleBtn(fltk::Button* o, const char* v) {
+  ((MainMenuUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_smotorcycleBtn_i(o,v);
+}
+
+inline void MainMenuUIAbstract::cb_scarBtn_i(fltk::Button* o, const char* v) {
+  cb_start(o,v)
+;}
+void MainMenuUIAbstract::cb_scarBtn(fltk::Button* o, const char* v) {
+  ((MainMenuUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_scarBtn_i(o,v);
+}
+
 inline void MainMenuUIAbstract::cb_exitBtn_i(fltk::Button*, void*) {
   cb_exit()
 ;}
@@ -69,44 +83,79 @@ fltk::Group* o = mainContainer = new fltk::Group(0, 0, 640, 480);
     o->begin();
     
     {
-fltk::Widget* o = new fltk::Widget(12, 6, 615, 100, _("Application Title") );
+fltk::Widget* o = new fltk::Widget(12, 6, 615, 54, _("Application Title") );
       o->box(fltk::HIGHLIGHT_UP_BOX);
       o->labeltype(fltk::EMBOSSED_LABEL);
+      o->labelsize(32);
+      o->textsize(32);
     }
     
     {
-fltk::Group* o = new fltk::Group(12, 123, 615, 210);
+fltk::Group* o = new fltk::Group(12, 89, 615, 241, _("Select a Test Category") );
       o->box(fltk::ENGRAVED_BOX);
+      o->labeltype(fltk::ENGRAVED_LABEL);
+      o->labelsize(18);
+      o->textsize(18);
       o->begin();
       
       {
-fltk::Group* o = new fltk::Group(16, 41, 580, 149, _("Select a Test Category") );
+fltk::Group* o = new fltk::Group(13, 10, 590, 120);
         o->labeltype(fltk::ENGRAVED_LABEL);
         o->begin();
         
         {
-fltk::Button* o = motorcycleBtn = new fltk::Button(0, 20, 110, 110, _("Motorcycle") );
+fltk::Button* o = motorcycleBtn = new fltk::Button(0, 0, 130, 120, _("Motorcycle") );
+          o->labelsize(14);
+          o->textsize(14);
           o->callback((fltk::Callback*)cb_motorcycleBtn, (void*)("motorcycle"));
         }
         
         {
-fltk::Button* o = carBtn = new fltk::Button(156, 20, 110, 110, _("Car") );
+fltk::Button* o = carBtn = new fltk::Button(153, 0, 130, 120, _("Car") );
+          o->labelsize(14);
+          o->textsize(14);
           o->callback((fltk::Callback*)cb_carBtn, (void*)("car"));
         }
         
         {
-fltk::Button* o = truckBtn = new fltk::Button(313, 20, 110, 110, _("Truck") );
+fltk::Button* o = truckBtn = new fltk::Button(306, 0, 130, 120, _("Truck") );
+          o->labelsize(14);
+          o->textsize(14);
           o->callback((fltk::Callback*)cb_truckBtn, (void*)("truck"));
         }
         
         {
-fltk::Button* o = busBtn = new fltk::Button(470, 20, 110, 110, _("Bus") );
+fltk::Button* o = busBtn = new fltk::Button(459, 0, 130, 120, _("Bus") );
+          o->labelsize(14);
+          o->textsize(14);
           o->callback((fltk::Callback*)cb_busBtn, (void*)("bus"));
         }
         o->end();
-        fltk::Group::current()->resizable(o);
+      }
+      
+      {
+fltk::Group* o = new fltk::Group(13, 140, 590, 90);
+        o->begin();
+        
+        {
+fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 90, _("Motorcycle Special Cateogry") );
+          o->labelsize(14);
+          o->textsize(14);
+          o->callback((fltk::Callback*)cb_smotorcycleBtn, (void*)("smotorcycle"));
+          o->align(fltk::ALIGN_WRAP);
+        }
+        
+        {
+fltk::Button* o = scarBtn = new fltk::Button(153, 0, 130, 90, _("Car Special Category") );
+          o->labelsize(14);
+          o->textsize(14);
+          o->callback((fltk::Callback*)cb_scarBtn, (void*)("scar"));
+          o->align(fltk::ALIGN_WRAP);
+        }
+        o->end();
       }
       o->end();
+      fltk::Group::current()->resizable(o);
     }
     
     {
@@ -161,7 +210,6 @@ fltk::Button* o = fullscreenBtn = new fltk::Button(228, 59, 180, 41, _("Fullscre
     }
     statusBar = new fltk::StatusBarGroup(0, 460, 640, 20, "This is the status bar");
     o->end();
-    o->resizable(o);
   }
 }
 

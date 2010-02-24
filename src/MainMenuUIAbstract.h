@@ -35,6 +35,16 @@ private:
         inline void cb_busBtn_i(fltk::Button*, const char*);
         static void cb_busBtn(fltk::Button*, const char*);
 public:
+        fltk::Button *smotorcycleBtn;
+private:
+        inline void cb_smotorcycleBtn_i(fltk::Button*, const char*);
+        static void cb_smotorcycleBtn(fltk::Button*, const char*);
+public:
+        fltk::Button *scarBtn;
+private:
+        inline void cb_scarBtn_i(fltk::Button*, const char*);
+        static void cb_scarBtn(fltk::Button*, const char*);
+public:
       fltk::Button *exitBtn;
 private:
       inline void cb_exitBtn_i(fltk::Button*, void*);

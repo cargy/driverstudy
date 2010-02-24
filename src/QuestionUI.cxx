@@ -156,6 +156,12 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 					case DBBUSID:
 						((MainMenuUI*)child_of())->busBtn->do_callback();
 						break;
+					case DBSCARID:
+						((MainMenuUI*)child_of())->scarBtn->do_callback();
+						break;
+					case DBSMOTORCYCLEID:
+						((MainMenuUI*)child_of())->smotorcycleBtn->do_callback();
+						break;						
 				}
 				break;
 			case 2:
@@ -321,7 +327,9 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	if (currTest->category_id() == DBMOTORCYCLEID) tcl = _("Motorcycle");
 	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");
 	if (currTest->category_id() == DBBUSID) tcl = _("Bus");
-	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id(),tcl);
+	if (currTest->category_id() == DBSCARID) tcl = _("Car Special Category");
+	if (currTest->category_id() == DBSMOTORCYCLEID) tcl = _("Motorcycle Special Category");
+	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id()%10,tcl);
 	copy_label(tl);
 	#ifdef DEBUG
 	timer->starttime(currTest->time());

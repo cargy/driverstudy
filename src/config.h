@@ -30,6 +30,8 @@
 #define DBMOTORCYCLEID 2
 #define DBTRUCKID 3
 #define DBBUSID 4
+#define DBSCARID 11
+#define DBSMOTORCYCLEID 12
 
 #define DBGREEKID 1
 #define DBENGLISHID 2

@@ -17,43 +17,59 @@ class MainMenuUIAbstract {open : {public fltk::Window}
   Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
   } {
     {fltk::Window} mainContainer {open
-      xywh {238 86 640 480} resizable
+      xywh {637 48 640 480} resizable
       class {fltk::Group} visible
     } {
       {fltk::Widget} {} {
         label {_Application Title}
-        xywh {12 6 615 100} box HIGHLIGHT_UP_BOX labeltype EMBOSSED_LABEL
+        xywh {12 6 615 54} box HIGHLIGHT_UP_BOX labeltype EMBOSSED_LABEL labelsize 32 textsize 32
       }
-      {fltk::Group} {} {open
-        xywh {12 123 615 210} box ENGRAVED_BOX
+      {fltk::Group} {} {
+        label {_Select a Test Category} open
+        xywh {12 89 615 241} resizable box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
       } {
-        {fltk::Group} {} {
-          label {_Select a Test Category} open
-          xywh {16 41 580 149} resizable labeltype ENGRAVED_LABEL
+        {fltk::Group} {} {open
+          xywh {13 10 590 120} labeltype ENGRAVED_LABEL
         } {
           {fltk::Button} motorcycleBtn {
             label _Motorcycle
             user_data {"motorcycle"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {0 20 110 110}
+            xywh {0 0 130 120} labelsize 14 textsize 14
           }
           {fltk::Button} carBtn {
             label _Car
             user_data {"car"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {156 20 110 110}
+            xywh {153 0 130 120} labelsize 14 textsize 14
           }
           {fltk::Button} truckBtn {
             label _Truck
             user_data {"truck"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {313 20 110 110}
+            xywh {306 0 130 120} labelsize 14 textsize 14
           }
           {fltk::Button} busBtn {
             label _Bus
             user_data {"bus"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {470 20 110 110}
+            xywh {459 0 130 120} labelsize 14 textsize 14
+          }
+        }
+        {fltk::Group} {} {open
+          xywh {13 140 590 90}
+        } {
+          {fltk::Button} smotorcycleBtn {
+            label {_Motorcycle Special Cateogry}
+            user_data {"smotorcycle"} user_data_type {const char*}
+            callback {cb_start(o,v)}
+            xywh {0 0 130 90} align 128 labelsize 14 textsize 14
+          }
+          {fltk::Button} scarBtn {
+            label {_Car Special Category}
+            user_data {"scar"} user_data_type {const char*}
+            callback {cb_start(o,v)}
+            xywh {153 0 130 90} align 128 labelsize 14 textsize 14
           }
         }
       }
@@ -72,7 +88,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
         {fltk::PopupMenu} languagePUM {
           label {_Select Language}
-          callback {cb_selectLanguage(o,v)} open
+          callback {cb_selectLanguage(o,v)} open selected
           xywh {230 13 178 41}
         } {
           {fltk::Item} {} {
@@ -99,7 +115,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
       }
       {fltk::StatusBarGroup} statusBar {
-        label {This is the status bar} selected
+        label {This is the status bar}
         xywh {0 460 640 20}
       }
     }

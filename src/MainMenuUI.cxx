@@ -120,6 +120,8 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	if (strcmp(tCategory, "motorcycle")==0) catid = DBMOTORCYCLEID;
 	if (strcmp(tCategory, "truck")==0) catid = DBTRUCKID;
 	if (strcmp(tCategory, "bus")==0) catid = DBBUSID;
+	if (strcmp(tCategory, "scar")==0) catid = DBSCARID;
+	if (strcmp(tCategory, "smotorcycle")==0) catid = DBSMOTORCYCLEID;
 	assert(catid>0);
 	
 	int langid = 0;
