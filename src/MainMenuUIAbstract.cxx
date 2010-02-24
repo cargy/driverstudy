@@ -65,6 +65,13 @@ void MainMenuUIAbstract::cb_languagePUM(fltk::PopupMenu* o, void* v) {
   ((MainMenuUIAbstract*)(o->parent()->parent()->user_data()))->cb_languagePUM_i(o,v);
 }
 
+inline void MainMenuUIAbstract::cb_soundBtn_i(fltk::LightButton*, void*) {
+  cb_sound()
+;}
+void MainMenuUIAbstract::cb_soundBtn(fltk::LightButton* o, void* v) {
+  ((MainMenuUIAbstract*)(o->parent()->parent()->user_data()))->cb_soundBtn_i(o,v);
+}
+
 inline void MainMenuUIAbstract::cb_fullscreenBtn_i(fltk::Button*, void*) {
   cb_fullscreen()
 ;}
@@ -83,7 +90,7 @@ fltk::Group* o = mainContainer = new fltk::Group(0, 0, 640, 480);
     o->begin();
     
     {
-fltk::Widget* o = new fltk::Widget(12, 6, 615, 54, _("Application Title") );
+fltk::Widget* o = appTitle = new fltk::Widget(12, 6, 615, 54, _("Application Title") );
       o->box(fltk::HIGHLIGHT_UP_BOX);
       o->labeltype(fltk::EMBOSSED_LABEL);
       o->labelsize(32);
@@ -91,7 +98,7 @@ fltk::Widget* o = new fltk::Widget(12, 6, 615, 54, _("Application Title") );
     }
     
     {
-fltk::Group* o = new fltk::Group(12, 89, 615, 241, _("Select a Test Category") );
+fltk::Group* o = new fltk::Group(12, 89, 615, 275, _("Select a Test Category") );
       o->box(fltk::ENGRAVED_BOX);
       o->labeltype(fltk::ENGRAVED_LABEL);
       o->labelsize(18);
@@ -134,11 +141,11 @@ fltk::Button* o = busBtn = new fltk::Button(459, 0, 130, 120, _("Bus") );
       }
       
       {
-fltk::Group* o = new fltk::Group(13, 140, 590, 90);
+fltk::Group* o = new fltk::Group(13, 140, 590, 120);
         o->begin();
         
         {
-fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 90, _("Motorcycle Special Cateogry") );
+fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 120, _("Motorcycle Special Cateogry") );
           o->labelsize(14);
           o->textsize(14);
           o->callback((fltk::Callback*)cb_smotorcycleBtn, (void*)("smotorcycle"));
@@ -146,7 +153,7 @@ fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 90, _("Motorcycle
         }
         
         {
-fltk::Button* o = scarBtn = new fltk::Button(153, 0, 130, 90, _("Car Special Category") );
+fltk::Button* o = scarBtn = new fltk::Button(153, 0, 130, 120, _("Car Special Category") );
           o->labelsize(14);
           o->textsize(14);
           o->callback((fltk::Callback*)cb_scarBtn, (void*)("scar"));
@@ -159,49 +166,66 @@ fltk::Button* o = scarBtn = new fltk::Button(153, 0, 130, 90, _("Car Special Cat
     }
     
     {
-fltk::Group* o = new fltk::Group(12, 340, 615, 113);
+fltk::Group* o = new fltk::Group(12, 371, 615, 85);
       o->box(fltk::ENGRAVED_BOX);
       o->begin();
       
       {
-fltk::Button* o = exitBtn = new fltk::Button(18, 18, 75, 75, _("Exit") );
+fltk::Button* o = exitBtn = new fltk::Button(18, 11, 60, 60, _("Exit") );
         o->callback((fltk::Callback*)cb_exitBtn);
       }
       
       {
-fltk::Button* o = helpBtn = new fltk::Button(521, 18, 75, 75, _("Help") );
+fltk::Button* o = helpBtn = new fltk::Button(536, 11, 60, 60, _("Help") );
         o->callback((fltk::Callback*)cb_helpBtn);
       }
       
       {
-fltk::PopupMenu* o = languagePUM = new fltk::PopupMenu(230, 13, 178, 41, _("Select Language") );
+fltk::PopupMenu* o = languagePUM = new fltk::PopupMenu(218, 8, 178, 35, _("Select Language") );
+        o->labelsize(14);
+        o->textsize(14);
         o->callback((fltk::Callback*)cb_languagePUM);
         o->begin();
         
         {
 fltk::Item* o = new fltk::Item(_("Greek") );
+          o->labelsize(14);
+          o->textsize(14);
           o->user_data((void*)("greek"));
         }
         
         {
 fltk::Item* o = new fltk::Item(_("English") );
+          o->labelsize(14);
+          o->textsize(14);
           o->user_data((void*)("english"));
         }
         
         {
 fltk::Item* o = new fltk::Item(_("Russian") );
+          o->labelsize(14);
+          o->textsize(14);
           o->user_data((void*)("russian"));
         }
         
         {
 fltk::Item* o = new fltk::Item(_("Albanian") );
+          o->labelsize(14);
+          o->textsize(14);
           o->user_data((void*)("albanian"));
         }
         o->end();
       }
       
       {
-fltk::Button* o = fullscreenBtn = new fltk::Button(228, 59, 180, 41, _("Fullscreen") );
+fltk::LightButton* o = soundBtn = new fltk::LightButton(448, 11, 80, 60, _("Sound") );
+        o->labelsize(14);
+        o->textsize(14);
+        o->callback((fltk::Callback*)cb_soundBtn);
+      }
+      
+      {
+fltk::Button* o = fullscreenBtn = new fltk::Button(216, 50, 180, 26, _("Fullscreen") );
         o->type(fltk::Button::TOGGLE);
         o->shortcut(0xffc8);
         o->callback((fltk::Callback*)cb_fullscreenBtn);
@@ -226,4 +250,7 @@ void MainMenuUIAbstract::cb_start(fltk::Widget* pBtn, const char* tCategory) {
 }
 
 void MainMenuUIAbstract::cb_selectLanguage(fltk::Widget* sItem, void* userdata) {
+}
+
+void MainMenuUIAbstract::cb_sound() {
 }

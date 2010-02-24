@@ -9,12 +9,14 @@
 #include <fltk/Button.h>
 #include <fltk/PopupMenu.h>
 #include <fltk/Item.h>
+#include <fltk/LightButton.h>
 #include <fltk/StatusBarGroup.h>
 
 class MainMenuUIAbstract : public fltk::Window  {
 public:
   MainMenuUIAbstract(int x, int y, int width, int height, const char* label);
   fltk::Group *mainContainer;
+    fltk::Widget *appTitle;
         fltk::Button *motorcycleBtn;
 private:
         inline void cb_motorcycleBtn_i(fltk::Button*, const char*);
@@ -60,6 +62,11 @@ private:
       inline void cb_languagePUM_i(fltk::PopupMenu*, void*);
       static void cb_languagePUM(fltk::PopupMenu*, void*);
 public:
+      fltk::LightButton *soundBtn;
+private:
+      inline void cb_soundBtn_i(fltk::LightButton*, void*);
+      static void cb_soundBtn(fltk::LightButton*, void*);
+public:
       fltk::Button *fullscreenBtn;
 private:
       inline void cb_fullscreenBtn_i(fltk::Button*, void*);
@@ -71,5 +78,6 @@ public:
   virtual void cb_fullscreen();
   virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
   virtual void cb_selectLanguage(fltk::Widget* sItem, void* userdata);
+  virtual void cb_sound();
 };
 #endif

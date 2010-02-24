@@ -33,6 +33,7 @@
 MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
+	appTitle->label(APPLICATIONTITLE);
 	resizable(this);
 	win_x = 100; win_y = 100;
 	win_w = width; win_h = height;
@@ -58,6 +59,14 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	busBtn->image( fltk::SharedImage::get("icons/bus_256x182.png") );
 	//truckBtn->align(fltk::ALIGN_CLIP);
     busBtn->align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
+    
+    smotorcycleBtn->image( fltk::SharedImage::get("icons/motorcycle_256x182.png") );
+	//motorcycleBtn->align(fltk::ALIGN_CLIP);
+    smotorcycleBtn->align((fltk::RESIZE_FIT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP));
+    
+    scarBtn->image( fltk::SharedImage::get("icons/car_256x182.png") );
+	//carBtn->align(fltk::ALIGN_CLIP);
+    scarBtn->align((fltk::RESIZE_FIT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP));
 }
 
 int MainMenuUI::convLangtoMenuItemIndexNo() {
