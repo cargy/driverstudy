@@ -33,6 +33,7 @@ class Test
 		int getWrong();
 		Question *wrongQuestions();
 		Question *next();
+		Question* question();
 		Question *nextWrong();
 		bool is_next();
 		bool is_nextWrong();

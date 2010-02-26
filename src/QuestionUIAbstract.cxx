@@ -3,6 +3,13 @@
 #include "QuestionUIAbstract.h"
 #include "config.h"
 
+inline void QuestionUIAbstract::cb_questionDisplay_i(fltk::Button*, void*) {
+  cb_questionRelease()
+;}
+void QuestionUIAbstract::cb_questionDisplay(fltk::Button* o, void* v) {
+  ((QuestionUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_questionDisplay_i(o,v);
+}
+
 inline void QuestionUIAbstract::cb_answerRB_i(fltk::RadioButton* o, long v) {
   cb_answerSelected(o,v)
 ;}
@@ -45,6 +52,13 @@ void QuestionUIAbstract::cb_fullscreenBtn(fltk::Button* o, void* v) {
   ((QuestionUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_fullscreenBtn_i(o,v);
 }
 
+inline void QuestionUIAbstract::cb_soundBtn_i(fltk::LightButton*, void*) {
+  cb_soundToggle()
+;}
+void QuestionUIAbstract::cb_soundBtn(fltk::LightButton* o, void* v) {
+  ((QuestionUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_soundBtn_i(o,v);
+}
+
 inline void QuestionUIAbstract::cb_timer_i(TimerProgressBar*, void*) {
   cb_timeout()
 ;}
@@ -83,18 +97,23 @@ fltk::Group* o = LeftGroup = new fltk::Group(5, 5, 450, 590);
       o->begin();
       
       {
-fltk::Group* o = QuestionGroup = new fltk::Group(5, 5, 440, 520);
+fltk::Group* o = QuestionGroup = new fltk::Group(5, 5, 440, 520, "Question #/#");
         o->set_vertical();
         o->box(fltk::THIN_UP_BOX);
+        o->labeltype(fltk::ENGRAVED_LABEL);
+        o->labelsize(18);
+        o->textsize(18);
+        o->align(fltk::ALIGN_TOP|fltk::ALIGN_INSIDE);
         o->begin();
         
         {
-fltk::TextDisplay* o = questionDisplay = new fltk::TextDisplay(5, 20, 430, 130, "Question #/#");
-          o->labeltype(fltk::ENGRAVED_LABEL);
-          o->labelsize(18);
+fltk::Button* o = questionDisplay = new fltk::Button(5, 20, 430, 130, "button");
+          o->buttonbox(fltk::DOWN_BOX);
+          o->buttoncolor((fltk::Color)0xffffff00);
+          o->labelsize(16);
           o->textsize(16);
-          o->align(fltk::ALIGN_TOP);
-          o->wrap_mode(true);
+          o->callback((fltk::Callback*)cb_questionDisplay);
+          o->align(fltk::ALIGN_TOP|fltk::ALIGN_LEFT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP);
         }
         
         {
@@ -163,9 +182,9 @@ fltk::Button* o = fullscreenBtn = new fltk::Button(157, 8, 130, 40, _("Fullscree
         }
         
         {
-fltk::Button* o = auxBtn = new fltk::Button(302, 8, 130, 40, _("Aux") );
+fltk::LightButton* o = soundBtn = new fltk::LightButton(302, 8, 130, 40, _("Dictation") );
           o->labelfont(fltk::HELVETICA_BOLD);
-          o->deactivate();
+          o->callback((fltk::Callback*)cb_soundBtn);
         }
         o->end();
       }
@@ -226,4 +245,10 @@ void QuestionUIAbstract::cb_next(fltk::Widget* pBtn, const char* btn) {
 }
 
 void QuestionUIAbstract::cb_timeout() {
+}
+
+void QuestionUIAbstract::cb_questionRelease() {
+}
+
+void QuestionUIAbstract::cb_soundToggle() {
 }

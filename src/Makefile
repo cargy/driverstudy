@@ -62,7 +62,7 @@ driverstudy: answer.o question.o test.o sqlite3.o \
 	sqlite3.o TimerProgressBar.o \
 	QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	driverstudy.o \
-	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/driverstudy	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o build/driverstudy	
 	#@echo Strip $@...
 	#$(STRIP) build/$@
 	#$(POSTBUILD) build/QuestionViewMain

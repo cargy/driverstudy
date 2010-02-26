@@ -142,7 +142,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	if (strcmp(slang,"albanian") == 0) langid = DBALBANIANID;
 	assert(langid>0);
 	
-	if (qv) delete qv;
+	//if (qv) delete qv;
 	vector<int> *v = sql.testTemplate(catid,langid);
 	
 	int *array = sql.createRandomTestFromTemplate(v);

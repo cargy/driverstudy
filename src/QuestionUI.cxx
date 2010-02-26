@@ -29,6 +29,14 @@
 using namespace std;
 #include "MainMenuUI.h"
 
+#ifdef ENABLE_SOUND
+#include <audiere.h>
+using namespace audiere;
+extern AudioDevicePtr device;
+extern OutputStreamPtr sound;
+#endif //ENABLE_SOUND
+
+
 QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	: QuestionUIAbstract(x,y,width,height,label)
 {
@@ -86,6 +94,13 @@ void QuestionUI::cb_timeout()
 	fltk::alert(_("You are out of time!"));
 }
 
+void QuestionUI::cb_soundToggle()
+{
+	static bool playSound;
+	playSound = !playSound;
+	printf("playSound: %d\n", playSound);
+}
+
 void QuestionUI::cb_fullscreen()
 {
 	((MainMenuUI*)child_of())->fullscreenBtn->do_callback();
@@ -99,12 +114,33 @@ void QuestionUI::cb_answerRB(fltk::Widget* o, long v) {
   ((QuestionUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_answerRB_i(o,v);
 }
 
+void QuestionUI::cb_questionRelease()
+{
+	char sndFile[255];
+	sprintf( sndFile,"voice/%s.ogg",currTest->question()->sound() );
+	sound = OutputStreamPtr(OpenSound(device,sndFile, true));
+	if (sound) sound->play();
+#ifdef DEBUG
+	else printf("Couldn't play file: %s\n",sndFile);
+	printf("sndFile = %s\n",sndFile);
+#endif
+	
+}
 void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)
 {
 	if (selectedRB() > -1)
 	{
 		validateBtn->activate();
 		currTest->selectAnswerOfCurrentQuestion(selectedRB());
+		char sndFile[255];
+		sprintf( sndFile,"voice/%s.ogg",currTest->question()->answerSound(selectedRB()) );
+		sound = OutputStreamPtr(OpenSound(device,sndFile, true));	
+		//sound = OutputStreamPtr(OpenSound(device,"/home/krizz/dev/C++/audiere/lup.spx", true));
+		if (sound) sound->play();
+#ifdef DEBUG
+		else printf("Couldn't play file: %s\n",sndFile);
+		printf("sndFile = %s\n",sndFile);
+#endif
 	}
 	else validateBtn->deactivate();	
 }
@@ -192,8 +228,8 @@ void QuestionUI::showQuestion(Question* q)
 	
 	char qNo[150];
 	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
-	questionDisplay->copy_label(qNo);
-	questionDisplay->text(q->title());
+	QuestionGroup->copy_label(qNo);
+	questionDisplay->label(q->title());
 	
 	createAnswerRB(q->getAOA());
 
@@ -260,6 +296,7 @@ void QuestionUI::createAnswerRB(int no)
 
 		rb_y = (answerRB[i]->y() + answerRB[i]->h() + space);
 	}
+	AnswerGroup->init_sizes();
 	
 }
 void QuestionUI::previewQuestion(Question* q)
@@ -269,8 +306,8 @@ void QuestionUI::previewQuestion(Question* q)
 	char qNo[150];
     sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
     label(qNo);
-    questionDisplay->copy_label(qNo);
-    questionDisplay->text(q->title());
+    QuestionGroup->copy_label(qNo);
+    questionDisplay->label(q->title());
     assert(q->getSelectedAnswer() != q->getCorrectAnswer());
     
   	createAnswerRB(q->getAOA());

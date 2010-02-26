@@ -5,9 +5,9 @@
 #include <fltk/Window.h>
 #include "TimerProgressBar.h"
 #include <fltk/Group.h>
-#include <fltk/TextDisplay.h>
-#include <fltk/RadioButton.h>
 #include <fltk/Button.h>
+#include <fltk/RadioButton.h>
+#include <fltk/LightButton.h>
 #include <fltk/Widget.h>
 
 class QuestionUIAbstract : public fltk::Window  {
@@ -16,9 +16,13 @@ public:
   fltk::Group *mainContainer;
 private:
     fltk::Group *LeftGroup;
-      fltk::Group *QuestionGroup;
 public:
-        fltk::TextDisplay *questionDisplay;
+      fltk::Group *QuestionGroup;
+        fltk::Button *questionDisplay;
+private:
+        inline void cb_questionDisplay_i(fltk::Button*, void*);
+        static void cb_questionDisplay(fltk::Button*, void*);
+public:
         fltk::Group *AnswerGroup;
 private:
           inline void cb_answerRB_i(fltk::RadioButton*, long);
@@ -41,7 +45,11 @@ public:
 private:
         inline void cb_fullscreenBtn_i(fltk::Button*, void*);
         static void cb_fullscreenBtn(fltk::Button*, void*);
-        fltk::Button *auxBtn;
+public:
+        fltk::LightButton *soundBtn;
+private:
+        inline void cb_soundBtn_i(fltk::LightButton*, void*);
+        static void cb_soundBtn(fltk::LightButton*, void*);
     fltk::Group *RightGroup;
 public:
       fltk::Widget *imageHolder;
@@ -68,5 +76,7 @@ public:
   virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
   virtual void cb_next(fltk::Widget* pBtn, const char* btn);
   virtual void cb_timeout();
+  virtual void cb_questionRelease();
+  virtual void cb_soundToggle();
 };
 #endif

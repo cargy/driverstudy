@@ -33,8 +33,10 @@ class Question
 		void selectAnswer(int selected);
 		const char *title();
 		const char *image();
+		const char *sound();
 		const char *getBookSection();
 		const char *getAnswer(unsigned int i);
+		const char *answerSound(unsigned int i);
 		unsigned int getAOA();
 		int getSelectedAnswer();
 		int getCorrectAnswer();

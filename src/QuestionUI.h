@@ -37,6 +37,8 @@ class QuestionUI: public QuestionUIAbstract
 		virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
 		virtual void cb_next(fltk::Widget* pBtn, const char* Btn);
 		virtual void cb_timeout();
+		virtual void cb_questionRelease();
+		virtual void cb_soundToggle();
 		int selectedRB();
 		void showQuestion(Question* q);
 		void previewQuestion(Question* q);

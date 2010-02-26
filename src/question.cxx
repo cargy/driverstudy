@@ -68,6 +68,8 @@ const char* Question::title() {	return question;}
 
 const char* Question::image() {	return imgFile; }
 
+const char* Question::sound() {	return sndFile; }
+
 const char* Question::getBookSection(){	return book;}
 
 const char* Question::getAnswer(unsigned int i)
@@ -76,6 +78,14 @@ const char* Question::getAnswer(unsigned int i)
 	assert(i<amountOfAnswers);
 	#endif
 	return qAnswers[i].text();
+}
+
+const char* Question::answerSound(unsigned int i)
+{
+	#ifdef DEBUG
+	assert(i<amountOfAnswers);
+	#endif
+	return qAnswers[i].soundFile();
 }
 
 unsigned int Question::getAOA(){return amountOfAnswers;}

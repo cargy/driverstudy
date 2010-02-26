@@ -34,6 +34,13 @@
 #include <cstdio>
 #include <cstdlib>
 
+#ifdef ENABLE_SOUND
+#include <audiere.h>
+using namespace audiere;
+AudioDevicePtr device;
+OutputStreamPtr sound;
+#endif //ENABLE_SOUND
+
 bool fullscreen_flag=false;
 
 #include "MainMenuUI.h"
@@ -115,7 +122,7 @@ const char* getUILanguage() {
 int main(int argc, char** argv)
 {
 	// Initial global objects.
-	
+	device = AudioDevicePtr(OpenDevice());
 	// read locale from enviroment
 	setlocale (LC_ALL, "");
 	int i;

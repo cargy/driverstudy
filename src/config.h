@@ -22,6 +22,7 @@
 #define APPLICATIONTITLE "Driver Study"
 #define DRIVERSTUDYVERSION "0.7.7"
 #define DEBUG
+#define ENABLE_SOUND
 
 
 #define DATABASE "ExerBase.db"

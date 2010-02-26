@@ -70,6 +70,11 @@ Question* Test::next()
 	
 }
 
+Question* Test::question()
+{
+	return &tQuestions[ccursor];
+}
+
 bool Test::is_next()
 {
 	unsigned int flag = 0;

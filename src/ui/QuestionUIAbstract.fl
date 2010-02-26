@@ -19,21 +19,22 @@ class QuestionUIAbstract {open : {public fltk::Window}
   Function {QuestionUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
   } {
     {fltk::Window} mainContainer {open
-      xywh {79 92 800 600} resizable
+      xywh {557 74 800 600} resizable
       class {fltk::Group} visible
     } {
       {fltk::Group} LeftGroup {open
         private xywh {5 5 450 590} resizable box THIN_DOWN_BOX
       } {
         {fltk::Group} QuestionGroup {
-          private xywh {5 5 440 520} box THIN_UP_BOX
+          label {Question \#/\#} open
+          xywh {5 5 440 520} align 33 box THIN_UP_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
         } {
-          {fltk::TextDisplay} questionDisplay {
-            label {Question \#/\#}
-            xywh {5 20 430 130} align 1 labeltype ENGRAVED_LABEL labelsize 18 textsize 16
-            extra_code {o->wrap_mode(true);}
+          {fltk::Button} questionDisplay {
+            label button
+            callback {cb_questionRelease()}
+            xywh {5 20 430 130} align 165 buttonbox DOWN_BOX buttoncolor 0xffffff00 labelsize 16 textsize 16
           }
-          {fltk::Group} AnswerGroup {open
+          {fltk::Group} AnswerGroup {
             xywh {5 155 430 355} box THIN_DOWN_BOX
           } {
             {fltk::RadioButton} {answerRB[0]} {
@@ -75,13 +76,14 @@ class QuestionUIAbstract {open : {public fltk::Window}
             callback {cb_fullscreen()}
             xywh {157 8 130 40} type TOGGLE labelfont 1 shortcut 0xffc8
           }
-          {fltk::Button} auxBtn {
-            label _Aux
-            private xywh {302 8 130 40} deactivate labelfont 1
+          {fltk::LightButton} soundBtn {
+            label _Dictation
+            callback {cb_soundToggle()} selected
+            xywh {302 8 130 40} labelfont 1
           }
         }
       }
-      {fltk::Group} RightGroup {open
+      {fltk::Group} RightGroup {
         private xywh {455 5 340 590} box THIN_DOWN_BOX
       } {
         {fltk::Widget} imageHolder {
@@ -113,12 +115,16 @@ class QuestionUIAbstract {open : {public fltk::Window}
   }
   Function {cb_close()} {open return_type void attributes virtual
   } {}
-  Function {cb_fullscreen()} {open return_type void attributes virtual
+  Function {cb_fullscreen()} {return_type void attributes virtual
   } {}
   Function {cb_answerSelected(fltk::Widget *pRB, long rbId)} {open return_type void attributes virtual
   } {}
   Function {cb_next(fltk::Widget* pBtn, const char* btn)} {open return_type void attributes virtual
   } {}
-  Function {cb_timeout()} {selected return_type void attributes virtual
+  Function {cb_timeout()} {return_type void attributes virtual
+  } {}
+  Function {cb_questionRelease()} {open return_type void attributes virtual
+  } {}
+  Function {cb_soundToggle()} {open return_type void attributes virtual
   } {}
 } 
