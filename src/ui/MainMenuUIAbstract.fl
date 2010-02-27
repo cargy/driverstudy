@@ -113,9 +113,9 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           }
         }
         {fltk::LightButton} soundBtn {
-          label _Sound
-          callback {cb_sound()} selected
-          xywh {448 11 80 60} labelsize 14 textsize 14
+          label _Dictation
+          callback {cb_soundToggle()} selected
+          xywh {439 11 90 60} labelfont 1
         }
         {fltk::Button} fullscreenBtn {
           label _Fullscreen
@@ -139,6 +139,6 @@ class MainMenuUIAbstract {open : {public fltk::Window}
   } {}
   Function {cb_selectLanguage(fltk::Widget* sItem, void* userdata)} {open return_type void attributes virtual
   } {}
-  Function {cb_sound()} {open return_type void attributes virtual
+  Function {cb_soundToggle()} {return_type void attributes virtual
   } {}
 } 

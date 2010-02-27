@@ -30,6 +30,11 @@
 #include "sqlite3.cxx"
 #include "QuestionUI.h"
 
+#ifdef ENABLE_SOUND
+#include "DictationSystem.h"
+extern DictationSystem* ds;
+#endif //ENABLE_SOUND
+
 MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
@@ -67,6 +72,7 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
     scarBtn->image( fltk::SharedImage::get("icons/car_256x182.png") );
 	//carBtn->align(fltk::ALIGN_CLIP);
     scarBtn->align((fltk::RESIZE_FIT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP));
+    
 }
 
 int MainMenuUI::convLangtoMenuItemIndexNo() {
@@ -89,6 +95,28 @@ void MainMenuUI::cb_exit()
 void MainMenuUI::cb_help()
 {
 	fltk::message(_("@c;%s ver. %s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
+}
+
+void MainMenuUI::cb_soundToggle()
+{
+	static bool playSound;
+	playSound = !playSound;
+	if (playSound)
+	{
+		if ( !ds->initialize() ) 
+		{
+			fltk::alert("Couldn't initialize audio device: %s", ds->audio_device());
+			playSound=false;
+		}
+	}
+	else ds->deinitialize();
+	
+	
+	// update interface if initialization has failed
+	soundBtn->value(playSound);
+	if (qv) qv->soundBtn->value(playSound);	
+	printf("playSound: %d\n", playSound);
+	
 }
 
 void MainMenuUI::cb_fullscreen()

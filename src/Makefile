@@ -54,12 +54,12 @@ QuestionUIAbstract.cxx MainMenuUIAbstract.cxx:
 	sed -i  's/"_\([^"]*\)"/_("\1") /g' MainMenuUIAbstract.cxx
 	
 driverstudy: answer.o question.o test.o sqlite3.o \
-			 TimerProgressBar.o \
+			 DictationSystem.o TimerProgressBar.o \
 			 MainMenuUIAbstract.o MainMenuUI.o  \
 			 QuestionUIAbstract.o QuestionUI.o driverstudy.o 
 	@echo === Linking $@... ===
 	$(CXX) answer.o question.o test.o \
-	sqlite3.o TimerProgressBar.o \
+	sqlite3.o DictationSystem.o TimerProgressBar.o \
 	QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	driverstudy.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o build/driverstudy	
@@ -111,7 +111,7 @@ driver_res.o: driverstudy.rc
 driverstudy.exe: driver_res.o MainMenuUI.cxx QuestionUI.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ -static -O2 -Wall driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
-	TimerProgressBar.cxx test.cxx question.cxx answer.cxx driver_res.o \
+	DictationSystem.cxx TimerProgressBar.cxx test.cxx question.cxx answer.cxx driver_res.o \
 	-o build/DriverStudy.exe \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \

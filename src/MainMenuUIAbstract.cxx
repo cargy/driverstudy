@@ -66,7 +66,7 @@ void MainMenuUIAbstract::cb_languagePUM(fltk::PopupMenu* o, void* v) {
 }
 
 inline void MainMenuUIAbstract::cb_soundBtn_i(fltk::LightButton*, void*) {
-  cb_sound()
+  cb_soundToggle()
 ;}
 void MainMenuUIAbstract::cb_soundBtn(fltk::LightButton* o, void* v) {
   ((MainMenuUIAbstract*)(o->parent()->parent()->user_data()))->cb_soundBtn_i(o,v);
@@ -218,9 +218,8 @@ fltk::Item* o = new fltk::Item(_("Albanian") );
       }
       
       {
-fltk::LightButton* o = soundBtn = new fltk::LightButton(448, 11, 80, 60, _("Sound") );
-        o->labelsize(14);
-        o->textsize(14);
+fltk::LightButton* o = soundBtn = new fltk::LightButton(439, 11, 90, 60, _("Dictation") );
+        o->labelfont(fltk::HELVETICA_BOLD);
         o->callback((fltk::Callback*)cb_soundBtn);
       }
       
@@ -252,5 +251,5 @@ void MainMenuUIAbstract::cb_start(fltk::Widget* pBtn, const char* tCategory) {
 void MainMenuUIAbstract::cb_selectLanguage(fltk::Widget* sItem, void* userdata) {
 }
 
-void MainMenuUIAbstract::cb_sound() {
+void MainMenuUIAbstract::cb_soundToggle() {
 }

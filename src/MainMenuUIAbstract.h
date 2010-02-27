@@ -78,6 +78,6 @@ public:
   virtual void cb_fullscreen();
   virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
   virtual void cb_selectLanguage(fltk::Widget* sItem, void* userdata);
-  virtual void cb_sound();
+  virtual void cb_soundToggle();
 };
 #endif

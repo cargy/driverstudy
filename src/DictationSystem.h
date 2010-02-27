@@ -1,4 +1,4 @@
-//      MainMenuUI.h
+//      DictationSystem.h
 //      
 //      Copyright 2010 Argyriadis Christos <krizz@Freak>
 //      
@@ -18,30 +18,29 @@
 //      MA 02110-1301, USA.
 
 
-#ifndef MAINMENUUI_H
-#define MAINMENUUI_H
+#ifndef DICTATIONSYSTEM_H
+#define DICTATIONSYSTEM_H
 #include "config.h"
-#include "MainMenuUIAbstract.h"
-#include "QuestionUI.h"
+#include <audiere.h>
+using namespace audiere;
 
-class MainMenuUI: public MainMenuUIAbstract
+
+class DictationSystem
 {
 	public:
-		MainMenuUI(int x, int y, int width, int height, const char* label);
-		QuestionUI *qv;
+		DictationSystem();
+		int initialize();
+		void deinitialize();
+		bool initialized();
+		int play(const char* audiofilename);
+		const char* audio_device();
 		
-				
+			
 	private:
-		int win_x, win_y, win_w, win_h;
-		//bool fullscreen_flag;
-		int convLangtoMenuItemIndexNo();
-		virtual void cb_exit();
-		virtual void cb_help();
-		virtual void cb_fullscreen();
-		virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
-		virtual void cb_selectLanguage(fltk::Widget* sItem, void* userdata);
-		virtual void cb_soundToggle();
-		void changeUILocale(fltk::Group* o);
+		AudioDevicePtr device;
+		OutputStreamPtr sound;
+		const char* audio_driver;
+	
 };
 
-#endif /* MAINMENUUI_H */ 
+#endif /* DICTATIONSYSTEM_H */ 

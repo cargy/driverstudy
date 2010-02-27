@@ -30,10 +30,8 @@ using namespace std;
 #include "MainMenuUI.h"
 
 #ifdef ENABLE_SOUND
-#include <audiere.h>
-using namespace audiere;
-extern AudioDevicePtr device;
-extern OutputStreamPtr sound;
+#include "DictationSystem.h"
+extern DictationSystem* ds;
 #endif //ENABLE_SOUND
 
 
@@ -80,6 +78,7 @@ void QuestionUI::show()
 {
 	extern bool fullscreen_flag;
 	if (fullscreen_flag) fullscreen();
+	soundBtn->value(ds->initialized());
 	fltk::Window::show();
 	timer->start();
 }
@@ -96,9 +95,15 @@ void QuestionUI::cb_timeout()
 
 void QuestionUI::cb_soundToggle()
 {
-	static bool playSound;
+	/*
+	static bool playSound = ds->initialized();
 	playSound = !playSound;
+	if (playSound) ds->initialize();
+	else ds->deinitialize();
 	printf("playSound: %d\n", playSound);
+	*/
+	((MainMenuUI*)child_of())->soundBtn->do_callback();
+	//((MainMenuUI*)child_of())->soundBtn->state(!((MainMenuUI*)child_of())->soundBtn->state());
 }
 
 void QuestionUI::cb_fullscreen()
@@ -114,17 +119,10 @@ void QuestionUI::cb_answerRB(fltk::Widget* o, long v) {
   ((QuestionUI*)(o->parent()->parent()->parent()->parent()->user_data()))->cb_answerRB_i(o,v);
 }
 
+
 void QuestionUI::cb_questionRelease()
 {
-	char sndFile[255];
-	sprintf( sndFile,"voice/%s.ogg",currTest->question()->sound() );
-	sound = OutputStreamPtr(OpenSound(device,sndFile, true));
-	if (sound) sound->play();
-#ifdef DEBUG
-	else printf("Couldn't play file: %s\n",sndFile);
-	printf("sndFile = %s\n",sndFile);
-#endif
-	
+	ds->play(currTest->question()->sound());
 }
 void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)
 {
@@ -132,15 +130,7 @@ void QuestionUI::cb_answerSelected(fltk::Widget *pRB, long rbId)
 	{
 		validateBtn->activate();
 		currTest->selectAnswerOfCurrentQuestion(selectedRB());
-		char sndFile[255];
-		sprintf( sndFile,"voice/%s.ogg",currTest->question()->answerSound(selectedRB()) );
-		sound = OutputStreamPtr(OpenSound(device,sndFile, true));	
-		//sound = OutputStreamPtr(OpenSound(device,"/home/krizz/dev/C++/audiere/lup.spx", true));
-		if (sound) sound->play();
-#ifdef DEBUG
-		else printf("Couldn't play file: %s\n",sndFile);
-		printf("sndFile = %s\n",sndFile);
-#endif
+		ds->play(currTest->question()->answerSound(selectedRB()));
 	}
 	else validateBtn->deactivate();	
 }
@@ -272,7 +262,8 @@ void QuestionUI::showQuestion(Question* q)
 	if ( currTest->is_next() ) nextBtn->activate();
 	else nextBtn->deactivate();
 	
-	redraw();	
+	redraw();
+	ds->play(currTest->question()->sound());
 }
 
 void QuestionUI::createAnswerRB(int no)

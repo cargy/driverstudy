@@ -31,15 +31,9 @@
 #include <fltk/error.h>
 #include <fltk/x.h>
 
+#include "DictationSystem.h"
 #include <cstdio>
 #include <cstdlib>
-
-#ifdef ENABLE_SOUND
-#include <audiere.h>
-using namespace audiere;
-AudioDevicePtr device;
-OutputStreamPtr sound;
-#endif //ENABLE_SOUND
 
 bool fullscreen_flag=false;
 
@@ -118,11 +112,10 @@ const char* getUILanguage() {
 	return default_test_language;
 }
 
+DictationSystem* ds;
 
 int main(int argc, char** argv)
 {
-	// Initial global objects.
-	device = AudioDevicePtr(OpenDevice());
 	// read locale from enviroment
 	setlocale (LC_ALL, "");
 	int i;
@@ -135,6 +128,9 @@ int main(int argc, char** argv)
 	
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
+    
+    ds = new DictationSystem();
+    
     
     char applicationTitle[50];
     sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
