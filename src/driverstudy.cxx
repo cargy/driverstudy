@@ -25,9 +25,7 @@
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
 #include <fltk/run.h>
-#ifdef DEBUG
 #include <fltk/ask.h>
-#endif
 #include <fltk/error.h>
 #include <fltk/x.h>
 
@@ -114,6 +112,11 @@ const char* getUILanguage() {
 
 DictationSystem* ds;
 
+void cb_exit(fltk::Widget*, void*)
+{
+	if ( fltk::ask(_("Do you want to cancel this Test?")) ) exit(0);
+}
+
 int main(int argc, char** argv)
 {
 	// read locale from enviroment
@@ -125,7 +128,7 @@ int main(int argc, char** argv)
 		#endif
 		fltk::fatal("%s\n -l[ocale] uilocale\n -f[ullscreen]\n", fltk::help);
 	}
-	
+
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
@@ -136,6 +139,10 @@ int main(int argc, char** argv)
     sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
 	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
 	//window->icon((char *)LoadIcon(fltk::xdisplay, MAKEINTRESOURCE(101)));
+#ifndef DEBUG	
+	window->callback(cb_exit);
+	window->exitBtn->callback(cb_exit);
+#endif
 
 	window->show(argc, argv);
 #ifdef _WIN32

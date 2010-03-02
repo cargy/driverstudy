@@ -78,7 +78,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
       } {
         {fltk::Button} exitBtn {
           label _Exit
-          callback {cb_exit()}
+          callback {cb_exit()} selected
           xywh {18 11 60 60}
         }
         {fltk::Button} helpBtn {
@@ -114,7 +114,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         }
         {fltk::LightButton} soundBtn {
           label _Dictation
-          callback {cb_soundToggle()} selected
+          callback {cb_soundToggle()}
           xywh {439 11 90 60} labelfont 1
         }
         {fltk::Button} fullscreenBtn {
@@ -129,7 +129,7 @@ class MainMenuUIAbstract {open : {public fltk::Window}
       }
     }
   }
-  Function {cb_exit()} {open return_type void attributes virtual
+  Function {cb_exit()} {return_type void attributes virtual
   } {}
   Function {cb_help()} {return_type void attributes virtual
   } {}

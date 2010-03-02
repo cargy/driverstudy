@@ -19,9 +19,7 @@
 
 
 #include "DictationSystem.h"
-#ifdef DEBUG
 #include <cstdio>
-#endif
 #include <audiere.h>
 using namespace audiere;
 
@@ -35,10 +33,14 @@ int DictationSystem::initialize()
 	// Initial global objects.
 	device = OpenDevice(audio_driver);
 	if (!device) {
+		#ifdef DEBUG
 		printf("Couldn't initialize audio_driver: %s\n",audio_driver);
+		#endif
 		return 0;
 	}
+	#ifdef DEBUG
 	printf("Opened Device: %s\n" ,device->getName() );
+	#endif
 	audio_driver = device->getName();
 	return 1;
 }

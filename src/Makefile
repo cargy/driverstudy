@@ -33,9 +33,9 @@ CC      = $(shell $(FLTK2CONFIG) --cc)
 
 #########################################################
 
-all: QuestionWindow QuestionViewMain
+all:  driverstudy
 
-run: QuestionWindow
+run: driverstudy
 	bash -c "cd build;./QuestionWindow"&
 
 ui: cleanui QuestionUIAbstract.cxx

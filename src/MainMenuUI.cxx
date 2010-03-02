@@ -114,8 +114,10 @@ void MainMenuUI::cb_soundToggle()
 	
 	// update interface if initialization has failed
 	soundBtn->value(playSound);
-	if (qv) qv->soundBtn->value(playSound);	
+	if (qv) qv->soundBtn->value(playSound);
+	#ifdef DEBUG
 	printf("playSound: %d\n", playSound);
+	#endif
 	
 }
 
