@@ -89,7 +89,7 @@ int MainMenuUI::convLangtoMenuItemIndexNo() {
 
 void MainMenuUI::cb_exit()
 {
-	if ( dlg::ask(_("Do you want to cancel this Test?")) ) exit(0);
+	if ( dlg::ask(_("Are you sure you want to quit?")) ) exit(0);
 }
 
 void MainMenuUI::cb_help()
@@ -105,9 +105,10 @@ void MainMenuUI::cb_soundToggle()
 	{
 		if ( !ds->initialize() ) 
 		{
-			dlg::alert("Couldn't initialize audio device: %s", ds->audio_device());
+			dlg::alert(_("Couldn't initialize audio device %s"), ds->audio_device());
 			playSound=false;
 		}
+		statusBar->label(ds->audio_device());
 	}
 	else ds->deinitialize();
 	
@@ -148,7 +149,7 @@ void MainMenuUI::cb_fullscreen()
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 {
-	statusBar->label("Creating Test...");
+	statusBar->label(_("Creating Test, please wait ..."));
 	deactivate();
 	fltk::check();
 	//fltk::message("Starting %s Test in %s",tCategory, languagePUM->get_item()->label() );
@@ -223,7 +224,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	qv->child_of(this);
 	qv->show();
 	activate();
-	statusBar->label("Test created Successfully!");
+	statusBar->label(_("Test created Successfully!"));
 }
 
 // debrecated method

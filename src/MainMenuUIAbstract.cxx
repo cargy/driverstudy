@@ -145,7 +145,7 @@ fltk::Group* o = new fltk::Group(13, 140, 590, 120);
         o->begin();
         
         {
-fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 120, _("Motorcycle Special Cateogry") );
+fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 120, _("Motorcycle Special Category") );
           o->labelsize(14);
           o->textsize(14);
           o->callback((fltk::Callback*)cb_smotorcycleBtn, (void*)("smotorcycle"));
@@ -171,7 +171,7 @@ fltk::Group* o = new fltk::Group(12, 371, 615, 85);
       o->begin();
       
       {
-fltk::Button* o = exitBtn = new fltk::Button(18, 11, 60, 60, _("Exit") );
+fltk::Button* o = exitBtn = new fltk::Button(18, 11, 60, 60, _("Quit") );
         o->callback((fltk::Callback*)cb_exitBtn);
       }
       

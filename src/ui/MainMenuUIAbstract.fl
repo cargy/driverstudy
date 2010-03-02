@@ -60,9 +60,9 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           xywh {13 140 590 120}
         } {
           {fltk::Button} smotorcycleBtn {
-            label {_Motorcycle Special Cateogry}
+            label {_Motorcycle Special Category}
             user_data {"smotorcycle"} user_data_type {const char*}
-            callback {cb_start(o,v)}
+            callback {cb_start(o,v)} selected
             xywh {0 0 130 120} align 128 labelsize 14 textsize 14
           }
           {fltk::Button} scarBtn {
@@ -77,8 +77,8 @@ class MainMenuUIAbstract {open : {public fltk::Window}
         xywh {12 371 615 85} box ENGRAVED_BOX
       } {
         {fltk::Button} exitBtn {
-          label _Exit
-          callback {cb_exit()} selected
+          label _Quit
+          callback {cb_exit()}
           xywh {18 11 60 60}
         }
         {fltk::Button} helpBtn {

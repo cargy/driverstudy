@@ -114,19 +114,11 @@ DictationSystem* ds;
 
 void cb_exit(fltk::Widget*, void*)
 {
-	if ( dlg::ask(_("Do you want to cancel this Test?")) ) exit(0);
+	if ( dlg::ask(_("Are you sure you want to quit?")) ) exit(0);
 }
 
 int main(int argc, char** argv)
 {
-	// initialize dlg windows parameters
-	#ifdef TOUCHSCREEN
-	dlg::format(90,80, APPLICATIONTITLE,dlg::POS_MONITOR_CENTER);
-	#else
-	dlg::message_window_label = APPLICATIONTITLE;
-	#endif
-	//fltk::Button::default_style->labelsize_ = 35;
-	
 	// read locale from enviroment
 	setlocale (LC_ALL, "");
 	int i;
@@ -140,6 +132,19 @@ int main(int argc, char** argv)
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
+    // initialize dlg windows parameters
+	#ifdef TOUCHSCREEN
+	dlg::format(90,80, APPLICATIONTITLE,dlg::POS_MONITOR_CENTER);
+	#else
+	dlg::format(75,30, APPLICATIONTITLE,dlg::POS_BUTTON_HOTSPOT);
+	dlg::position(dlg::POS_BUTTON_HOTSPOT);
+	#endif
+	//fltk::Button::default_style->labelsize_ = 35;
+	dlg::no = _("&No");
+	dlg::yes= _("&Yes");
+	dlg::ok = _("&OK");
+	dlg::cancel= _("&Cancel");
+
     ds = new DictationSystem();
     
     

@@ -108,17 +108,20 @@ driver_res.o: driverstudy.rc
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-windres -i driverstudy.rc -o driver_res.o
 	
-driverstudy.exe: driver_res.o MainMenuUI.cxx QuestionUI.cxx
+driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ -static -O2 -Wall driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
 	DictationSystem.cxx dlg.cxx TimerProgressBar.cxx test.cxx question.cxx answer.cxx driver_res.o \
 	-o build/DriverStudy.exe \
+	-L/home/krizz/src/cross_win32/lib \
+	-laudiere -ldsound -lole32 -lrpcrt4 -lspeex -lwinmm -lvorbisfile -lvorbis -logg -lpthread -lws2_32 \
+	-I/home/krizz/src/cross_win32/include -DPTW32_STATIC_LIB=1 -D_WIN32_WINNT=0x0501 \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a  \
-	/home/krizz/src/cross_win32/lib/libsqlite3.a
+	/home/krizz/src/cross_win32/lib/libsqlite3.a 
 	#@echo Strip $@...
 	#$(STRIP) build/$@
 	#$(POSTBUILD) build/DriverStudy.exe

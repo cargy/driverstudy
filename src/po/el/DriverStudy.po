@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Driver Study ver 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-17 23:29+0200\n"
+"POT-Creation-Date: 2010-03-03 01:12+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Argyriadis Christos <c.argyriadis@locusta.gr>\n"
 "Language-Team: Locusta <c.argyriadis@locusta.gr>\n"
@@ -17,15 +17,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../QuestionUI.cxx:53
+#: ../driverstudy.cxx:117
+msgid "Are you sure you want to quit?"
+msgstr "Είστε σίγουρος ότι θέλετε να τερματίσετε την εφαρμογή;"
+
+#: ../QuestionUI.cxx:59
 msgid "Do you want to cancel this Test?"
 msgstr "Είστε σίγουρος ότι θέλετε να ακυρώσετε το Τεστ;"
 
-#: ../QuestionUI.cxx:86
+#: ../QuestionUI.cxx:93
 msgid "You are out of time!"
 msgstr "Ο διαθέσιμος χρόνος εξαντλήθηκε!"
 
-#: ../QuestionUI.cxx:121
+#: ../QuestionUI.cxx:139
 #, c-format
 msgid ""
 "Test Completed!\n"
@@ -38,7 +42,7 @@ msgstr ""
 "Απαντήσατε σωστά:\n"
 "%d από τις %d ερωτήσεις."
 
-#: ../QuestionUI.cxx:130
+#: ../QuestionUI.cxx:148
 msgid ""
 "All wrong questions were shown!\n"
 "\n"
@@ -54,106 +58,132 @@ msgstr ""
 "- να ξεκινήσετε νέο Τεστ [Νέο Τεστ]\n"
 "- να επιστρέψετε στην αρχική οθόνη [Άκυρο]\n"
 
-#: ../QuestionUI.cxx:135
+#: ../QuestionUI.cxx:153
 msgid "Show me again"
 msgstr "Ξανά δείξε μου"
 
-#: ../QuestionUI.cxx:135
+#: ../QuestionUI.cxx:153
 msgid "New Test"
 msgstr "Νέο Τεστ"
 
-#: ../QuestionUI.cxx:135
+#: ../QuestionUI.cxx:153
 msgid "Cancel"
 msgstr "Άκυρο"
 
-#: ../QuestionUI.cxx:188
+#: ../QuestionUI.cxx:212
 #, c-format
 msgid "Question %i/%i"
 msgstr "Ερώτηση %i/%i"
 
-#: ../QuestionUI.cxx:264
+#: ../QuestionUI.cxx:290
 #, c-format
 msgid "Question %i (%s)"
 msgstr "Ερώτηση %i (%s)"
 
-#: ../QuestionUI.cxx:320
-#: ../MainMenuUIAbstract.cxx:93
+#: ../QuestionUI.cxx:346
+#: ../MainMenuUIAbstract.cxx:121
 msgid "Car"
 msgstr "Αυτοκίνητο"
 
-#: ../QuestionUI.cxx:321
-#: ../MainMenuUIAbstract.cxx:88
+#: ../QuestionUI.cxx:347
+#: ../MainMenuUIAbstract.cxx:114
 msgid "Motorcycle"
 msgstr "Μοτοσικλέτα"
 
-#: ../QuestionUI.cxx:322
-#: ../MainMenuUIAbstract.cxx:98
+#: ../QuestionUI.cxx:348
+#: ../MainMenuUIAbstract.cxx:128
 msgid "Truck"
 msgstr "Φορτηγό"
 
-#: ../QuestionUI.cxx:323
-#: ../MainMenuUIAbstract.cxx:103
+#: ../QuestionUI.cxx:349
+#: ../MainMenuUIAbstract.cxx:135
 msgid "Bus"
 msgstr "Λεωφορείο"
 
-#: ../QuestionUI.cxx:324
+#: ../QuestionUI.cxx:350
+#: ../MainMenuUIAbstract.cxx:156
+msgid "Car Special Category"
+msgstr "Ειδική Κατηγορία Αυτοκίνητο"
+
+#: ../QuestionUI.cxx:351
+#: ../MainMenuUIAbstract.cxx:148
+msgid "Motorcycle Special Category"
+msgstr "Ειδική Κατηγορία Μοτοσικλέτα"
+
+#: ../QuestionUI.cxx:352
 #, c-format
 msgid "Questionnaire %i - %s"
 msgstr "Ερωτηματολόγιο %i - %s"
 
-#: ../MainMenuUIAbstract.cxx:72
+#: ../MainMenuUIAbstract.cxx:93
 msgid "Application Title"
 msgstr "Τίτλος Εφαρμογής"
 
-#: ../MainMenuUIAbstract.cxx:83
+#: ../MainMenuUIAbstract.cxx:101
 msgid "Select a Test Category"
 msgstr "Επιλέξτε κατηγορία"
 
-#: ../MainMenuUIAbstract.cxx:118
-msgid "Exit"
+#: ../MainMenuUIAbstract.cxx:174
+msgid "Quit"
 msgstr "Έξοδος"
 
-#: ../MainMenuUIAbstract.cxx:123
+#: ../MainMenuUIAbstract.cxx:179
 msgid "Help"
 msgstr "Σχετικά"
 
-#: ../MainMenuUIAbstract.cxx:128
+#: ../MainMenuUIAbstract.cxx:184
 msgid "Select Language"
 msgstr "Επιλογή Γλώσσας"
 
-#: ../MainMenuUIAbstract.cxx:133
+#: ../MainMenuUIAbstract.cxx:191
 msgid "Greek"
 msgstr "Ελληνικά"
 
-#: ../MainMenuUIAbstract.cxx:138
+#: ../MainMenuUIAbstract.cxx:198
 msgid "English"
 msgstr "Αγγλικά"
 
-#: ../MainMenuUIAbstract.cxx:143
+#: ../MainMenuUIAbstract.cxx:205
 msgid "Russian"
 msgstr "Ρώσικα"
 
-#: ../MainMenuUIAbstract.cxx:148
+#: ../MainMenuUIAbstract.cxx:212
 msgid "Albanian"
 msgstr "Αλβανικά"
 
-#: ../MainMenuUIAbstract.cxx:155
+#: ../MainMenuUIAbstract.cxx:221
+msgid "Dictation"
+msgstr "Υπαγόρευση"
+
+#: ../MainMenuUIAbstract.cxx:227
 msgid "Fullscreen"
 msgstr "Πλήρης Οθόνη"
 
-#: ../QuestionUIAbstract.cxx:166
-msgid "Aux"
-msgstr "Εφεδρικό"
+#: ../dlg.cxx:51
+msgid "&No"
+msgstr "&Όχι"
 
-#: ../QuestionUIAbstract.cxx:194
+#: ../dlg.cxx:53
+msgid "&Yes"
+msgstr "&Ναι"
+
+#: ../dlg.cxx:55
+msgid "&OK"
+msgstr "&ΟΚ"
+
+#: ../dlg.cxx:57
+msgid "&Cancel"
+msgstr "&Άκυρο"
+
+#: ../QuestionUIAbstract.cxx:213
 msgid "Validate Answer  @+1+"
 msgstr "Επιβεβαίωση Απάντησης  @+1+"
 
-#: ../QuestionUIAbstract.cxx:202
+#: ../QuestionUIAbstract.cxx:221
 msgid "Next Question  @+1>@+1>[]"
 msgstr "Επόμενη Ερώτηση  @+1>@+1>[]"
 
-#: ../MainMenuUI.cxx:82
+#: ../MainMenuUI.cxx:97
 #, c-format
 msgid ""
 "@c;%s ver. %s\n"
@@ -165,4 +195,35 @@ msgstr ""
 "Copyright(c) 2010\n"
 "Αργυριάδης Χρήστος\n"
 "c.argyriadis@@locusta.gr"
+
+#: ../MainMenuUI.cxx:108
+#, c-format
+msgid "Couldn't initialize audio device %s"
+msgstr "Δεν ήταν δυνατή η αρχικοποίηση του συστήματος ήχου %s"
+
+#: ../MainMenuUI.cxx:152
+msgid "Creating Test, please wait ..."
+msgstr "Δημιουργία νέου Τεστ, παρακαλώ περιμένετε ..."
+
+#: ../MainMenuUI.cxx:202
+#, c-format
+msgid ""
+"This categories tests doesn't exist in %s yet!\n"
+"\n"
+"The Test will be loaded in %s\n"
+msgstr ""
+"Τα Τεστ αυτής της Κατηγορίας δεν είναι διαθέσιμα στα %s!\n"
+"\n"
+"Το Τεστ θα προβληθεί στα %s\n"
+
+#: ../MainMenuUI.cxx:227
+msgid "Test created Successfully!"
+msgstr "Το Τεστ δημιουργήθηκε!"
+
+#~ msgid "Motorcycle Special Cateogry"
+#~ msgstr "Ειδική Κατηγορία"
+#~ msgid "Exit"
+#~ msgstr "Έξοδος"
+#~ msgid "Aux"
+#~ msgstr "Εφεδρικό"
 
