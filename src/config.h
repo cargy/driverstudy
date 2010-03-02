@@ -22,6 +22,8 @@
 #define APPLICATIONTITLE "Driver Study"
 #define DRIVERSTUDYVERSION "0.7.7"
 #define DEBUG
+//#define NDEBUG
+#define TOUCHSCREEN
 
 // SOUND DEFs
 #define ENABLE_SOUND

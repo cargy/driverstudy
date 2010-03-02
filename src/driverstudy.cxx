@@ -25,7 +25,7 @@
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
 #include <fltk/run.h>
-#include <fltk/ask.h>
+#include "dlg.h"
 #include <fltk/error.h>
 #include <fltk/x.h>
 
@@ -104,7 +104,7 @@ const char* getUILanguage() {
 	
 	strtok(default_test_language, "_" );
 	#ifdef DEBUG
-	fltk::message("LANG=%s\nLC_MESSAGES=%s\nLC_ALL=%s\nLANGUAGE=%s\nWe take=%s",
+	dlg::message("LANG=%s\nLC_MESSAGES=%s\nLC_ALL=%s\nLANGUAGE=%s\nWe take=%s",
 		getenv("LANG"),setlocale (LC_MESSAGES, NULL),setlocale (LC_ALL, NULL),getenv("LANGUAGE"),default_test_language);
 	#endif
 	return default_test_language;
@@ -114,11 +114,19 @@ DictationSystem* ds;
 
 void cb_exit(fltk::Widget*, void*)
 {
-	if ( fltk::ask(_("Do you want to cancel this Test?")) ) exit(0);
+	if ( dlg::ask(_("Do you want to cancel this Test?")) ) exit(0);
 }
 
 int main(int argc, char** argv)
 {
+	// initialize dlg windows parameters
+	#ifdef TOUCHSCREEN
+	dlg::format(90,80, APPLICATIONTITLE,dlg::POS_MONITOR_CENTER);
+	#else
+	dlg::message_window_label = APPLICATIONTITLE;
+	#endif
+	//fltk::Button::default_style->labelsize_ = 35;
+	
 	// read locale from enviroment
 	setlocale (LC_ALL, "");
 	int i;

@@ -88,12 +88,12 @@ public:
 		//}
 	}
   
-  int *createRandomTestFromTemplate ( vector<int> *v) {
-	  int *array = new int[qNo];
-	   for (int i=0;i<qNo;i++) {
-		   array[i] = v[i].at(random_range(0,v[i].size()));
-	   }
-	   return array;
+int *createRandomTestFromTemplate ( vector<int> *v) {
+	int *array = new int[qNo];
+	for (int i=0;i<qNo;i++) {
+		array[i] = v[i].at(random_range(0,v[i].size()));
+	}
+	return array;
 	  
   }
   
@@ -123,6 +123,30 @@ int getTestTime (int category) {
 		return tTime;
 	else
 		throw -1;
+}
+
+vector<int> availableLanguages (int category) {
+	char buffer[1024];
+	sprintf(buffer,"SELECT DISTINCT(qlang) FROM Quest WHERE QKateg = %d ;",category);
+	string s_exe(buffer);
+	
+	
+	if( rc == SQLITE_OK )
+	{
+		rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
+		vector<int> plang;
+		printf("lang size: %d\nnrow=%d\n",(int)plang.size(),nrow);
+		if (nrow > 0) for (int i=1;i<=nrow;i++) plang.push_back(atoi(result[i])) ;
+		printf("lang size: %d\nnrow=%d\n",plang.size(),nrow);
+		// else probably wrong category id
+		sqlite3_free_table(result);
+		return plang;
+	}
+	else
+	{
+		throw DBError(sqlite3_errmsg(db),s_exe.c_str());
+		sqlite3_free_table(result);
+	}
 }
 
 vector<int> *testTemplate ( int category, int language ) {

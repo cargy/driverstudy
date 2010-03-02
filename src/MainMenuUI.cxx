@@ -20,7 +20,7 @@
 #include "config.h"
 #include "MainMenuUI.h"
 #include <cstdlib>
-#include <fltk/ask.h>
+#include "dlg.h"
 #include <fltk/Menu.h>
 #include <fltk/run.h>
 #include <fltk/Image.h>
@@ -89,12 +89,12 @@ int MainMenuUI::convLangtoMenuItemIndexNo() {
 
 void MainMenuUI::cb_exit()
 {
-	if ( fltk::ask(_("Do you want to cancel this Test?")) ) exit(0);
+	if ( dlg::ask(_("Do you want to cancel this Test?")) ) exit(0);
 }
 
 void MainMenuUI::cb_help()
 {
-	fltk::message(_("@c;%s ver. %s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
+	dlg::message(_("@c;%s ver. %s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
 }
 
 void MainMenuUI::cb_soundToggle()
@@ -105,7 +105,7 @@ void MainMenuUI::cb_soundToggle()
 	{
 		if ( !ds->initialize() ) 
 		{
-			fltk::alert("Couldn't initialize audio device: %s", ds->audio_device());
+			dlg::alert("Couldn't initialize audio device: %s", ds->audio_device());
 			playSound=false;
 		}
 	}
@@ -173,7 +173,40 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	assert(langid>0);
 	
 	//if (qv) delete qv;
-	vector<int> *v = sql.testTemplate(catid,langid);
+	vector<int> *v;
+	vector<int> alangs = sql.availableLanguages(catid);
+
+	// check if selected language is available in current category
+	bool lang_exists = false;
+	for (unsigned int i=0;i<alangs.size();i++) 
+		if ( alangs[i] == langid ) { lang_exists = true; continue; }
+	
+	const char* selectedLang = "no lang selected!";
+	switch ( langid ) {
+		case DBGREEKID :
+			selectedLang = _("Greek");
+			break;
+		case DBENGLISHID :
+			selectedLang = _("English");
+			break;
+		case DBRUSSIAN :
+			selectedLang = _("Russian");
+			break;
+		case DBALBANIANID :
+			selectedLang = _("Albanian");
+			break;
+	}						
+			
+	if (!lang_exists) {
+		dlg::message(_("This categories tests doesn't exist in %s yet!\n\n"
+					    "The Test will be loaded in %s\n"),selectedLang,_("Greek") );
+		langid = DBGREEKID;
+		// set defaut value of languagePUM
+		languagePUM->value(0);
+		languagePUM->label(languagePUM->get_item()->label());
+		fltk::check();
+	}
+	v = sql.testTemplate(catid,langid);
 	
 	int *array = sql.createRandomTestFromTemplate(v);
 	

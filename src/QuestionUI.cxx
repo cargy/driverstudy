@@ -21,7 +21,8 @@
 #include "QuestionUI.h"
 #include <cstdio>
 #include <cassert>
-#include <fltk/ask.h>
+//#include <fltk/ask.h>
+#include "dlg.h"
 #include <fltk/Image.h>
 #include <fltk/SharedImage.h>
 
@@ -41,7 +42,6 @@ QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	resizable(this);
 	win_x = 150; win_y = 50; win_w = width; win_h = height;
 	fltk::register_images();
-	fltk::beep_on_dialog(true);
 }
 
 QuestionUI::~QuestionUI()
@@ -56,7 +56,7 @@ QuestionUI::~QuestionUI()
 void QuestionUI::cb_close() 
 {
 	timer->stop();
-	if ( fltk::ask(_("Do you want to cancel this Test?")) ) hide();
+	if ( dlg::ask(_("Do you want to cancel this Test?")) ) hide();
 	else timer->start();
 }
 
@@ -90,20 +90,12 @@ void QuestionUI::fullscreen_off()
 
 void QuestionUI::cb_timeout()
 {
-	fltk::alert(_("You are out of time!"));
+	dlg::alert(_("You are out of time!"));
 }
 
 void QuestionUI::cb_soundToggle()
 {
-	/*
-	static bool playSound = ds->initialized();
-	playSound = !playSound;
-	if (playSound) ds->initialize();
-	else ds->deinitialize();
-	printf("playSound: %d\n", playSound);
-	*/
 	((MainMenuUI*)child_of())->soundBtn->do_callback();
-	//((MainMenuUI*)child_of())->soundBtn->state(!((MainMenuUI*)child_of())->soundBtn->state());
 }
 
 void QuestionUI::cb_fullscreen()
@@ -144,7 +136,7 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 	if (currTest->completed() && !preview_mode) 
 	{
 		timer->stop();
-		fltk::message(_("Test Completed!\n\nYou answered correctly:\n%d from %d questions."),currTest->getCorrect(), currTest->size());
+		dlg::message(_("Test Completed!\n\nYou answered correctly:\n%d from %d questions."),currTest->getCorrect(), currTest->size());
 
 		preview_mode = true;
 		if ( currTest->getWrong() > 0 ) previewQuestion(currTest->nextWrong());
@@ -153,7 +145,7 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 	// load next question
 	else if (preview_mode && !currTest->is_nextWrong() )
 	{
-		int c = fltk::choice(_("All wrong questions were shown!\n\n"
+		int c = dlg::choice(_("All wrong questions were shown!\n\n"
 							   "You can:\n"
 							   "- see again the wrong questions [Show me again]\n"
 							   "- start a new Test[New Test]\n"
