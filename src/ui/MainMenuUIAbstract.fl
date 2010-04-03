@@ -62,14 +62,14 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           {fltk::Button} smotorcycleBtn {
             label {_Motorcycle Special Category}
             user_data {"smotorcycle"} user_data_type {const char*}
-            callback {cb_start(o,v)} selected
-            xywh {0 0 130 120} align 128 labelsize 14 textsize 14
+            callback {cb_start(o,v)}
+            xywh {0 0 130 120} align 128 deactivate labelsize 14 textsize 14
           }
           {fltk::Button} scarBtn {
             label {_Car Special Category}
             user_data {"scar"} user_data_type {const char*}
-            callback {cb_start(o,v)}
-            xywh {153 0 130 120} align 128 labelsize 14 textsize 14
+            callback {cb_start(o,v)} selected
+            xywh {153 0 130 120} align 128 deactivate labelsize 14 textsize 14
           }
         }
       }

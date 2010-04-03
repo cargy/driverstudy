@@ -21,14 +21,14 @@
 
 #define APPLICATIONTITLE "Driver Study"
 #define DRIVERSTUDYVERSION "0.9.1"
-#define DEBUG
-//#define NDEBUG
+//#define DEBUG
+#define NDEBUG
 //#define TOUCHSCREEN
 
 // SOUND DEFs
 #define ENABLE_SOUND
 #define VOICE_DIR "voice"
-#define VOICE_EXT "ogg"
+#define VOICE_EXT "spx"
 
 
 #define DATABASE "ExerBase.db"

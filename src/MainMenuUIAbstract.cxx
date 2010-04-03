@@ -150,6 +150,7 @@ fltk::Button* o = smotorcycleBtn = new fltk::Button(0, 0, 130, 120, _("Motorcycl
           o->textsize(14);
           o->callback((fltk::Callback*)cb_smotorcycleBtn, (void*)("smotorcycle"));
           o->align(fltk::ALIGN_WRAP);
+          o->deactivate();
         }
         
         {
@@ -158,6 +159,7 @@ fltk::Button* o = scarBtn = new fltk::Button(153, 0, 130, 120, _("Car Special Ca
           o->textsize(14);
           o->callback((fltk::Callback*)cb_scarBtn, (void*)("scar"));
           o->align(fltk::ALIGN_WRAP);
+          o->deactivate();
         }
         o->end();
       }

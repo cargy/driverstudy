@@ -116,8 +116,8 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	-L/home/krizz/src/cross_win32/lib \
 	-laudiere -ldsound -lole32 -lrpcrt4 -lspeex -lwinmm -lvorbisfile -lvorbis -logg -lpthread -lws2_32 \
 	-I/home/krizz/src/cross_win32/include -DPTW32_STATIC_LIB=1 -D_WIN32_WINNT=0x0501 \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a  \
@@ -128,8 +128,8 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 
 QuestionWindow.exe: QuestionWindow.cpp
 	i586-mingw32msvc-g++ QuestionWindow.cpp -o build/QuestionWindow.exe \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/sqlite-3.6.22/cross_win32/include -L/home/krizz/src/sqlite-3.6.22/cross_win32/lib/ /home/krizz/src/sqlite-3.6.22/cross_win32/lib/libsqlite3.a
 
@@ -137,8 +137,8 @@ QuestionViewMain.exe: QuestionViewUI.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx question.cxx answer.cxx \
 	-o build/QuestionViewMain.exe \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a  \
@@ -151,8 +151,8 @@ MainMenu.exe: MainMenuUIAbstract.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ MainMenuUIAbstract.cxx MainMenuUI.cxx MainMenu.cxx \
 	-o build/MainMenu.exe \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --cxxflags` \
-	`/home/src/fltk-2.0.x-r6970/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
+	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a 

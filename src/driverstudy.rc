@@ -1,7 +1,7 @@
 #include <winver.h>
 VS_VERSION_INFO VERSIONINFO
-  FILEVERSION 0,7,7,0
-  PRODUCTVERSION 0,7,7,0
+  FILEVERSION 0,9,1,0
+  PRODUCTVERSION 0,9,1,0
   FILEFLAGSMASK 0
   FILEFLAGS 0
   FILEOS VOS__WINDOWS32
@@ -14,12 +14,12 @@ VS_VERSION_INFO VERSIONINFO
       BEGIN
         VALUE "CompanyName", "Locusta"
         VALUE "FileDescription", "Driver Study executable"
-        VALUE "FileVersion", "0.7.7"
+        VALUE "FileVersion", "0.9.1"
         VALUE "InternalName", "driverstudy"
         VALUE "LegalCopyright", "Copyright (C) 2010 Argyriadis Christos (See the COPYRIGHT file in the source distribution)."
-        VALUE "OriginalFilename", "@ORIGINAL_FILENAME@"
+        VALUE "OriginalFilename", "DriverStudy.exe"
         VALUE "ProductName", "Driver Study"
-        VALUE "ProductVersion", "@PIDGIN_VERSION@"
+        VALUE "ProductVersion", "0.9.1"
       END
     END
     BLOCK "VarFileInfo"
