@@ -36,7 +36,7 @@ CC      = $(shell $(FLTK2CONFIG) --cc)
 all:  driverstudy
 
 run: driverstudy
-	bash -c "cd build;./QuestionWindow"&
+	bash -c "cd ../build;./QuestionWindow"&
 
 ui: cleanui QuestionUIAbstract.cxx
 
@@ -62,17 +62,17 @@ driverstudy: answer.o question.o test.o sqlite3.o \
 	sqlite3.o DictationSystem.o TimerProgressBar.o dlg.o \
 	QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	driverstudy.o \
-	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o build/driverstudy	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/driverstudy	
 	#@echo Strip $@...
-	#$(STRIP) build/$@
-	#$(POSTBUILD) build/QuestionViewMain
+	#$(STRIP) ../build/$@
+	#$(POSTBUILD) ../build/QuestionViewMain
 
 QuestionViewMain: answer.o question.o test.o sqlite3.o \
 				  QuestionViewUI.o QuestionView.o QuestionViewMain.o 
 	@echo === Linking $@... ===
 	$(CXX) answer.o question.o test.o \
 	sqlite3.o QuestionViewUI.o QuestionView.o QuestionViewMain.o \
-	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/QuestionViewMain	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -o ../build/QuestionViewMain	
 	#@echo Strip $@...
 	#$(STRIP) build/$@
 	#$(POSTBUILD) build/QuestionViewMain
@@ -80,29 +80,29 @@ QuestionViewMain: answer.o question.o test.o sqlite3.o \
 MainMenu: MainMenuUIAbstract.o MainMenuUI.o MainMenu.o
 	@echo === Linking $@... ===
 	$(CXX) MainMenuUIAbstract.o MainMenuUI.o MainMenu.o \
-	$(IMGLIB) $(LDLIBS) -lsqlite3 -o build/MainMenu	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -o ../build/MainMenu	
 	#@echo Strip $@...
-	#$(STRIP) build/$@
-	#$(POSTBUILD) build/MainMenu
+	#$(STRIP) ../build/$@
+	#$(POSTBUILD) ../build/MainMenu
 
 QuestionWindow: Question.o sqliteExerBase.o QuestionWindow.o 
 	@echo === Linking $@... ===
 	$(CXX) QuestionWindow.o -Wall -o build/QuestionWindow \
 	$(IMGLIB) $(LDLIBS) -lsqlite3
 	#@echo Strip $@...
-	#$(STRIP) build/$@
-	#$(POSTBUILD) build/QuestionViewMain
+	#$(STRIP) ../build/$@
+	#$(POSTBUILD) ../build/QuestionViewMain
 
 
 debug: QuestionViewMain.cxx QuestionWindow.cpp
-	g++ QuestionViewMain.cxx -Wall -W -g3 -o build/QuestionWindow `fltk2-config --libs --ldflags --cxxflags --use-images` -lsqlite3
-	#g++ QuestionWindow.cpp -Wall -W -g3 -o build/QuestionWindow `fltk2-config --libs --ldflags --cxxflags --use-images` -lsqlite3
+	g++ QuestionViewMain.cxx -Wall -W -g3 -o ../build/QuestionWindow `fltk2-config --libs --ldflags --cxxflags --use-images` -lsqlite3
+	#g++ QuestionWindow.cpp -Wall -W -g3 -o ../build/QuestionWindow `fltk2-config --libs --ldflags --cxxflags --use-images` -lsqlite3
 
 # configure below the path to fltk2-config of cross-buildable FLTK 2 lib
 allwin: QuestionWindow.exe QuestionViewMain.exe
 
 wrun: QuestionWindow.exe
-	bash -c "cd build;wine ./QuestionWindow.exe"&
+	bash -c "cd ../build;wine ./QuestionWindow.exe"&
 	
 driver_res.o: driverstudy.rc
 	@echo === Compiling $@... ===
@@ -112,7 +112,7 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ -static -O2 -Wall driverstudy.cxx MainMenuUIAbstract.cxx MainMenuUI.cxx QuestionUI.cxx QuestionUIAbstract.cxx \
 	DictationSystem.cxx dlg.cxx TimerProgressBar.cxx test.cxx question.cxx answer.cxx driver_res.o \
-	-o build/DriverStudy.exe \
+	-o ../build/DriverStudy.exe \
 	-L/home/krizz/src/cross_win32/lib \
 	-laudiere -ldsound -lole32 -lrpcrt4 -lspeex -lwinmm -lvorbisfile -lvorbis -logg -lpthread -lws2_32 \
 	-I/home/krizz/src/cross_win32/include -DPTW32_STATIC_LIB=1 -D_WIN32_WINNT=0x0501 \
@@ -123,11 +123,11 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	/home/krizz/src/cross_win32/lib/libintl.a  \
 	/home/krizz/src/cross_win32/lib/libsqlite3.a 
 	#@echo Strip $@...
-	#$(STRIP) build/$@
-	#$(POSTBUILD) build/DriverStudy.exe
+	#$(STRIP) ../build/$@
+	#$(POSTBUILD) ../build/DriverStudy.exe
 
 QuestionWindow.exe: QuestionWindow.cpp
-	i586-mingw32msvc-g++ QuestionWindow.cpp -o build/QuestionWindow.exe \
+	i586-mingw32msvc-g++ QuestionWindow.cpp -o ../build/QuestionWindow.exe \
 	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
@@ -136,7 +136,7 @@ QuestionWindow.exe: QuestionWindow.cpp
 QuestionViewMain.exe: QuestionViewUI.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ QuestionViewMain.cxx QuestionView.cxx QuestionViewUI.cxx test.cxx question.cxx answer.cxx \
-	-o build/QuestionViewMain.exe \
+	-o ../build/QuestionViewMain.exe \
 	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
@@ -144,26 +144,26 @@ QuestionViewMain.exe: QuestionViewUI.cxx
 	/home/krizz/src/cross_win32/lib/libintl.a  \
 	/home/krizz/src/cross_win32/lib/libsqlite3.a
 	#@echo Strip $@...
-	#$(STRIP) build/$@
-	#$(POSTBUILD) build/QuestionViewMain.exe
+	#$(STRIP) ../build/$@
+	#$(POSTBUILD) ../build/QuestionViewMain.exe
 	
 MainMenu.exe: MainMenuUIAbstract.cxx
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ MainMenuUIAbstract.cxx MainMenuUI.cxx MainMenu.cxx \
-	-o build/MainMenu.exe \
+	-o ../build/MainMenu.exe \
 	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
 	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a 
 	#@echo Strip $@...
-	#$(STRIP) build/$@
-	#$(POSTBUILD) build/QuestionViewMain.exe
+	#$(STRIP) ../build/$@
+	#$(POSTBUILD) ../build/QuestionViewMain.exe
 
 clean:
 	rm -f *.o
-	rm -f build/QuestionWindow build/QuestionViewMain build/MainMenu build/driverstudy
-	rm -f build/QuestionWindow.exe build/QuestionViewMain.exe build/MainMenu.exe build/DriverStudy.exe
+	rm -f ../build/QuestionWindow ../build/QuestionViewMain ../build/MainMenu ../build/driverstudy
+	rm -f ../build/QuestionWindow.exe ../build/QuestionViewMain.exe ../build/MainMenu.exe ../build/DriverStudy.exe
 
 cleanui:
 	rm -f QuestionUIAbstract.cxx QuestionUIAbstract.h

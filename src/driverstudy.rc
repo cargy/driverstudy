@@ -28,4 +28,4 @@ VS_VERSION_INFO VERSIONINFO
     END
   END
 
-101	ICON "build/icons/driverstudy.ico"
+101	ICON "../build/icons/driverstudy.ico"
