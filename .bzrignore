@@ -1,7 +1,7 @@
-src/build/QuestionViewMain
-src/build/QuestionViewMain.exe
-src/build/MainMenu
-src/build/MainMenu.exe
-src/build/DriverStudy.exe
-src/build/driverstudy
+build/QuestionViewMain
+build/QuestionViewMain.exe
+build/MainMenu
+build/MainMenu.exe
+build/DriverStudy.exe
+build/driverstudy
 DriverStudy.geany
