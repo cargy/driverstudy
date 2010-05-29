@@ -207,7 +207,11 @@ int QuestionUI::selectedRB()
 
 void QuestionUI::showQuestion(Question* q)
 {
-	
+	// restore setting changed by previewQuestion()
+	AnswerGroup->clear_output();
+  	if ( !timer->visible() ) timer->show();
+  	if ( !validateBtn->visible() ) validateBtn->show();
+  	
 	char qNo[150];
 	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
 	QuestionGroup->copy_label(qNo);

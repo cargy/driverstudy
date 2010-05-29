@@ -42,6 +42,7 @@ MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	resizable(this);
 	win_x = 100; win_y = 100;
 	win_w = width; win_h = height;
+	qv = NULL;
 	// set defaut value of languagePUM
 	languagePUM->value(convLangtoMenuItemIndexNo());
 	languagePUM->label(languagePUM->get_item()->label());
@@ -173,8 +174,6 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	if (strcmp(slang,"albanian") == 0) langid = DBALBANIANID;
 	assert(langid>0);
 	
-	//if (qv) delete qv;
-	vector<int> *v;
 	vector<int> alangs = sql.availableLanguages(catid);
 
 	// check if selected language is available in current category
@@ -207,7 +206,8 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 		languagePUM->label(languagePUM->get_item()->label());
 		fltk::check();
 	}
-	v = sql.testTemplate(catid,langid);
+	
+	vector<int> *v = sql.testTemplate(catid,langid);
 	
 	int *array = sql.createRandomTestFromTemplate(v);
 	
@@ -217,11 +217,17 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	#ifdef DEBUG
 	ct->answerRandomly();
 	#endif
+
+	if (!qv) 
+	{
+		qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always happen :(");
+		qv->child_of(this);
+	}
+//	else qv->hide();
 	
-	qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always can happen :(");
 	qv->setTest(ct);
 	//qv->show_inside(this);
-	qv->child_of(this);
+
 	qv->show();
 	activate();
 	statusBar->label(_("Test created Successfully!"));

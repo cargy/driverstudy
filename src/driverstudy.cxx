@@ -128,7 +128,12 @@ int main(int argc, char** argv)
 		#endif
 		fltk::fatal("%s\n -l[ocale] uilocale\n -f[ullscreen]\n", fltk::help);
 	}
-
+	
+	/* Make change known.  */
+	{
+	extern int  _nl_msg_cat_cntr;
+	++_nl_msg_cat_cntr;
+	}
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
