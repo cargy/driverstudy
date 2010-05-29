@@ -2,7 +2,7 @@
 
 #ifndef QuestionUIAbstract_h
 #define QuestionUIAbstract_h
-#include <fltk/Window.h>
+#include <fltk/Group.h>
 #include "TimerProgressBar.h"
 #include <fltk/Group.h>
 #include <fltk/Button.h>
@@ -10,7 +10,7 @@
 #include <fltk/LightButton.h>
 #include <fltk/Widget.h>
 
-class QuestionUIAbstract : public fltk::Window  {
+class QuestionUIAbstract : public fltk::Group  {
 public:
   QuestionUIAbstract(int x, int y, int width, int height, const char* label);
   fltk::Group *mainContainer;
@@ -37,7 +37,9 @@ private:
           inline void cb_answerRB3_i(fltk::RadioButton*, long);
           static void cb_answerRB3(fltk::RadioButton*, long);
       fltk::Group *MainControlsGroup;
+public:
         fltk::Button *exitBtn;
+private:
         inline void cb_exitBtn_i(fltk::Button*, void*);
         static void cb_exitBtn(fltk::Button*, void*);
 public:

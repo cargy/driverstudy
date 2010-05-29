@@ -8,34 +8,34 @@ gridy 5
 snap 3
 decl {\#include "config.h"} {} 
 
-decl {\#include <fltk/Window.h>} {public
+decl {\#include <fltk/Group.h>} {public
 } 
 
 decl {\#include "TimerProgressBar.h"} {public
 } 
 
-class QuestionUIAbstract {open : {public fltk::Window}
+class QuestionUIAbstract {open : {public fltk::Group}
 } {
-  Function {QuestionUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
+  Function {QuestionUIAbstract(int x, int y, int width, int height, const char* label): fltk::Group(x,y,width,height,label)} {open
   } {
     {fltk::Window} mainContainer {open
-      xywh {557 74 800 600} resizable
+      xywh {122 68 800 580} resizable
       class {fltk::Group} visible
     } {
       {fltk::Group} LeftGroup {open
-        private xywh {5 5 450 590} resizable box THIN_DOWN_BOX
+        private xywh {5 5 450 570} resizable box THIN_DOWN_BOX
       } {
         {fltk::Group} QuestionGroup {
           label {Question \#/\#} open
-          xywh {5 5 440 520} align 33 box THIN_UP_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
+          xywh {5 5 440 510} align 33 box THIN_UP_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
         } {
           {fltk::Button} questionDisplay {
             label button
             callback {cb_questionRelease()}
-            xywh {5 20 430 130} align 165 buttonbox DOWN_BOX buttoncolor 0xffffff00 labelsize 16 textsize 16
+            xywh {5 20 430 120} align 165 buttonbox DOWN_BOX buttoncolor 0xffffff00 labelsize 16 textsize 16
           }
           {fltk::Group} AnswerGroup {
-            xywh {5 155 430 355} box THIN_DOWN_BOX
+            xywh {5 145 430 355} box THIN_DOWN_BOX
           } {
             {fltk::RadioButton} {answerRB[0]} {
               label {Answer 0}
@@ -64,33 +64,33 @@ class QuestionUIAbstract {open : {public fltk::Window}
           }
         }
         {fltk::Group} MainControlsGroup {open
-          private xywh {5 530 440 57} box THIN_UP_BOX
+          private xywh {5 520 440 47} box THIN_UP_BOX
         } {
           {fltk::Button} exitBtn {
             label _Cancel
             callback {cb_close()}
-            private xywh {9 8 130 40} labelfont 1 shortcut 0xff1b
+            xywh {9 8 130 30} labelfont 1 shortcut 0xff1b
           }
           {fltk::Button} fullscreenBtn {
             label _Fullscreen
             callback {cb_fullscreen()}
-            xywh {157 8 130 40} type TOGGLE labelfont 1 shortcut 0xffc8
+            xywh {157 8 130 30} type TOGGLE labelfont 1 shortcut 0xffc8
           }
           {fltk::LightButton} soundBtn {
             label _Dictation
-            callback {cb_soundToggle()} selected
-            xywh {302 8 130 40} labelfont 1
+            callback {cb_soundToggle()}
+            xywh {302 8 130 30} labelfont 1
           }
         }
       }
-      {fltk::Group} RightGroup {
-        private xywh {455 5 340 590} box THIN_DOWN_BOX
+      {fltk::Group} RightGroup {open
+        private xywh {455 5 340 570} box THIN_DOWN_BOX
       } {
-        {fltk::Widget} imageHolder {
+        {fltk::Widget} imageHolder {selected
           xywh {5 5 330 300}
         }
         {fltk::Group} QuestionControlsGroup {open
-          private xywh {5 310 330 275} resizable box THIN_UP_BOX
+          private xywh {5 310 330 255} resizable box THIN_UP_BOX
         } {
           {fltk::ProgressBar} timer {
             callback {cb_timeout()}
@@ -101,13 +101,13 @@ class QuestionUIAbstract {open : {public fltk::Window}
             label {_Validate Answer  @+1+}
             user_data {"validate"} user_data_type {const char*}
             callback {cb_next(o,v)}
-            xywh {15 60 300 100} deactivate labeltype EMBOSSED_LABEL labelsize 16
+            xywh {15 60 300 90} deactivate labeltype EMBOSSED_LABEL labelsize 16
           }
           {fltk::Button} nextBtn {
             label {_Next Question  @+1>@+1>[]}
             user_data {"next"} user_data_type {const char*}
             callback {cb_next(o,v)}
-            xywh {15 167 300 100} labeltype EMBOSSED_LABEL labelsize 16
+            xywh {15 157 300 90} labeltype EMBOSSED_LABEL labelsize 16
           }
         }
       }

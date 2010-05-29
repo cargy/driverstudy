@@ -23,22 +23,26 @@
 #include "config.h"
 #include "MainMenuUIAbstract.h"
 #include "QuestionUI.h"
+//#include "Application.h"
 
 class MainMenuUI: public MainMenuUIAbstract
 {
 	public:
 		MainMenuUI(int x, int y, int width, int height, const char* label);
 		QuestionUI *qv;
-		
+		virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
+		int getSelectedLanguage();
+		int getSelectedCategory(const char* tCategory);
 				
 	private:
+
 		int win_x, win_y, win_w, win_h;
 		//bool fullscreen_flag;
 		int convLangtoMenuItemIndexNo();
 		virtual void cb_exit();
 		virtual void cb_help();
-		virtual void cb_fullscreen();
-		virtual void cb_start(fltk::Widget* pBtn, const char* tCategory);
+		//virtual void cb_fullscreen();
+		
 		virtual void cb_selectLanguage(fltk::Widget* sItem, void* userdata);
 		virtual void cb_soundToggle();
 		void changeUILocale(fltk::Group* o);

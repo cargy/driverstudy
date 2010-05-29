@@ -39,7 +39,8 @@ extern DictationSystem* ds;
 QuestionUI::QuestionUI(int x, int y, int width, int height, const char* label)
 	: QuestionUIAbstract(x,y,width,height,label)
 {
-	resizable(this);
+	//resizable(this);
+	//app = a;
 	win_x = 150; win_y = 50; win_w = width; win_h = height;
 	fltk::register_images();
 }
@@ -50,16 +51,16 @@ QuestionUI::~QuestionUI()
 	printf("QuestionUI object Goind down!\n");
 #endif
 	delete currTest;
-	destroy();
+	//destroy();
 }
 	
 void QuestionUI::cb_close() 
 {
 	timer->stop();
-	if ( dlg::ask(_("Do you want to cancel this Test?")) ) hide();
-	else timer->start();
+	//if ( dlg::ask(_("Do you want to cancel this Test?")) ) wizard->prev();
+	//else timer->start();
 }
-
+/*
 void QuestionUI::fullscreen()
 {
 	// store last position of window before going fullscreen
@@ -73,21 +74,22 @@ void QuestionUI::fullscreen()
 	fullscreenBtn->state(true);
 
 }
-
+*/
 void QuestionUI::show()
 {
 	extern bool fullscreen_flag;
-	if (fullscreen_flag) fullscreen();
+	//if (fullscreen_flag) fullscreen();
 	soundBtn->value(ds->initialized());
-	fltk::Window::show();
+	fltk::Widget::show();
 	timer->start();
 }
+/*
 void QuestionUI::fullscreen_off()
 {
 	fltk::Window::fullscreen_off( win_x, win_y,win_w,win_h);
 	fullscreenBtn->state(false);
 }
-
+*/
 void QuestionUI::cb_timeout()
 {
 	dlg::alert(_("You are out of time!"));
@@ -95,13 +97,13 @@ void QuestionUI::cb_timeout()
 
 void QuestionUI::cb_soundToggle()
 {
-	((MainMenuUI*)child_of())->soundBtn->do_callback();
+	//((MainMenuUI*)child_of())->soundBtn->do_callback();
 }
 
 void QuestionUI::cb_fullscreen()
 {
-	((MainMenuUI*)child_of())->fullscreenBtn->do_callback();
-	((MainMenuUI*)child_of())->fullscreenBtn->state(!((MainMenuUI*)child_of())->fullscreenBtn->state());
+	//((MainMenuUI*)child_of())->fullscreenBtn->do_callback();
+	//((MainMenuUI*)child_of())->fullscreenBtn->state(!((MainMenuUI*)child_of())->fullscreenBtn->state());
 }
 	
 inline void QuestionUI::cb_answerRB_i(fltk::Widget* o, long v) {
@@ -163,22 +165,22 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 				switch ( currTest->category_id() )
 				{
 					case DBCARID:
-						((MainMenuUI*)child_of())->carBtn->do_callback();
+						//((MainMenuUI*)child_of())->carBtn->do_callback();
 						break;
 					case DBMOTORCYCLEID:
-						((MainMenuUI*)child_of())->motorcycleBtn->do_callback();
+						//((MainMenuUI*)child_of())->motorcycleBtn->do_callback();
 						break;
 					case DBTRUCKID:
-						((MainMenuUI*)child_of())->truckBtn->do_callback();
+						//((MainMenuUI*)child_of())->truckBtn->do_callback();
 						break;
 					case DBBUSID:
-						((MainMenuUI*)child_of())->busBtn->do_callback();
+						//((MainMenuUI*)child_of())->busBtn->do_callback();
 						break;
 					case DBSCARID:
-						((MainMenuUI*)child_of())->scarBtn->do_callback();
+						//((MainMenuUI*)child_of())->scarBtn->do_callback();
 						break;
 					case DBSMOTORCYCLEID:
-						((MainMenuUI*)child_of())->smotorcycleBtn->do_callback();
+						//((MainMenuUI*)child_of())->smotorcycleBtn->do_callback();
 						break;						
 				}
 				break;
@@ -207,11 +209,7 @@ int QuestionUI::selectedRB()
 
 void QuestionUI::showQuestion(Question* q)
 {
-	// restore setting changed by previewQuestion()
-	AnswerGroup->clear_output();
-  	if ( !timer->visible() ) timer->show();
-  	if ( !validateBtn->visible() ) validateBtn->show();
-  	
+	
 	char qNo[150];
 	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
 	QuestionGroup->copy_label(qNo);

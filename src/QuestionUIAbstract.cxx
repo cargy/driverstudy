@@ -80,24 +80,24 @@ void QuestionUIAbstract::cb_nextBtn(fltk::Button* o, const char* v) {
   ((QuestionUIAbstract*)(o->parent()->parent()->parent()->user_data()))->cb_nextBtn_i(o,v);
 }
 
-QuestionUIAbstract::QuestionUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true) {
+QuestionUIAbstract::QuestionUIAbstract(int x, int y, int width, int height, const char* label): fltk::Group(x,y,width,height,label) {
   fltk::Group* w;
   
   {
-fltk::Group* o = mainContainer = new fltk::Group(0, 0, 800, 600);
+fltk::Group* o = mainContainer = new fltk::Group(0, 0, 800, 580);
     w = o;
     o->shortcut(0xff1b);
     o->user_data((void*)(this));
     o->begin();
     
     {
-fltk::Group* o = LeftGroup = new fltk::Group(5, 5, 450, 590);
+fltk::Group* o = LeftGroup = new fltk::Group(5, 5, 450, 570);
       o->set_vertical();
       o->box(fltk::THIN_DOWN_BOX);
       o->begin();
       
       {
-fltk::Group* o = QuestionGroup = new fltk::Group(5, 5, 440, 520, "Question #/#");
+fltk::Group* o = QuestionGroup = new fltk::Group(5, 5, 440, 510, "Question #/#");
         o->set_vertical();
         o->box(fltk::THIN_UP_BOX);
         o->labeltype(fltk::ENGRAVED_LABEL);
@@ -107,7 +107,7 @@ fltk::Group* o = QuestionGroup = new fltk::Group(5, 5, 440, 520, "Question #/#")
         o->begin();
         
         {
-fltk::Button* o = questionDisplay = new fltk::Button(5, 20, 430, 130, "button");
+fltk::Button* o = questionDisplay = new fltk::Button(5, 20, 430, 120, "button");
           o->buttonbox(fltk::DOWN_BOX);
           o->buttoncolor((fltk::Color)0xffffff00);
           o->labelsize(16);
@@ -117,7 +117,7 @@ fltk::Button* o = questionDisplay = new fltk::Button(5, 20, 430, 130, "button");
         }
         
         {
-fltk::Group* o = AnswerGroup = new fltk::Group(5, 155, 430, 355);
+fltk::Group* o = AnswerGroup = new fltk::Group(5, 145, 430, 355);
           o->box(fltk::THIN_DOWN_BOX);
           o->begin();
           
@@ -162,19 +162,19 @@ fltk::RadioButton* o = answerRB[3] = new fltk::RadioButton(5, 265, 420, 85, "Ans
       }
       
       {
-fltk::Group* o = MainControlsGroup = new fltk::Group(5, 530, 440, 57);
+fltk::Group* o = MainControlsGroup = new fltk::Group(5, 520, 440, 47);
         o->box(fltk::THIN_UP_BOX);
         o->begin();
         
         {
-fltk::Button* o = exitBtn = new fltk::Button(9, 8, 130, 40, _("Cancel") );
+fltk::Button* o = exitBtn = new fltk::Button(9, 8, 130, 30, _("Cancel") );
           o->labelfont(fltk::HELVETICA_BOLD);
           o->shortcut(0xff1b);
           o->callback((fltk::Callback*)cb_exitBtn);
         }
         
         {
-fltk::Button* o = fullscreenBtn = new fltk::Button(157, 8, 130, 40, _("Fullscreen") );
+fltk::Button* o = fullscreenBtn = new fltk::Button(157, 8, 130, 30, _("Fullscreen") );
           o->type(fltk::Button::TOGGLE);
           o->labelfont(fltk::HELVETICA_BOLD);
           o->shortcut(0xffc8);
@@ -182,7 +182,7 @@ fltk::Button* o = fullscreenBtn = new fltk::Button(157, 8, 130, 40, _("Fullscree
         }
         
         {
-fltk::LightButton* o = soundBtn = new fltk::LightButton(302, 8, 130, 40, _("Dictation") );
+fltk::LightButton* o = soundBtn = new fltk::LightButton(302, 8, 130, 30, _("Dictation") );
           o->labelfont(fltk::HELVETICA_BOLD);
           o->callback((fltk::Callback*)cb_soundBtn);
         }
@@ -193,14 +193,14 @@ fltk::LightButton* o = soundBtn = new fltk::LightButton(302, 8, 130, 40, _("Dict
     }
     
     {
-fltk::Group* o = RightGroup = new fltk::Group(455, 5, 340, 590);
+fltk::Group* o = RightGroup = new fltk::Group(455, 5, 340, 570);
       o->set_vertical();
       o->box(fltk::THIN_DOWN_BOX);
       o->begin();
       imageHolder = new fltk::Widget(5, 5, 330, 300);
       
       {
-fltk::Group* o = QuestionControlsGroup = new fltk::Group(5, 310, 330, 275);
+fltk::Group* o = QuestionControlsGroup = new fltk::Group(5, 310, 330, 255);
         o->box(fltk::THIN_UP_BOX);
         o->begin();
         
@@ -210,7 +210,7 @@ TimerProgressBar* o = timer = new TimerProgressBar(15, 16, 300, 30);
         }
         
         {
-fltk::Button* o = validateBtn = new fltk::Button(15, 60, 300, 100, _("Validate Answer  @+1+") );
+fltk::Button* o = validateBtn = new fltk::Button(15, 60, 300, 90, _("Validate Answer  @+1+") );
           o->labeltype(fltk::EMBOSSED_LABEL);
           o->labelsize(16);
           o->callback((fltk::Callback*)cb_validateBtn, (void*)("validate"));
@@ -218,7 +218,7 @@ fltk::Button* o = validateBtn = new fltk::Button(15, 60, 300, 100, _("Validate A
         }
         
         {
-fltk::Button* o = nextBtn = new fltk::Button(15, 167, 300, 100, _("Next Question  @+1>@+1>[]") );
+fltk::Button* o = nextBtn = new fltk::Button(15, 157, 300, 90, _("Next Question  @+1>@+1>[]") );
           o->labeltype(fltk::EMBOSSED_LABEL);
           o->labelsize(16);
           o->callback((fltk::Callback*)cb_nextBtn, (void*)("next"));

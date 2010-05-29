@@ -79,18 +79,18 @@ void MainMenuUIAbstract::cb_fullscreenBtn(fltk::Button* o, void* v) {
   ((MainMenuUIAbstract*)(o->parent()->parent()->user_data()))->cb_fullscreenBtn_i(o,v);
 }
 
-MainMenuUIAbstract::MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true) {
+MainMenuUIAbstract::MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Widget(x,y,width,height,label) {
   fltk::Group* w;
   
   {
-fltk::Group* o = mainContainer = new fltk::Group(0, 0, 640, 480);
+fltk::Group* o = mainContainer = new fltk::Group(0, 0, 800, 580);
     w = o;
     o->shortcut(0xff1b);
     o->user_data((void*)(this));
     o->begin();
     
     {
-fltk::Widget* o = appTitle = new fltk::Widget(12, 6, 615, 54, _("Application Title") );
+fltk::Widget* o = appTitle = new fltk::Widget(12, 6, 775, 54, _("Application Title") );
       o->box(fltk::HIGHLIGHT_UP_BOX);
       o->labeltype(fltk::EMBOSSED_LABEL);
       o->labelsize(32);
@@ -98,7 +98,7 @@ fltk::Widget* o = appTitle = new fltk::Widget(12, 6, 615, 54, _("Application Tit
     }
     
     {
-fltk::Group* o = new fltk::Group(12, 89, 615, 275, _("Select a Test Category") );
+fltk::Group* o = new fltk::Group(12, 89, 775, 375, _("Select a Test Category") );
       o->box(fltk::ENGRAVED_BOX);
       o->labeltype(fltk::ENGRAVED_LABEL);
       o->labelsize(18);
@@ -168,7 +168,7 @@ fltk::Button* o = scarBtn = new fltk::Button(153, 0, 130, 120, _("Car Special Ca
     }
     
     {
-fltk::Group* o = new fltk::Group(12, 371, 615, 85);
+fltk::Group* o = new fltk::Group(12, 471, 775, 85);
       o->box(fltk::ENGRAVED_BOX);
       o->begin();
       
@@ -233,7 +233,6 @@ fltk::Button* o = fullscreenBtn = new fltk::Button(216, 50, 180, 26, _("Fullscre
       }
       o->end();
     }
-    statusBar = new fltk::StatusBarGroup(0, 460, 640, 20, "This is the status bar");
     o->end();
   }
 }

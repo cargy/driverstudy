@@ -3,16 +3,15 @@
 #ifndef MainMenuUIAbstract_h
 #define MainMenuUIAbstract_h
 #include "config.h"
-#include <fltk/Window.h>
+#include <fltk/Widget.h>
 #include <fltk/Group.h>
 #include <fltk/Widget.h>
 #include <fltk/Button.h>
 #include <fltk/PopupMenu.h>
 #include <fltk/Item.h>
 #include <fltk/LightButton.h>
-#include <fltk/StatusBarGroup.h>
 
-class MainMenuUIAbstract : public fltk::Window  {
+class MainMenuUIAbstract : public fltk::Widget  {
 public:
   MainMenuUIAbstract(int x, int y, int width, int height, const char* label);
   fltk::Group *mainContainer;
@@ -72,7 +71,6 @@ private:
       inline void cb_fullscreenBtn_i(fltk::Button*, void*);
       static void cb_fullscreenBtn(fltk::Button*, void*);
 public:
-    fltk::StatusBarGroup *statusBar;
   virtual void cb_exit();
   virtual void cb_help();
   virtual void cb_fullscreen();

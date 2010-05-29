@@ -38,14 +38,16 @@ extern DictationSystem* ds;
 MainMenuUI::MainMenuUI(int x, int y, int width, int height, const char* label)
 	: MainMenuUIAbstract(x,y,width,height,label)
 {
-	appTitle->label(APPLICATIONTITLE);
-	resizable(this);
+	//appTitle->label(APPLICATIONTITLE);
+	//resizable(this);
+	mainContainer->resizable();
+	//app = a;
 	win_x = 100; win_y = 100;
 	win_w = width; win_h = height;
-	qv = NULL;
 	// set defaut value of languagePUM
 	languagePUM->value(convLangtoMenuItemIndexNo());
 	languagePUM->label(languagePUM->get_item()->label());
+	printf("labguagePUM: %s\n",languagePUM->get_item()->label());
 	extern bool fullscreen_flag;
 	if (fullscreen_flag) { fullscreen_flag=false;fullscreenBtn->do_callback(); fullscreenBtn->state(true);}
 	
@@ -95,6 +97,7 @@ void MainMenuUI::cb_exit()
 
 void MainMenuUI::cb_help()
 {
+	printf("getSelectLanguage:%d",getSelectedLanguage());
 	dlg::message(_("@c;%s ver. %s\nCopyright(c) 2010\nArgyriadis Christos\nc.argyriadis@@locusta.gr"), APPLICATIONTITLE,DRIVERSTUDYVERSION );
 }
 
@@ -109,7 +112,7 @@ void MainMenuUI::cb_soundToggle()
 			dlg::alert(_("Couldn't initialize audio device %s"), ds->audio_device());
 			playSound=false;
 		}
-		statusBar->label(ds->audio_device());
+		//statusBar->label(ds->audio_device());
 	}
 	else ds->deinitialize();
 	
@@ -122,14 +125,14 @@ void MainMenuUI::cb_soundToggle()
 	#endif
 	
 }
-
+/*
 void MainMenuUI::cb_fullscreen()
 {
 	extern bool fullscreen_flag;
 	
 	if (fullscreen_flag) 
 	{
-		fullscreen_off( win_x, win_y, win_w, win_h);
+		//fullscreen_off( win_x, win_y, win_w, win_h);
 		if (qv) qv->fullscreen_off();
 	}
 	else 
@@ -137,7 +140,7 @@ void MainMenuUI::cb_fullscreen()
 		// store last position of window before going fullscreen
 		// ONLY if Window is already show or else x(), y() are
 		// not set by ftlk::USEDAFAULT yet.
-		if ( shown() ) { win_x = x(); win_y = y(); }
+		//if ( shown() ) { win_x = x(); win_y = y(); }
 		
 		win_w = w();
 		win_h = h();
@@ -147,10 +150,39 @@ void MainMenuUI::cb_fullscreen()
 	fullscreen_flag = !fullscreen_flag; 
 	
 }
+*/
+
+int MainMenuUI::getSelectedLanguage()
+{
+	int langid = 0;
+	
+	const char* slang = (const char*)languagePUM->get_item()->user_data();
+
+	if (strcmp(slang,"greek") == 0) langid = DBGREEKID;
+	if (strcmp(slang,"english") == 0 ) langid = DBENGLISHID;
+	if (strcmp(slang,"russian") == 0) langid = DBRUSSIAN;
+	if (strcmp(slang,"albanian") == 0) langid = DBALBANIANID;
+	assert(langid>0);
+	
+	return langid;
+}
+
+int MainMenuUI::getSelectedCategory(const char* tCategory)
+{
+	int catid = 0;
+	if (strcmp(tCategory, "car")==0) catid = DBCARID;
+	if (strcmp(tCategory, "motorcycle")==0) catid = DBMOTORCYCLEID;
+	if (strcmp(tCategory, "truck")==0) catid = DBTRUCKID;
+	if (strcmp(tCategory, "bus")==0) catid = DBBUSID;
+	if (strcmp(tCategory, "scar")==0) catid = DBSCARID;
+	if (strcmp(tCategory, "smotorcycle")==0) catid = DBSMOTORCYCLEID;
+	assert(catid>0);
+	return catid;
+}
 
 void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 {
-	statusBar->label(_("Creating Test, please wait ..."));
+	//statusBar->label(_("Creating Test, please wait ..."));
 	deactivate();
 	fltk::check();
 	//fltk::message("Starting %s Test in %s",tCategory, languagePUM->get_item()->label() );
@@ -174,6 +206,8 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	if (strcmp(slang,"albanian") == 0) langid = DBALBANIANID;
 	assert(langid>0);
 	
+	//if (qv) delete qv;
+	vector<int> *v;
 	vector<int> alangs = sql.availableLanguages(catid);
 
 	// check if selected language is available in current category
@@ -206,8 +240,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 		languagePUM->label(languagePUM->get_item()->label());
 		fltk::check();
 	}
-	
-	vector<int> *v = sql.testTemplate(catid,langid);
+	v = sql.testTemplate(catid,langid);
 	
 	int *array = sql.createRandomTestFromTemplate(v);
 	
@@ -217,20 +250,14 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	#ifdef DEBUG
 	ct->answerRandomly();
 	#endif
-
-	if (!qv) 
-	{
-		qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always happen :(");
-		qv->child_of(this);
-	}
-//	else qv->hide();
-	
-	qv->setTest(ct);
+	//wizard->next();
+	//qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always can happen :(");
+	//wizard->value()->setTest(ct);
 	//qv->show_inside(this);
-
-	qv->show();
+	//qv->child_of(this);
+	//qv->show();
 	activate();
-	statusBar->label(_("Test created Successfully!"));
+	//statusBar->label(_("Test created Successfully!"));
 }
 
 // debrecated method

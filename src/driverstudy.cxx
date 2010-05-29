@@ -24,6 +24,8 @@
 
 #include <fltk/Window.h>
 #include <fltk/Widget.h>
+#include <fltk/WizardGroup.h>
+#include <fltk/StatusBarGroup.h>
 #include <fltk/run.h>
 #include "dlg.h"
 #include <fltk/error.h>
@@ -112,9 +114,46 @@ const char* getUILanguage() {
 
 DictationSystem* ds;
 
+fltk::WizardGroup *wiz;
+fltk::Window *window;
+
+MainMenuUI *menu;
+QuestionUI *qv;
+
+
+// this include are for createTest and will be moved to persistance some
+// day
+#include "test.h"
+#include "sqlite3.cxx"
+Test* createTest(int catid, int langid) {
+	SQLITE3 sql(DATABASE);
+	//catid = DBCARID;
+
+	assert(catid>0);
+	
+	//if (qv) delete qv;
+	vector<int> *v;
+	vector<int> alangs = sql.availableLanguages(catid);
+
+	v = sql.testTemplate(catid,langid);
+	
+	int *array = sql.createRandomTestFromTemplate(v);
+	
+	Test* ct = sql.getTest(array);
+	return ct;
+}
+
+void back_cb(Widget*, void*) { wiz->prev(); }
+
+void next_cb(fltk::Widget* pBtn, void* tCategory) {
+	const char* selectedCategory = (const char*)tCategory;
+	qv->setTest(createTest(menu->getSelectedCategory(selectedCategory),menu->getSelectedLanguage()));
+	wiz->next(); 
+}
+
 void cb_exit(fltk::Widget*, void*)
 {
-	if ( dlg::ask(_("Are you sure you want to quit?")) ) exit(0);
+	if ( dlg::ask(_("Are you sure you want to quit?")) ) window->hide();//exit(0);
 }
 
 int main(int argc, char** argv)
@@ -128,12 +167,7 @@ int main(int argc, char** argv)
 		#endif
 		fltk::fatal("%s\n -l[ocale] uilocale\n -f[ullscreen]\n", fltk::help);
 	}
-	
-	/* Make change known.  */
-	{
-	extern int  _nl_msg_cat_cntr;
-	++_nl_msg_cat_cntr;
-	}
+
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
@@ -155,14 +189,40 @@ int main(int argc, char** argv)
     
     char applicationTitle[50];
     sprintf(applicationTitle, "%s %s", APPLICATIONTITLE, DRIVERSTUDYVERSION);
-	MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
+	//MainMenuUI *window = new MainMenuUI(fltk::USEDEFAULT, fltk::USEDEFAULT,640,480,applicationTitle);
+	window = new fltk::Window(fltk::USEDEFAULT, fltk::USEDEFAULT,800,600,applicationTitle);
 	//window->icon((char *)LoadIcon(fltk::xdisplay, MAKEINTRESOURCE(101)));
-#ifndef DEBUG	
-	window->callback(cb_exit);
-	window->exitBtn->callback(cb_exit);
-#endif
 
+	window->callback(cb_exit);
+	//window->exitBtn->callback(cb_exit);
+
+	
+	wiz = new fltk::WizardGroup(0,0,800, 580);
+	
+	menu = new MainMenuUI(0, 0,800,580,applicationTitle);
+	
+	wiz->add(menu->mainContainer);
+	
+	qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always can happen :(");
+	qv->exitBtn->callback(back_cb);
+	wiz->add(qv->mainContainer);
+	menu->carBtn->callback(next_cb);
+	menu->motorcycleBtn->callback(next_cb);
+	menu->truckBtn->callback(next_cb);
+	menu->busBtn->callback(next_cb);
+
+	window->add(wiz);
+	//wiz->resizable();
+	window->resizable(wiz);
+	fltk::StatusBarGroup* statusBar = new fltk::StatusBarGroup(20);
+	statusBar->label("Hello!");
+	window->add(statusBar);
 	window->show(argc, argv);
+	
+	//menu->show();
+	//Application *app = new Application();
+	//app->show();
+	
 #ifdef _WIN32
 	HANDLE bigicon = LoadImage(GetModuleHandle(0), MAKEINTRESOURCE(101), IMAGE_ICON, 32, 32, 0);
 	SendMessage(xid(window), WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(bigicon));

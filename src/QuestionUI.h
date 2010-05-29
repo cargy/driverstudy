@@ -31,8 +31,8 @@ class QuestionUI: public QuestionUIAbstract
 		QuestionUI(int x, int y, int width, int height, const char* label);
 		~QuestionUI();
 		virtual void cb_close();
-		void fullscreen();
-		void fullscreen_off();
+		//void fullscreen();
+		//void fullscreen_off();
 		virtual void cb_fullscreen();
 		virtual void cb_answerSelected(fltk::Widget *pRB, long rbId);
 		virtual void cb_next(fltk::Widget* pBtn, const char* Btn);
@@ -47,8 +47,10 @@ class QuestionUI: public QuestionUIAbstract
 		
 			
 	private:
+//		Application *app;
 		int win_x, win_y, win_w, win_h;
 		//bool fullscreen_flag;
+		//fltk::WizardGroup *wizard;
 		Test* currTest;
 		bool preview_mode;
 		inline void cb_answerRB_i(fltk::Widget*, long);

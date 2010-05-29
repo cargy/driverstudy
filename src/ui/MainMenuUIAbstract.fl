@@ -9,24 +9,24 @@ snap 3
 decl {\#include "config.h"} {public
 } 
 
-decl {\#include <fltk/Window.h>} {public
+decl {\#include <fltk/Widget.h>} {public
 } 
 
-class MainMenuUIAbstract {open : {public fltk::Window}
+class MainMenuUIAbstract {open : {public fltk::Widget}
 } {
-  Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Window(x,y,width,height,label,true)} {open
+  Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Widget(x,y,width,height,label)} {open
   } {
-    {fltk::Window} mainContainer {open
-      xywh {317 63 640 480} resizable
+    {fltk::Window} mainContainer {selected
+      xywh {77 114 800 580} resizable
       class {fltk::Group} visible
     } {
       {fltk::Widget} appTitle {
         label {_Application Title}
-        xywh {12 6 615 54} box HIGHLIGHT_UP_BOX labeltype EMBOSSED_LABEL labelsize 32 textsize 32
+        xywh {12 6 775 54} box HIGHLIGHT_UP_BOX labeltype EMBOSSED_LABEL labelsize 32 textsize 32
       }
       {fltk::Group} {} {
-        label {_Select a Test Category} open
-        xywh {12 89 615 275} resizable box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
+        label {_Select a Test Category}
+        xywh {12 89 775 375} resizable box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
       } {
         {fltk::Group} {} {open
           xywh {13 10 590 120} labeltype ENGRAVED_LABEL
@@ -68,13 +68,13 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           {fltk::Button} scarBtn {
             label {_Car Special Category}
             user_data {"scar"} user_data_type {const char*}
-            callback {cb_start(o,v)} selected
+            callback {cb_start(o,v)}
             xywh {153 0 130 120} align 128 deactivate labelsize 14 textsize 14
           }
         }
       }
-      {fltk::Group} {} {open
-        xywh {12 371 615 85} box ENGRAVED_BOX
+      {fltk::Group} {} {
+        xywh {12 471 775 85} box ENGRAVED_BOX
       } {
         {fltk::Button} exitBtn {
           label _Quit
@@ -122,10 +122,6 @@ class MainMenuUIAbstract {open : {public fltk::Window}
           callback {cb_fullscreen()}
           xywh {216 50 180 26} type TOGGLE shortcut 0xffc8
         }
-      }
-      {fltk::StatusBarGroup} statusBar {
-        label {This is the status bar}
-        xywh {0 460 640 20}
       }
     }
   }
