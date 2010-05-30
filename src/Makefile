@@ -18,6 +18,12 @@ GL_LIB   = $(shell $(FLTK2CONFIG) --use-gl --ldstaticflags)
 CXX     =  g++ #$(shell $(FLTK2CONFIG) --cxx)
 CC      = $(shell $(FLTK2CONFIG) --cc)
 
+# get version
+MAJOR_VERSION	= $(shell grep "DRIVERSTUDY_MAJOR_VERSION.*[0-9]" version.h | cut -f3)
+MINOR_VERSION	= $(shell grep "DRIVERSTUDY_MINOR_VERSION.*[0-9]" version.h | cut -f3)
+MICRO_VERSION	= $(shell grep "DRIVERSTUDY_MICRO_VERSION.*[0-9]" version.h | cut -f3)
+VERSION			= $(MAJOR_VERSION).$(MINOR_VERSION).$(MICRO_VERSION)
+
 .SILENT: # Make the build run quietly
 
 #########################################################
@@ -63,6 +69,7 @@ driverstudy: answer.o question.o test.o sqlite3.o \
 	QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	driverstudy.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/driverstudy	
+	@echo version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
 	#$(POSTBUILD) ../build/QuestionViewMain
@@ -122,6 +129,7 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a  \
 	/home/krizz/src/cross_win32/lib/libsqlite3.a 
+	@echo version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
 	#$(POSTBUILD) ../build/DriverStudy.exe
