@@ -20,10 +20,11 @@
 #define CONFIG_H
 
 #define APPLICATIONTITLE "Driver Study"
-#define DRIVERSTUDYVERSION "0.9.1"
-#define DEBUG
-//#define NDEBUG
-//#define TOUCHSCREEN
+#include "version.h"
+#define DRIVERSTUDYVERSION DRIVERSTUDY_VERSION_STRING
+//#define DEBUG
+#define NDEBUG
+#define TOUCHSCREEN
 
 // SOUND DEFs
 #define ENABLE_SOUND
