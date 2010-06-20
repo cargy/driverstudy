@@ -135,9 +135,9 @@ vector<int> availableLanguages (int category) {
 	{
 		rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 		vector<int> plang;
-		printf("lang size: %d\nnrow=%d\n",(int)plang.size(),nrow);
+		//printf("lang size: %d\nnrow=%d\n",(int)plang.size(),nrow);
 		if (nrow > 0) for (int i=1;i<=nrow;i++) plang.push_back(atoi(result[i])) ;
-		printf("lang size: %d\nnrow=%d\n",plang.size(),nrow);
+		//printf("lang size: %d\nnrow=%d\n",plang.size(),nrow);
 		// else probably wrong category id
 		sqlite3_free_table(result);
 		return plang;
