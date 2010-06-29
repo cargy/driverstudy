@@ -130,7 +130,7 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a  \
 	/home/krizz/src/cross_win32/lib/libsqlite3.a 
-	@echo compiled version:$(VERSION)
+	@echo build version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
 	#$(POSTBUILD) ../build/DriverStudy.exe
@@ -192,18 +192,23 @@ deploy-src: clean
 	
 deploy-w32: deepclean strip-w32
 	@echo === Assembling $(VERSION) release... ===
-	rm -r ../deploy/win32/driverstudy-$(VERSION)
+	rm -rf ../deploy/win32/driverstudy-$(VERSION)
 	cp -r ../build/ ../deploy/win32/driverstudy-$(VERSION)
 	cp -r ../../sounds/speex-uwb/ ../deploy/win32/driverstudy-$(VERSION)/voice
 	@echo === Archiving full release... ===
-	rm ../deploy/win32/driverstudy-$(VERSION)-full.7z
+	rm -f ../deploy/win32/driverstudy-$(VERSION)-full.7z
 	7z a -mx=9 -ms=on ../deploy/win32/driverstudy-$(VERSION)-full.7z ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
 	@echo === Archiving no-voice files release... ===
-	cp ../deploy/win32/driverstudy-$(VERSION)-full.7z ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z
-	7z d ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z driverstudy-$(VERSION)/voice/
+	#cp ../deploy/win32/driverstudy-$(VERSION)-full.7z ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z
+	#7z d ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z driverstudy-$(VERSION)/voice/
+	rm -f ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z
+	7z a  -mx=9 -ms=on -x\!driverstudy-$(VERSION)/voice/ ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
+	@echo === Archiving no-voice files sfx release... ===
+	rm -f ../deploy/win32/driverstudy-$(VERSION)-no-voice.exe
+	7z a  -sfx7z.sfx -mx=9 -ms=on -x\!driverstudy-$(VERSION)/voice/ ../deploy/win32/driverstudy-$(VERSION)-no-voice.exe ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
 	@echo === Archiving voice files... ===
-	rm ../deploy/win32/driverstudy-$(VERSION)-voice-files.7z
-	7z a -mx=9 -ms=on ../deploy/win32/driverstudy-$(VERSION)-voice-files.7z ../deploy/win32/driverstudy-$(VERSION)/voice/ | grep -v "Compressing"
+	rm -f ../deploy/win32/driverstudy-voice-files-spx.7z
+	7z a -mx=9 -ms=on ../deploy/win32/driverstudy-voice-files-spx.7z ../deploy/win32/driverstudy-$(VERSION)/voice/ | grep -v "Compressing"
 	@echo deployment of $(VERSION) release completed!
 
 deploy: deploy-src deploy-w32
