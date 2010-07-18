@@ -156,7 +156,12 @@ vector<int> *testTemplate ( int category, int language ) {
 	  tCategory = category;
 	  
 	  char buffer[1024];
-	  sprintf(buffer,"Select Qpag,qcod FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
+	  sprintf(buffer,"SELECT Qpag,qcod "
+			  "FROM Quest, Numbs "
+			  "WHERE "
+			  "KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d "
+			  "ORDER BY qpag;",
+			  category,language);
 	  string s_exe(buffer);
 
 	  rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
@@ -196,7 +201,11 @@ vector<int> *testTemplate ( int category, int language ) {
 
   Question getQuestion(int qid) {
 	  char buffer[1024];
-	  sprintf(buffer,"SELECT qlect, QPhoto, QSound, QBook, alect, ACorr, ASound, AAA from Quest,answer where qcod = aqcod and qcod = %d ;",qid);
+	  sprintf(buffer,"SELECT qlect, QPhoto, QSound, QBook, alect, ACorr, ASound, AAA "
+			  "FROM Quest,answer "
+			  "WHERE qcod = aqcod and qcod = %d "
+			  "ORDER BY RANDOM();",
+			  qid);
 	  string s_exe(buffer);
 	  
       rc = sqlite3_get_table(

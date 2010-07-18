@@ -199,8 +199,6 @@ deploy-w32: deepclean strip-w32
 	rm -f ../deploy/win32/driverstudy-$(VERSION)-full.7z
 	7z a -mx=9 -ms=on ../deploy/win32/driverstudy-$(VERSION)-full.7z ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
 	@echo === Archiving no-voice files release... ===
-	#cp ../deploy/win32/driverstudy-$(VERSION)-full.7z ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z
-	#7z d ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z driverstudy-$(VERSION)/voice/
 	rm -f ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z
 	7z a  -mx=9 -ms=on -x\!driverstudy-$(VERSION)/voice/ ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
 	@echo === Archiving no-voice files sfx release... ===
