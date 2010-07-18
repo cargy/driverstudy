@@ -7,6 +7,7 @@ CXXFLAGS = -g -Wall -O2 -I. $(shell $(FLTK2CONFIG) -g --cxxflags) -DFLTK2
 # Possible steps after linking...
 STRIP      = strip
 POSTBUILD  = $(FLTK2CONFIG) --post
+STRIPW32	= i586-mingw32msvc-strip -s
 
 # libraries to link with:
 LDLIBS   = -lm
@@ -69,7 +70,7 @@ driverstudy: answer.o question.o test.o sqlite3.o \
 	QuestionUIAbstract.o QuestionUI.o MainMenuUIAbstract.o MainMenuUI.o  \
 	driverstudy.o \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/driverstudy	
-	@echo version:$(VERSION)
+	@echo compiled version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
 	#$(POSTBUILD) ../build/QuestionViewMain
@@ -129,10 +130,14 @@ driverstudy.exe: driver_res.o MainMenuUIAbstract.cxx QuestionUIAbstract.cxx
 	-I/home/krizz/src/cross_win32/include -I./ \
 	/home/krizz/src/cross_win32/lib/libintl.a  \
 	/home/krizz/src/cross_win32/lib/libsqlite3.a 
-	@echo version:$(VERSION)
+	@echo build version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
 	#$(POSTBUILD) ../build/DriverStudy.exe
+	
+strip-w32: driverstudy.exe
+	@echo Striping DriverStudy.exe...
+	$(STRIP) ../build/DriverStudy.exe
 
 QuestionWindow.exe: QuestionWindow.cpp
 	i586-mingw32msvc-g++ QuestionWindow.cpp -o ../build/QuestionWindow.exe \
@@ -169,14 +174,40 @@ MainMenu.exe: MainMenuUIAbstract.cxx
 	#$(POSTBUILD) ../build/QuestionViewMain.exe
 
 clean:
+	@echo Cleaning object and executable files...
 	rm -f *.o
 	rm -f ../build/QuestionWindow ../build/QuestionViewMain ../build/MainMenu ../build/driverstudy
 	rm -f ../build/QuestionWindow.exe ../build/QuestionViewMain.exe ../build/MainMenu.exe ../build/DriverStudy.exe
 
 cleanui:
+	@echo Clean fluid2 export files...
 	rm -f QuestionUIAbstract.cxx QuestionUIAbstract.h
 	rm -f MainMenuUIAbstract.cxx MainMenuUIAbstract.h
 	
 deepclean: clean cleanui
 
+deploy-src: clean
+	bzr export --root=driverstudy-$(VERSION)-src ../deploy/src/driverstudy-$(VERSION)-src.tar.bz2
+	@echo exported: driverstudy-$(VERSION)-src.tar.bz2
+	
+deploy-w32: deepclean strip-w32
+	@echo === Assembling $(VERSION) release... ===
+	rm -rf ../deploy/win32/driverstudy-$(VERSION)
+	cp -r ../build/ ../deploy/win32/driverstudy-$(VERSION)
+	cp -r ../../sounds/speex-uwb/ ../deploy/win32/driverstudy-$(VERSION)/voice
+	@echo === Archiving full release... ===
+	rm -f ../deploy/win32/driverstudy-$(VERSION)-full.7z
+	7z a -mx=9 -ms=on ../deploy/win32/driverstudy-$(VERSION)-full.7z ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
+	@echo === Archiving no-voice files release... ===
+	rm -f ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z
+	7z a  -mx=9 -ms=on -x\!driverstudy-$(VERSION)/voice/ ../deploy/win32/driverstudy-$(VERSION)-no-voice.7z ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
+	@echo === Archiving no-voice files sfx release... ===
+	rm -f ../deploy/win32/driverstudy-$(VERSION)-no-voice.exe
+	7z a  -sfx7z.sfx -mx=9 -ms=on -x\!driverstudy-$(VERSION)/voice/ ../deploy/win32/driverstudy-$(VERSION)-no-voice.exe ../deploy/win32/driverstudy-$(VERSION)/ | grep -v "Compressing"
+	@echo === Archiving voice files... ===
+	rm -f ../deploy/win32/driverstudy-voice-files-spx.7z
+	7z a -mx=9 -ms=on ../deploy/win32/driverstudy-voice-files-spx.7z ../deploy/win32/driverstudy-$(VERSION)/voice/ | grep -v "Compressing"
+	@echo deployment of $(VERSION) release completed!
+
+deploy: deploy-src deploy-w32
 
