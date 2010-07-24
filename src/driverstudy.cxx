@@ -151,6 +151,17 @@ void next_cb(fltk::Widget* pBtn, void* tCategory) {
 	wiz->next(); 
 }
 
+void fullscreen_cb(Widget* pWdg, void*)
+{
+	window->init_sizes();
+	fltk::Button *pBtn = (fltk::Button*)pWdg;
+	if (!pBtn->state())
+		window->fullscreen_off(0,0,800,600);
+	else
+		window->fullscreen();
+
+}
+
 void cb_exit(fltk::Widget*, void*)
 {
 	if ( dlg::ask(_("Are you sure you want to quit?")) ) window->hide();//exit(0);
@@ -203,13 +214,14 @@ int main(int argc, char** argv)
 	
 	wiz->add(menu->mainContainer);
 	
-	qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,600,"You should never see this! But shit always can happen :(");
+	qv = new QuestionUI(fltk::USEDEFAULT,fltk::USEDEFAULT,800,580,"You should never see this! But shit always can happen :(");
 	qv->exitBtn->callback(back_cb);
 	wiz->add(qv->mainContainer);
 	menu->carBtn->callback(next_cb);
 	menu->motorcycleBtn->callback(next_cb);
 	menu->truckBtn->callback(next_cb);
 	menu->busBtn->callback(next_cb);
+	menu->fullscreenBtn->callback(fullscreen_cb);
 
 	window->add(wiz);
 	//wiz->resizable();
