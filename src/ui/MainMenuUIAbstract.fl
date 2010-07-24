@@ -16,8 +16,8 @@ class MainMenuUIAbstract {open : {public fltk::Widget}
 } {
   Function {MainMenuUIAbstract(int x, int y, int width, int height, const char* label): fltk::Widget(x,y,width,height,label)} {open
   } {
-    {fltk::Window} mainContainer {selected
-      xywh {77 114 800 580} resizable
+    {fltk::Window} mainContainer {open
+      xywh {371 104 800 560} resizable
       class {fltk::Group} visible
     } {
       {fltk::Widget} appTitle {
@@ -25,11 +25,11 @@ class MainMenuUIAbstract {open : {public fltk::Widget}
         xywh {12 6 775 54} box HIGHLIGHT_UP_BOX labeltype EMBOSSED_LABEL labelsize 32 textsize 32
       }
       {fltk::Group} {} {
-        label {_Select a Test Category}
-        xywh {12 89 775 375} resizable box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
+        label {_Select a Test Category} open
+        xywh {12 92 775 350} resizable box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelsize 18 textsize 18
       } {
-        {fltk::Group} {} {open
-          xywh {13 10 590 120} labeltype ENGRAVED_LABEL
+        {fltk::Group} {} {
+          xywh {13 10 743 120} labeltype ENGRAVED_LABEL
         } {
           {fltk::Button} motorcycleBtn {
             label _Motorcycle
@@ -41,40 +41,40 @@ class MainMenuUIAbstract {open : {public fltk::Widget}
             label _Car
             user_data {"car"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {153 0 130 120} labelsize 14 textsize 14
+            xywh {204 0 130 120} labelsize 14 textsize 14
           }
           {fltk::Button} truckBtn {
             label _Truck
             user_data {"truck"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {306 0 130 120} labelsize 14 textsize 14
+            xywh {408 0 130 120} labelsize 14 textsize 14
           }
           {fltk::Button} busBtn {
             label _Bus
             user_data {"bus"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {459 0 130 120} labelsize 14 textsize 14
+            xywh {613 0 130 120} labelsize 14 textsize 14
           }
         }
         {fltk::Group} {} {open
-          xywh {13 140 590 120}
+          xywh {13 140 743 120}
         } {
           {fltk::Button} smotorcycleBtn {
             label {_Motorcycle Special Category}
             user_data {"smotorcycle"} user_data_type {const char*}
-            callback {cb_start(o,v)}
-            xywh {0 0 130 120} align 128 deactivate labelsize 14 textsize 14
+            callback {cb_start(o,v)} selected
+            xywh {0 0 130 120} align 128 hide deactivate labelsize 14 textsize 14
           }
           {fltk::Button} scarBtn {
             label {_Car Special Category}
             user_data {"scar"} user_data_type {const char*}
             callback {cb_start(o,v)}
-            xywh {153 0 130 120} align 128 deactivate labelsize 14 textsize 14
+            xywh {204 0 130 120} align 128 hide deactivate labelsize 14 textsize 14
           }
         }
       }
-      {fltk::Group} {} {
-        xywh {12 471 775 85} box ENGRAVED_BOX
+      {fltk::Group} {} {open
+        xywh {12 460 775 85} box ENGRAVED_BOX
       } {
         {fltk::Button} exitBtn {
           label _Quit
@@ -84,12 +84,12 @@ class MainMenuUIAbstract {open : {public fltk::Widget}
         {fltk::Button} helpBtn {
           label _Help
           callback {cb_help()}
-          xywh {536 11 60 60}
+          xywh {696 11 60 60}
         }
         {fltk::PopupMenu} languagePUM {
           label {_Select Language}
           callback {cb_selectLanguage(o,v)} open
-          xywh {218 8 178 35} labelsize 14 textsize 14
+          xywh {310 8 178 35} labelsize 14 textsize 14
         } {
           {fltk::Item} {} {
             label _Greek
@@ -115,12 +115,12 @@ class MainMenuUIAbstract {open : {public fltk::Widget}
         {fltk::LightButton} soundBtn {
           label _Dictation
           callback {cb_soundToggle()}
-          xywh {439 11 90 60} labelfont 1
+          xywh {563 11 120 60} labelfont 1
         }
         {fltk::Button} fullscreenBtn {
           label _Fullscreen
           callback {cb_fullscreen()}
-          xywh {216 50 180 26} type TOGGLE shortcut 0xffc8
+          xywh {309 50 180 26} type TOGGLE shortcut 0xffc8
         }
       }
     }

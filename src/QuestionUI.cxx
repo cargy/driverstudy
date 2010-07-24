@@ -186,7 +186,7 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 				break;
 			case 2:
 				// Cacnel
-				hide();
+				exitBtn->do_callback();
 				break;
 		}
 	}
@@ -209,11 +209,18 @@ int QuestionUI::selectedRB()
 
 void QuestionUI::showQuestion(Question* q)
 {
-	
+	// restore setting changed by previewQuestion()
+	AnswerGroup->clear_output();
+  	if ( !timer->visible() ) timer->show();
+  	if ( !validateBtn->visible() ) validateBtn->show();
+
 	char qNo[150];
 	sprintf(qNo, _("Question %i/%i"),currTest->cursor()+1,currTest->size());
+	//QuestionGroup->copy_label(qNo);
 	QuestionGroup->copy_label(qNo);
+	QuestionGroup->redraw_label();
 	questionDisplay->label(q->title());
+	questionDisplay->redraw_label();
 	
 	createAnswerRB(q->getAOA());
 
@@ -292,9 +299,12 @@ void QuestionUI::previewQuestion(Question* q)
     sprintf(qNo, _("Question %i (%s)"),currTest->cursor()+1,q->getBookSection());
     label(qNo);
     QuestionGroup->copy_label(qNo);
+    QuestionGroup->redraw_label();
     questionDisplay->label(q->title());
+    questionDisplay->redraw_label();
     assert(q->getSelectedAnswer() != q->getCorrectAnswer());
     
+
   	createAnswerRB(q->getAOA());
     for (unsigned int i=0; i<q->getAOA(); i++) 
     {
