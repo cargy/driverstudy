@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 	vector<int> *v = sql.testTemplate(1,1);
 	int *array = sql.createRandomTestFromTemplate(v);
 
-	Test *ct = sql.getTest(array);
+	TestModel *ct = sql.getTest(array);
 
 	ct->answerRandomly();
 	QuestionView qvui;

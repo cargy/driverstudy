@@ -347,7 +347,7 @@ void QuestionUI::previewQuestion(Question* q)
 	redraw();
 }
 
-void QuestionUI::setTest(Test* t, bool pmode)
+void QuestionUI::setTest(TestModel* t, bool pmode)
 {
 	currTest = t;
 	preview_mode = false;

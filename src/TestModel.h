@@ -18,15 +18,15 @@
 //      MA 02110-1301, USA.
 
 
-#ifndef TEST_H
-#define TEST_H
+#ifndef TESTMODEL_H
+#define TESTMODEL_H
 #include "question.h"
 #include "MV.h"
 
-class Test: public Model
+class TestModel: public Model
 {
 	public:
-		Test(Question *xferQuestions, int aoq, int ttime, int tcategory);
+		TestModel(Question *xferQuestions, int aoq, int ttime, int tcategory);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();
 		bool completed();
@@ -58,4 +58,4 @@ class Test: public Model
 
 };
 
-#endif /* TEST_H */ 
+#endif /* TESTMODEL_H */

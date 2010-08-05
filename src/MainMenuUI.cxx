@@ -244,7 +244,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	
 	int *array = sql.createRandomTestFromTemplate(v);
 	
-	Test* ct = sql.getTest(array);
+	TestModel* ct = sql.getTest(array);
 	fltk::check();
 	
 	#ifdef DEBUG

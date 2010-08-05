@@ -42,7 +42,7 @@ class QuestionUI: public QuestionUIAbstract
 		int selectedRB();
 		void showQuestion(Question* q);
 		void previewQuestion(Question* q);
-		void setTest(Test* t, bool pmode=false);
+		void setTest(TestModel* t, bool pmode=false);
 		void show();
 		
 			
@@ -51,7 +51,7 @@ class QuestionUI: public QuestionUIAbstract
 		int win_x, win_y, win_w, win_h;
 		//bool fullscreen_flag;
 		//fltk::WizardGroup *wizard;
-		Test* currTest;
+		TestModel* currTest;
 		bool preview_mode;
 		inline void cb_answerRB_i(fltk::Widget*, long);
 		static void cb_answerRB(fltk::Widget*, long);

@@ -1,6 +1,6 @@
-#include "test.h"
+#include "TestModel.h"
 
-Test::Test(Question *xferQuestions, int aoq, int ttime, int tcategory):
+TestModel::TestModel(Question *xferQuestions, int aoq, int ttime, int tcategory):
 Model()
 {
 	tQuestions = xferQuestions;
@@ -10,17 +10,17 @@ Model()
 	testCategory = tcategory;
 }
 
-void Test::selectAnswerOfCurrentQuestion(int a)
+void TestModel::selectAnswerOfCurrentQuestion(int a)
 {
 	tQuestions[ccursor].selectAnswer(a);
 }
 
-void Test::verifyAnswerOfCurrentQuestion()
+void TestModel::verifyAnswerOfCurrentQuestion()
 {
 	tQuestions[ccursor].verify();
 }
 
-bool Test::completed()
+bool TestModel::completed()
 {
 	bool flag = true;
 	
@@ -31,7 +31,7 @@ bool Test::completed()
 	return flag;
 }
 
-int Test::getCorrect() {
+int TestModel::getCorrect() {
 	int correctQuestions = 0;
 	for(int i=0;i<csize;i++) {
 		if ( tQuestions[i].isVerified() && tQuestions[i].isCorrect() ) correctQuestions++;
@@ -39,7 +39,7 @@ int Test::getCorrect() {
 	return correctQuestions;
 }
 
-int Test::getWrong() {
+int TestModel::getWrong() {
 	int wrongQuestion = 0;
 	for(int i=0;i<csize;i++) {
 		if ( tQuestions[i].isVerified() && !tQuestions[i].isCorrect() ) wrongQuestion++;
@@ -47,7 +47,7 @@ int Test::getWrong() {
 	return wrongQuestion;
 }
 
-Question* Test::wrongQuestions() 
+Question* TestModel::wrongQuestions() 
 {
 	Question *wq = new Question[csize-getCorrect()];
 	int index = -1;
@@ -59,7 +59,7 @@ Question* Test::wrongQuestions()
 	return wq;			
 }
 
-Question* Test::next()
+Question* TestModel::next()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 	
@@ -72,12 +72,12 @@ Question* Test::next()
 	
 }
 
-Question* Test::question()
+Question* TestModel::question()
 {
 	return &tQuestions[ccursor];
 }
 
-bool Test::is_next()
+bool TestModel::is_next()
 {
 	unsigned int flag = 0;
 	
@@ -88,7 +88,7 @@ bool Test::is_next()
 	else return false;
 }
 
-bool Test::is_nextWrong()
+bool TestModel::is_nextWrong()
 {
 	for (int i=ccursor+1; i < csize; i++ )
 		if ( !tQuestions[i].isCorrect() ) return true;
@@ -96,7 +96,7 @@ bool Test::is_nextWrong()
 	return false;
 }
 
-Question* Test::nextWrong()
+Question* TestModel::nextWrong()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 	
@@ -109,18 +109,18 @@ Question* Test::nextWrong()
 	
 }
 
-int Test::time() { return testTime;};
-int Test::category_id() {return testCategory;};
+int TestModel::time() { return testTime;};
+int TestModel::category_id() {return testCategory;};
 
 #ifdef DEBUG
 #include <cstdio>
-void Test::answerRandomly() 
+void TestModel::answerRandomly() 
 {
 	for(int i=0;i<csize;i++)
 		tQuestions[i].answerRandomly();			
 }
 
-void Test::showResults() {
+void TestModel::showResults() {
 	int i=0;
 	for(i=0;i<csize;i++) {
 		printf("\nQuestion %i\n",i+1);

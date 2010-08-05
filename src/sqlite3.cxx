@@ -195,11 +195,11 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return q;
   }
 
-  Test* getTest(int *array) {
-	  return new Test(getQuestionArray(array),qNo,tTime, tCategory);
+  TestModel* getTest(int *array) {
+	  return new TestModel(getQuestionArray(array),qNo,tTime, tCategory);
   }
 
-  Test* getTest(catid,langid) {
+  TestModel* getTest(catid,langid) {
 	  vector<int> *v = sql.testTemplate(catid,langid);
 	  int *array = sql.createRandomTestFromTemplate(v);
 	  return getTest(array);
