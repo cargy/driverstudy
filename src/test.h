@@ -21,8 +21,9 @@
 #ifndef TEST_H
 #define TEST_H
 #include "question.h"
+#include "MV.h"
 
-class Test
+class Test: public Model
 {
 	public:
 		Test(Question *xferQuestions, int aoq, int ttime, int tcategory);

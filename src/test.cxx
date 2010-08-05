@@ -1,6 +1,7 @@
 #include "test.h"
 
-Test::Test(Question *xferQuestions, int aoq, int ttime, int tcategory)
+Test::Test(Question *xferQuestions, int aoq, int ttime, int tcategory):
+Model()
 {
 	tQuestions = xferQuestions;
 	csize = aoq;
@@ -66,6 +67,7 @@ Question* Test::next()
 	{
 		if (ccursor >= csize-1) ccursor = -1;
 	}
+	changed();
 	return &tQuestions[ccursor];
 	
 }
@@ -102,6 +104,7 @@ Question* Test::nextWrong()
 	{
 		if (ccursor >= csize-1) ccursor = -1;
 	}
+	changed();
 	return &tQuestions[ccursor];
 	
 }

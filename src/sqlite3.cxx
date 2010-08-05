@@ -199,6 +199,12 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return new Test(getQuestionArray(array),qNo,tTime, tCategory);
   }
 
+  Test* getTest(catid,langid) {
+	  vector<int> *v = sql.testTemplate(catid,langid);
+	  int *array = sql.createRandomTestFromTemplate(v);
+	  return getTest(array);
+  }
+
   Question getQuestion(int qid) {
 	  char buffer[1024];
 	  sprintf(buffer,"SELECT qlect, QPhoto, QSound, QBook, alect, ACorr, ASound, AAA "
