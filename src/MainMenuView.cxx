@@ -7,6 +7,8 @@
 
 #include "MainMenuView.h"
 #include "AppModel.h"
+#include <fltk/Image.h>
+#include <fltk/SharedImage.h>
 
 MainMenuView::MainMenuView(int x, int y, int w, int h, const char* l) :
 Group(x, y, w, h, l, true/* auto-begin() */),
@@ -31,10 +33,21 @@ busBtn(category.x()+15+w/4*3, y + 100, 130, 120, "Bus")
 	category.labelsize(18);
 	category.textsize(18);
 
+	fltk::register_images();
 	motorcycleBtn.callback(cb_categoryBtn, this);
+	motorcycleBtn.image( fltk::SharedImage::get("icons/motorcycle_256x182.png") );
+	motorcycleBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
 	carBtn.callback(cb_categoryBtn, this);
+	carBtn.image( fltk::SharedImage::get("icons/car_256x182.png") );
+	carBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
+
 	truckBtn.callback(cb_categoryBtn, this);
+	truckBtn.image( fltk::SharedImage::get("icons/truck_256x182.png") );
+	truckBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
+
 	busBtn.callback(cb_categoryBtn, this);
+	busBtn.image( fltk::SharedImage::get("icons/bus_256x182.png") );
+	busBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
 
 }
 

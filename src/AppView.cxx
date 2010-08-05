@@ -22,7 +22,7 @@ group(0,0,w,580)
 
 
 	add(group);
-	toolbar = new BarGroup(0,h - 80 - statusBar.h(),w,80,"ToolBar");
+	toolbar = new ToolbarView(0,h - 80 - statusBar.h(),w,80,"ToolBar");
 	container = new ContainerView(0,0,w, h - toolbar->h() - statusBar.h());
 	group.add(container);
 	group.add(toolbar);
@@ -36,7 +36,7 @@ group(0,0,w,580)
 	//container->color(fltk::BLUE);
 	//model()->setView(container);
 
-
+/*
 	fullscreenBtn = new ToggleButton(116, 11, 180, 60, "Fullscreen");
 	fullscreenBtn->callback(cb_fullscreenBtn, this);
 	quitBtn = new Button(18, 11, 60, 60, "Quit" );
@@ -48,7 +48,7 @@ group(0,0,w,580)
 	toolbar->add(quitBtn);
 	toolbar->add(aboutBtn);
 	toolbar->add(dicationBtn);
-
+*/
 
 	statusBar.child_box(FLAT_BOX);
 	statusBar.set("Hello!",  StatusBarGroup::SBAR_LEFT);
@@ -73,7 +73,7 @@ void AppView::cb_fullscreenBtn(fltk::Widget* pWdg, void* p) {
 */
 
 inline void AppView::cb_fullscreenBtn_i(ToggleButton* fullscreenBtn) {
-	model()->fullscreen_toggle(x(),y(),w(),h());
+	model()->fullscreen_toggle();
 }
 void AppView::cb_fullscreenBtn(Widget* w, void* v) {
   ((AppView*)v)->cb_fullscreenBtn_i((ToggleButton*)w);
@@ -105,7 +105,7 @@ void AppView::cb_nextBtn(Widget* w, void* v) {
 }
 
 inline void AppView::cb_prevBtn_i(Button* btn) {
-	//add_timeout(0.01f, move, aboutBtn);
+	model()->gotoMainMenu();
 }
 void AppView::cb_prevBtn(Widget* w, void* v) {
   ((AppView*)v)->cb_prevBtn_i((Button*)w);
@@ -119,7 +119,7 @@ void AppView::update() {
 	{
 		fullscreen();
 		fullscreen_status = true;
-		fullscreenBtn->value(model()->isfullscreen());
+		toolbar->fullscreenBtn.value(model()->isfullscreen());
 	}
 
 	else if (!model()->isfullscreen() && fullscreen_status)
@@ -132,7 +132,7 @@ void AppView::update() {
 		fullscreen_status = false;
 		//model()->setpos(window->x(),window->y());
 		//model()->setsize(window->w(),window->h());
-		fullscreenBtn->value(model()->isfullscreen());
+		toolbar->fullscreenBtn.value(model()->isfullscreen());
 
 	}
 

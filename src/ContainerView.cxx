@@ -20,10 +20,11 @@ Group(x,y,w,h,l,begin), value_(0),
 View()
 {
 	transitioning_ = false;
+	interval_ = 0.01f;
 	box(THIN_UP_BOX);
 
 	// TODO Auto-generated constructor stub
-	//add(new MainMenuView(0,0,w,h, "Main Menu"));
+	add(new MainMenuView(0,0,w,h, "Main Menu"));
 	//add(new HomeView(0,0,w,h, "Choices"));
 	add(new QuestionView(0,0,w,h, "Test View"));
 
@@ -89,13 +90,13 @@ int ContainerView::handle(int event) {
 		if (!transitioning_) break;
 	case TIMEOUT:
 		if (prev_ && prev_->x() < prev_->parent()->w()) {
-			prev_->x(prev_->x()+60);
+			prev_->x(prev_->x()+20);
 			//prev_->position(prev_->x()+60, prev_->y());
 			next_->x(prev_->x() - next_->w());
 			//next_->position(prev_->x() - next_->w(), next_->y());
 			if (!next_->visible()) next_->show();
 			redraw();
-			add_timeout(0.2f);
+			add_timeout(interval_);
 		}else{
 			transitioning_ = false;
 			remove_timeout();
@@ -138,7 +139,7 @@ void ContainerView::slide(Widget *kid) {
 	  value(kid);
   else {
 	  transitioning_ = true;
-	  add_timeout(0.2f);
+	  add_timeout(interval_);
   }
 
 

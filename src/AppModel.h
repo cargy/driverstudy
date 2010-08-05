@@ -10,6 +10,7 @@
 #include "MV.h"
 #include <cstdlib>
 #include <string>
+#include <fltk/Window.h>
 
 using namespace std;
 
@@ -21,12 +22,13 @@ private:
 	int page_index;
 	const char* statusbar_msg;
 	static AppModel* instance;
+	fltk::Window* mainWindow_;
 
 public:
 	AppModel();
 	~AppModel();
 	static AppModel* getInstance();
-	bool fullscreen_toggle(int x, int y, int w, int h);
+	bool fullscreen_toggle();
 	const char* getappTitle();
 	void setTitle(const char* appTitle);
 	bool isfullscreen();
@@ -43,6 +45,7 @@ public:
 	int getpage();
 	void setpos(int x, int y);
 	void setsize(int w, int h);
+	void setView(View *pw);
 };
 
 #endif /* APPMODEL_H_ */

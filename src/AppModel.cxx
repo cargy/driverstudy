@@ -10,6 +10,7 @@
 #include <cstdio>
 #include <cstring>
 #include "AppView.h"
+#include <fltk/Widget.h>
 
 AppModel* AppModel::instance = NULL;
 
@@ -34,12 +35,17 @@ AppModel* AppModel::getInstance() {
 	return instance;
 }
 
-bool AppModel::fullscreen_toggle(int x, int y, int w, int h) {
+void AppModel::setView(View *pv) {
+	if ( dynamic_cast<fltk::Window*>(pv)->is_window() ) mainWindow_ = dynamic_cast<fltk::Window*>(pv);
+	Model::setView(pv);
+}
+
+bool AppModel::fullscreen_toggle() {
 	if (!fullscreen_flag) {
-		this->x = x;
-		this->y = y;
-		this->w = w;
-		this->h = h;
+		this->x = mainWindow_->x();
+		this->y = mainWindow_->y();
+		this->w = mainWindow_->w();
+		this->h = mainWindow_->h();
 	}
 	fullscreen_flag = !fullscreen_flag;
 	changed();

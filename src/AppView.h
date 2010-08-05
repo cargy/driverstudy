@@ -19,12 +19,13 @@
 
 #include "AppModel.h"
 #include "ContainerView.h"
+#include "ToolbarView.h"
 
 class AppView: public fltk::Window, public View {
 private:
 	fltk::PackedGroup group;
 		ContainerView* container;
-		fltk::BarGroup* toolbar;
+		ToolbarView* toolbar;
 	fltk::StatusBarGroup statusBar;
 
 

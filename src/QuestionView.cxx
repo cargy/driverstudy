@@ -13,13 +13,13 @@ View(),
 leftGroup(5, 5, 450, h-10),
 	questionGroup(5, 5, leftGroup.w()-10, leftGroup.h()-10, "Question #/#"),
 		questionHolder(5, 20, questionGroup.w()-10, 120, "The actual Question?"),
-		answerGroup(5, 145, 430, questionGroup.h() - questionHolder.y() -  questionHolder.h() - 10),
+		answerGroup(5, 145, 430, questionGroup.h() - questionHolder.y() -  questionHolder.h() - 10, "Answers Group"),
 rightGroup(leftGroup.w()+5, 5, 340, h-10),
 	imageHolder(5,5,rightGroup.w()-10,300),
 	controlGroup(5, 310, rightGroup.w()-10, rightGroup.h() - imageHolder.y() - imageHolder.h() - 10),
-		timerBar(15, 10, 300, 20),
-		validateBtn(15, timerBar.y()+timerBar.h() + 10, 300, 50, "Validate Answer  @+1+"),
-		nextBtn(15, validateBtn.y()+validateBtn.h() + 10, 300, 50, "Next Question  @+1>@+1>[]")
+		timerBar(15, 10, 300, 25),
+		validateBtn(15, timerBar.y()+timerBar.h() + 10, 300, 55, "Validate Answer  @+1+"),
+		nextBtn(15, validateBtn.y()+validateBtn.h() + 10, 300, 55, "Next Question  @+1>@+1>[]")
 {
 	leftGroup.add(questionGroup);
 	questionGroup.add(questionHolder);
@@ -55,4 +55,12 @@ rightGroup(leftGroup.w()+5, 5, 340, h-10),
 
 QuestionView::~QuestionView() {
 	// TODO Auto-generated destructor stub
+}
+
+void QuestionView::cb_validateBtn(Widget* v, void *) { // static method
+  ((QuestionView*)(v->parent()))->cb_validateBtn_i((Button*)v);
+}
+
+void QuestionView::cb_validateBtn_i(Button* btn) {
+
 }

@@ -20,6 +20,7 @@ private:
 	fltk::Widget * value_;
 	fltk::Widget * next_;
 	bool transitioning_;
+	float interval_;
 
 protected:
 	int handle(int);

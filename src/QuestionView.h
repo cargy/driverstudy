@@ -13,21 +13,26 @@
 #include <fltk/Button.h>
 #include <fltk/Widget.h>
 #include "TimerProgressBar.h"
+#include "AnswersView.h"
 
-using namespace fltk;
-
-class QuestionView: public Group, public View {
+class QuestionView: public fltk::Group, public View {
 private:
-	Group leftGroup;
-		Group questionGroup;
-			Button questionHolder;
-			Group answerGroup;
-	Group rightGroup;
-		Widget imageHolder;
-		Group controlGroup;
+	fltk::Group leftGroup;
+	fltk::Group questionGroup;
+			fltk::Button questionHolder;
+			AnswersView answerGroup;
+	fltk::Group rightGroup;
+		fltk::Widget imageHolder;
+		fltk::Group controlGroup;
 			TimerProgressBar timerBar;
-			Button validateBtn;
-			Button nextBtn;
+			fltk::Button validateBtn;
+			fltk::Button nextBtn;
+
+	//callbacks
+	static void cb_validateBtn(fltk::Widget* v, void *);
+	void cb_validateBtn_i(fltk::Button* btn);
+	static void cb_nextBtn(fltk::Widget* v, void *);
+	void cb_nextBtn_i(fltk::Button* btn);
 
 public:
 	QuestionView(int x, int y, int w, int h, const char* l);
