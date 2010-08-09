@@ -89,29 +89,52 @@ int ContainerView::handle(int event) {
 		remove_timeout();
 		if (!transitioning_) break;
 	case TIMEOUT:
-		if (prev_ && prev_->x() < prev_->parent()->w()) {
-			prev_->x(prev_->x()+20);
-			//prev_->position(prev_->x()+60, prev_->y());
-			next_->x(prev_->x() - next_->w());
-			//next_->position(prev_->x() - next_->w(), next_->y());
-			if (!next_->visible()) next_->show();
-			redraw();
-			add_timeout(interval_);
-		}else{
-			transitioning_ = false;
-			remove_timeout();
-			if (prev_) prev_->x(0);
-			value(next_);
-			relayout();
-			redraw();
-
-		}
+		if ( prev_ < next_ )
+			move_left();
+		else
+			move_right();
 		break;
 	case HIDE:
 		remove_timeout();
 	    break;
 	default:
 	    return fltk::Group::handle(event);
+
+	}
+}
+
+void ContainerView::move_left() {
+	if ( prev_->x() > -prev_->w()) {
+		prev_->x(prev_->x()-20);
+		next_->x(prev_->x() + prev_->w());
+		if (!next_->visible()) next_->show();
+		redraw();
+		add_timeout(interval_);
+	}else{
+		transitioning_ = false;
+		remove_timeout();
+		if (prev_) prev_->x(0);
+		value(next_);
+		relayout();
+		redraw();
+
+	}
+}
+
+void ContainerView::move_right() {
+	if (prev_ && prev_->x() < prev_->parent()->w()) {
+		prev_->x(prev_->x()+20);
+		next_->x(prev_->x() - next_->w());
+		if (!next_->visible()) next_->show();
+		redraw();
+		add_timeout(interval_);
+	}else{
+		transitioning_ = false;
+		remove_timeout();
+		if (prev_) prev_->x(0);
+		value(next_);
+		relayout();
+		redraw();
 
 	}
 }

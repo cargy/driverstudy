@@ -21,6 +21,8 @@ private:
 	fltk::Widget * next_;
 	bool transitioning_;
 	float interval_;
+	void move_left();
+	void move_right();
 
 protected:
 	int handle(int);
