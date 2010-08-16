@@ -7,6 +7,8 @@
 
 #include "AppView.h"
 #include "AppModel.h"
+#include "MainMenuView.h"
+#include "TestView.h"
 
 using namespace fltk;
 
@@ -24,6 +26,10 @@ group(0,0,w,580)
 	add(group);
 	toolbar = new ToolbarView(0,h - 80 - statusBar.h(),w,80,"ToolBar");
 	container = new ContainerView(0,0,w, h - toolbar->h() - statusBar.h());
+	//container->add(new MainMenuView(0,0,container->w(),container->h(), "Main Menu"));
+	//container->add(new MainMenuView(0,0,container->w(),container->h(), "Main Menu1"));
+	//container->add(new TestView(0,0,container->w(),container->h(), "Test View"));
+	//container->value(child(1));
 	group.add(container);
 	group.add(toolbar);
 	group.resizable(container);
@@ -139,19 +145,12 @@ void AppView::update() {
 
 	char buf[100];
 
-
-
 	container->showPage(model()->getpage());
+	//container->update();
 
 	container->draw();
 	sprintf(buf, "%s page: %d", container->value()->label(), model()->getpage());
 	statusBar.set(buf);
 
 	statusBar.set(model()->getStuatusBarMsg(),  StatusBarGroup::SBAR_LEFT);
-
-
-
-
-
-
 }

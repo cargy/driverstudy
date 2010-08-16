@@ -66,7 +66,8 @@ void MainMenuView::cb_categoryBtn_i(Button* btn) {
 		carBtn.label("BOO!");
 	else {
 		//testBtn.label(model()->getappTitle());
-		AppModel::getInstance()->nextpage();
+		//AppModel::getInstance()->nextpage();
+		AppModel::getInstance()->gotoTest();
 		AppModel::getInstance()->setStatusBarMsg(btn->label());
 		printf("categoryBtn: %s\n", btn->label());
 	}

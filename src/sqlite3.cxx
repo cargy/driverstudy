@@ -22,7 +22,7 @@
 #include <cassert>
 #include <iostream>
 #include <sqlite3.h>
-#include "test.h"
+#include "TestModel.h"
 #include <vector>
 #include <iterator>
 #include <stdio.h>
@@ -199,9 +199,9 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return new TestModel(getQuestionArray(array),qNo,tTime, tCategory);
   }
 
-  TestModel* getTest(catid,langid) {
-	  vector<int> *v = sql.testTemplate(catid,langid);
-	  int *array = sql.createRandomTestFromTemplate(v);
+  TestModel* getTest(int catid,int langid) {
+	  vector<int> *v = testTemplate(catid,langid);
+	  int *array = createRandomTestFromTemplate(v);
 	  return getTest(array);
   }
 

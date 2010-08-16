@@ -67,7 +67,7 @@ Question* TestModel::next()
 	{
 		if (ccursor >= csize-1) ccursor = -1;
 	}
-	changed();
+	//changed();
 	return &tQuestions[ccursor];
 	
 }

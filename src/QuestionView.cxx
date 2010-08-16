@@ -18,9 +18,10 @@ rightGroup(leftGroup.w()+5, 5, 340, h-10),
 	imageHolder(5,5,rightGroup.w()-10,300),
 	controlGroup(5, 310, rightGroup.w()-10, rightGroup.h() - imageHolder.y() - imageHolder.h() - 10),
 		timerBar(15, 10, 300, 25),
-		validateBtn(15, timerBar.y()+timerBar.h() + 10, 300, 55, "Validate Answer  @+1+"),
+		validateBtn(15, timerBar.y() + timerBar.h() + 10, 300, 55, "Validate Answer  @+1+"),
 		nextBtn(15, validateBtn.y()+validateBtn.h() + 10, 300, 55, "Next Question  @+1>@+1>[]")
 {
+
 	leftGroup.add(questionGroup);
 	questionGroup.add(questionHolder);
 	questionGroup.add(answerGroup);
@@ -47,14 +48,21 @@ rightGroup(leftGroup.w()+5, 5, 340, h-10),
 	rightGroup.add(controlGroup);
 	rightGroup.resizable(controlGroup);
 	controlGroup.box(fltk::THIN_UP_BOX);
+	validateBtn.callback(cb_validateBtn, this);
 	controlGroup.add(timerBar);
 	controlGroup.add(validateBtn);
 	controlGroup.add(nextBtn);
+	end();
 
 }
 
 QuestionView::~QuestionView() {
 	// TODO Auto-generated destructor stub
+}
+#include "AppModel.h"
+void QuestionView::update() {
+	questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
+	redraw();
 }
 
 void QuestionView::cb_validateBtn(Widget* v, void *) { // static method
@@ -62,5 +70,11 @@ void QuestionView::cb_validateBtn(Widget* v, void *) { // static method
 }
 
 void QuestionView::cb_validateBtn_i(Button* btn) {
-
+	//questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
+	//answerGroup.label("asadsas");
+	//questionHolder.redraw_label();
+	//questionHolder.hide();
+	btn->label(AppModel::getInstance()->currentTest->next()->title());
+	redraw();
+	printf("question: %s\n", AppModel::getInstance()->currentTest->next()->title());
 }

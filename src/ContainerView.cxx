@@ -13,7 +13,7 @@
 
 #include "MainMenuView.h"
 #include "HomeView.h"
-#include "QuestionView.h"
+#include "TestView.h"
 
 ContainerView::ContainerView(int x,int y,int w,int h, const char * l, bool begin):
 Group(x,y,w,h,l,begin), value_(0),
@@ -22,12 +22,12 @@ View()
 	transitioning_ = false;
 	interval_ = 0.01f;
 	box(THIN_UP_BOX);
+	end();
 
-	// TODO Auto-generated constructor stub
 	add(new MainMenuView(0,0,w,h, "Main Menu"));
 	//add(new HomeView(0,0,w,h, "Choices"));
-	add(new QuestionView(0,0,w,h, "Test View"));
-
+	//add(new QuestionView(0,0,w,h, "Question View"));
+	add(new TestView(0,0,w,h, "Test View"));
 
 }
 
@@ -83,24 +83,22 @@ AppModel* ContainerView::model() {
 
 
 int ContainerView::handle(int event) {
+
+
 	switch (event)
 	{
-	case SHOW:
-		remove_timeout();
-		if (!transitioning_) break;
 	case TIMEOUT:
 		if ( prev_ < next_ )
 			move_left();
 		else
 			move_right();
 		break;
-	case HIDE:
-		remove_timeout();
-	    break;
-	default:
-	    return fltk::Group::handle(event);
 
 	}
+
+	if (fltk::Group::handle(event)) return 1;
+	else return 0;
+	//return fltk::Group::handle(event);
 }
 
 void ContainerView::move_left() {
@@ -142,17 +140,21 @@ void ContainerView::move_right() {
 void ContainerView::showPage(int i) {
 	if ( children() == 0 || child(i) == NULL )  return;
 	slide(child(i));
+
+	if (i == 1)  {
+		AppModel::getInstance()->currentTest->setView((View*)child(i));
+		AppModel::getInstance()->currentTest->next();
+	}
+
 }
 
 void ContainerView::update()
 {
-	//next();
+	//if (AppModel::getInstance()->getpage() == 1) ((View*)child(1))->update();
 }
 
 void ContainerView::slide(Widget *kid) {
   int num_kids, i;
-
-
 
   prev_ = value_;
   next_ = kid;
@@ -164,7 +166,6 @@ void ContainerView::slide(Widget *kid) {
 	  transitioning_ = true;
 	  add_timeout(interval_);
   }
-
 
 }
 

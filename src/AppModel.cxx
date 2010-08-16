@@ -25,6 +25,7 @@ AppModel::AppModel() : Model() {
 	page_index = 0;
 	instance = this;
 	statusbar_msg = "Ready";
+	db = new SQLITE3(DATABASE);
 }
 
 AppModel::~AppModel() {
@@ -73,7 +74,15 @@ void AppModel::gotoTestPage() {
 
 void AppModel::gotoTest() {
 	page_index = 1;
+	currentTest = db->getTest(1,1);
+
+	currentTest->next();
+
 	changed();
+}
+
+void AppModel::createTest(int catid, int langid) {
+	db->getTest(1,1);
 }
 
 void AppModel::setStatusBarMsg(const char* msg)

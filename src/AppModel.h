@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <string>
 #include <fltk/Window.h>
+#include "sqlite3.cxx"
 
 using namespace std;
 
@@ -23,6 +24,8 @@ private:
 	const char* statusbar_msg;
 	static AppModel* instance;
 	fltk::Window* mainWindow_;
+	SQLITE3* db;
+
 
 public:
 	AppModel();
@@ -46,6 +49,8 @@ public:
 	void setpos(int x, int y);
 	void setsize(int w, int h);
 	void setView(View *pw);
+	void createTest(int catid, int langid);
+	TestModel* currentTest;
 };
 
 #endif /* APPMODEL_H_ */

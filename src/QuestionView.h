@@ -5,8 +5,8 @@
  *      Author: krizz
  */
 
-#ifndef TESTVIEW_H_
-#define TESTVIEW_H_
+#ifndef QUESTIONVIEW_H_
+#define QUESTIONVIEW_H_
 
 #include "MV.h"
 #include <fltk/Group.h>
@@ -37,7 +37,8 @@ private:
 public:
 	QuestionView(int x, int y, int w, int h, const char* l);
 	~QuestionView();
+	void update();
 };
 
-#endif /* TESTVIEW_H_ */
+#endif /* QUESTIONVIEW_H_ */
 
