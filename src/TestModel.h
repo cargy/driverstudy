@@ -20,22 +20,22 @@
 
 #ifndef TESTMODEL_H
 #define TESTMODEL_H
-#include "question.h"
+#include "QuestionModel.h"
 #include "MV.h"
 
 class TestModel: public Model
 {
 	public:
-		TestModel(Question *xferQuestions, int aoq, int ttime, int tcategory);
+		TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();
 		bool completed();
 		int getCorrect();
 		int getWrong();
-		Question *wrongQuestions();
-		Question *next();
-		Question* question();
-		Question *nextWrong();
+		QuestionModel *wrongQuestions();
+		QuestionModel *next();
+		QuestionModel* question();
+		QuestionModel *nextWrong();
 		bool is_next();
 		bool is_nextWrong();
 		int size(){	return csize;}	
@@ -48,7 +48,7 @@ class TestModel: public Model
 		#endif
 		
 	protected:
-		Question *tQuestions;
+		QuestionModel *tQuestions;
 		int csize;
 		int ccursor;
 	

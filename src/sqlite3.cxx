@@ -26,8 +26,7 @@
 #include <vector>
 #include <iterator>
 #include <stdio.h>
-#include "question.h"
-#include "questionCollection.h"
+#include "QuestionModel.h"
 
 using namespace std;
 
@@ -186,8 +185,8 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return NULL;
   }
   
-  Question *getQuestionArray(int *array) {
-	  Question *q = new Question[qNo];
+  QuestionModel *getQuestionArray(int *array) {
+	  QuestionModel *q = new QuestionModel[qNo];
 	  
 	  for (int i=0; i<qNo; i++)
 		q[i] = getQuestion(array[i]);
@@ -205,7 +204,7 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return getTest(array);
   }
 
-  Question getQuestion(int qid) {
+  QuestionModel getQuestion(int qid) {
 	  char buffer[1024];
 	  sprintf(buffer,"SELECT qlect, QPhoto, QSound, QBook, alect, ACorr, ASound, AAA "
 			  "FROM Quest,answer "
@@ -236,13 +235,13 @@ vector<int> *testTemplate ( int category, int language ) {
 			 a[i-1] = Answer(result[ncol*i+4], correct, result[ncol*i+6],atoi(result[ncol*i+7]));
 
 		 }
-		 Question q =  Question(result[ncol],result[ncol+1],result[ncol+2],result[ncol+3],a,nrow);
+		 QuestionModel q =  QuestionModel(result[ncol],result[ncol+1],result[ncol+2],result[ncol+3],a,nrow);
 		 sqlite3_free_table(result);
 		 return q;	 
      }else {throw DBError(sqlite3_errmsg(db),s_exe.c_str());}
      
      sqlite3_free_table(result);
-     return Question();
+     return QuestionModel();
   }
 
 

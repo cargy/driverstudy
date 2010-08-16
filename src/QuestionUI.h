@@ -40,8 +40,8 @@ class QuestionUI: public QuestionUIAbstract
 		virtual void cb_questionRelease();
 		virtual void cb_soundToggle();
 		int selectedRB();
-		void showQuestion(Question* q);
-		void previewQuestion(Question* q);
+		void showQuestion(QuestionModel* q);
+		void previewQuestion(QuestionModel* q);
 		void setTest(TestModel* t, bool pmode=false);
 		void show();
 		

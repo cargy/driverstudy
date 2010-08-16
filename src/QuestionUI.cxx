@@ -207,7 +207,7 @@ int QuestionUI::selectedRB()
 	return -1;
 }
 
-void QuestionUI::showQuestion(Question* q)
+void QuestionUI::showQuestion(QuestionModel* q)
 {
 	// restore setting changed by previewQuestion()
 	AnswerGroup->clear_output();
@@ -291,7 +291,7 @@ void QuestionUI::createAnswerRB(int no)
 	AnswerGroup->init_sizes();
 	
 }
-void QuestionUI::previewQuestion(Question* q)
+void QuestionUI::previewQuestion(QuestionModel* q)
 {
 	AnswerGroup->set_output();
 	timer->hide();

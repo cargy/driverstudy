@@ -1,6 +1,6 @@
 #include "TestModel.h"
 
-TestModel::TestModel(Question *xferQuestions, int aoq, int ttime, int tcategory):
+TestModel::TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory):
 Model()
 {
 	tQuestions = xferQuestions;
@@ -47,9 +47,9 @@ int TestModel::getWrong() {
 	return wrongQuestion;
 }
 
-Question* TestModel::wrongQuestions() 
+QuestionModel* TestModel::wrongQuestions() 
 {
-	Question *wq = new Question[csize-getCorrect()];
+	QuestionModel *wq = new QuestionModel[csize-getCorrect()];
 	int index = -1;
 	for(int i=0;i<csize;i++) {
 		if ( !tQuestions[i].isCorrect() ) {
@@ -59,7 +59,7 @@ Question* TestModel::wrongQuestions()
 	return wq;			
 }
 
-Question* TestModel::next()
+QuestionModel* TestModel::next()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 	
@@ -72,7 +72,7 @@ Question* TestModel::next()
 	
 }
 
-Question* TestModel::question()
+QuestionModel* TestModel::question()
 {
 	return &tQuestions[ccursor];
 }
@@ -96,7 +96,7 @@ bool TestModel::is_nextWrong()
 	return false;
 }
 
-Question* TestModel::nextWrong()
+QuestionModel* TestModel::nextWrong()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 	
