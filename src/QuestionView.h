@@ -18,15 +18,15 @@
 class QuestionView: public fltk::Group, public View {
 private:
 	fltk::Group leftGroup;
-	fltk::Group* questionGroup;
-			fltk::Button* questionHolder;
-			AnswersView* answerGroup;
+	fltk::Group questionGroup;
+			fltk::Button questionHolder;
+			AnswersView answerGroup;
 	fltk::Group rightGroup;
-		fltk::Widget* imageHolder;
-		fltk::Group* controlGroup;
-			TimerProgressBar* timerBar;
-			fltk::Button* validateBtn;
-			fltk::Button* nextBtn;
+		fltk::Widget imageHolder;
+		fltk::Group controlGroup;
+			TimerProgressBar timerBar;
+			fltk::Button validateBtn;
+			fltk::Button nextBtn;
 
 	//callbacks
 	static void cb_validateBtn(fltk::Widget* btn, void *v);
