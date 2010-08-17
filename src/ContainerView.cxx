@@ -11,10 +11,6 @@
 #include <fltk/Cursor.h>
 #include <fltk/events.h>
 
-#include "MainMenuView.h"
-#include "HomeView.h"
-#include "TestView.h"
-
 ContainerView::ContainerView(int x,int y,int w,int h, const char * l, bool begin):
 Group(x,y,w,h,l,begin), value_(0),
 View()
@@ -24,15 +20,24 @@ View()
 	box(THIN_UP_BOX);
 	end();
 
-	add(new MainMenuView(0,0,w,h, "Main Menu"));
+
+	mainMenuView_ = new MainMenuView(0,0,w,h, "Main Menu");
 	//add(new HomeView(0,0,w,h, "Choices"));
 	//add(new QuestionView(0,0,w,h, "Question View"));
-	add(new TestView(0,0,w,h, "Test View"));
+	testView_ = new TestView(0,0,w,h, "Test View");
+	add(mainMenuView_);
+	add(testView_);
+
+
 
 }
 
 ContainerView::~ContainerView() {
 	// TODO Auto-generated destructor stub
+}
+
+void ContainerView::setView() {
+	AppModel::getInstance()->currentTest->setView(testView_);
 }
 
 void ContainerView::draw() {
@@ -84,20 +89,27 @@ AppModel* ContainerView::model() {
 
 int ContainerView::handle(int event) {
 
+	if (fltk::Group::handle(event)) return 1;
 
 	switch (event)
 	{
+	case SHOW:
+		remove_timeout();
+		if (!transitioning_) break;
 	case TIMEOUT:
 		if ( prev_ < next_ )
 			move_left();
 		else
 			move_right();
 		break;
-
+	case HIDE:
+		remove_timeout();
+	    break;
+	default:
+		return 0;
 	}
 
-	if (fltk::Group::handle(event)) return 1;
-	else return 0;
+	return 1;
 	//return fltk::Group::handle(event);
 }
 
@@ -139,12 +151,15 @@ void ContainerView::move_right() {
 
 void ContainerView::showPage(int i) {
 	if ( children() == 0 || child(i) == NULL )  return;
-	slide(child(i));
+	if (transitioning_) return;
+
 
 	if (i == 1)  {
-		AppModel::getInstance()->currentTest->setView((View*)child(i));
-		AppModel::getInstance()->currentTest->next();
+		setView();
+		//AppModel::getInstance()->currentTest->next();
 	}
+
+	slide(child(i));
 
 }
 

@@ -27,6 +27,7 @@ class TestModel: public Model
 {
 	public:
 		TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory);
+		void loadTest(TestModel* pTestModel);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();
 		bool completed();
@@ -36,6 +37,7 @@ class TestModel: public Model
 		QuestionModel *next();
 		QuestionModel* question();
 		QuestionModel *nextWrong();
+		void nextQuestion();
 		bool is_next();
 		bool is_nextWrong();
 		int size(){	return csize;}	
@@ -51,10 +53,11 @@ class TestModel: public Model
 		QuestionModel *tQuestions;
 		int csize;
 		int ccursor;
-	
-	private:
 		int testTime;
 		int testCategory;
+	
+	private:
+		QuestionModel* currentQuestion;
 
 };
 

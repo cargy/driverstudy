@@ -61,8 +61,30 @@ QuestionView::~QuestionView() {
 }
 #include "AppModel.h"
 void QuestionView::update() {
-	questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
-	redraw();
+	//questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
+	//redraw();
+}
+
+void QuestionView::setQuestionNumber(int qNo, int size) {
+	char label[150];
+	sprintf(label, _("Question %i/%i"),qNo+1,size);
+	questionGroup.copy_label(label);
+}
+void QuestionView::setQuestion(const char* q) {
+	questionHolder.label(q);
+	//questionHolder.redraw_label();
+}
+
+void QuestionView::setAnswers(QuestionModel* pQuestion) {
+	answerGroup.size = pQuestion->getAOA();
+	answerGroup.update();
+	for (unsigned int i=0; i<answerGroup.size; i++)
+	{
+		answerGroup.answerBtn[i]->label(pQuestion->getAnswer(i));
+	}
+	//answerGroup.answerBtn[pQuestion->getSelectedAnswer()]->state(true);
+
+
 }
 
 void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
@@ -74,7 +96,8 @@ void QuestionView::cb_validateBtn_i(Button* btn) {
 	//answerGroup.label("asadsas");
 	//questionHolder.redraw_label();
 	//questionHolder.hide();
-	questionHolder.label(AppModel::getInstance()->currentTest->next()->title());
+	//questionHolder.label(AppModel::getInstance()->currentTest->next()->title());
+	AppModel::getInstance()->currentTest->nextQuestion();
 	redraw();
-	printf("question: %s\n", AppModel::getInstance()->currentTest->next()->title());
+	printf("question: %s\n", AppModel::getInstance()->currentTest->question()->title());
 }

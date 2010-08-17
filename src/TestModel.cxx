@@ -10,6 +10,14 @@ Model()
 	testCategory = tcategory;
 }
 
+void TestModel::loadTest(TestModel* pTestModel) {
+	tQuestions = pTestModel->tQuestions;
+	csize = pTestModel->csize;
+	ccursor = -1;
+	testTime = pTestModel->testTime;
+	testCategory = pTestModel->testCategory;
+}
+
 void TestModel::selectAnswerOfCurrentQuestion(int a)
 {
 	tQuestions[ccursor].selectAnswer(a);
@@ -70,6 +78,11 @@ QuestionModel* TestModel::next()
 	//changed();
 	return &tQuestions[ccursor];
 	
+}
+
+void TestModel::nextQuestion() {
+	currentQuestion = next();
+	changed();
 }
 
 QuestionModel* TestModel::question()

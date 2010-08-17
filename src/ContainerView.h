@@ -12,13 +12,18 @@
 #include <fltk/Group.h>
 #include "AppModel.h"
 
-
+#include "MainMenuView.h"
+#include "HomeView.h"
+#include "TestView.h"
 
 class ContainerView: public fltk::Group, public View {
 private:
 	fltk::Widget * prev_;
 	fltk::Widget * value_;
 	fltk::Widget * next_;
+	MainMenuView* mainMenuView_;
+	TestView* testView_;
+
 	bool transitioning_;
 	float interval_;
 	void move_left();
@@ -33,6 +38,7 @@ public:
 	void update();
 	void showPage(int i);
 	AppModel* model();
+	void setView();
 
 	void draw();
 	void next();

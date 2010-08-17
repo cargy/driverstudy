@@ -14,6 +14,7 @@
 #include <fltk/Widget.h>
 #include "TimerProgressBar.h"
 #include "AnswersView.h"
+#include "QuestionModel.h"
 
 class QuestionView: public fltk::Group, public View {
 private:
@@ -36,6 +37,9 @@ private:
 
 public:
 	QuestionView(int x, int y, int w, int h, const char* l);
+	void setQuestion(const char* q);
+	void setQuestionNumber(int qNo, int size);
+	void setAnswers(QuestionModel* pQuestion);
 	~QuestionView();
 	void update();
 };

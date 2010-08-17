@@ -75,10 +75,11 @@ void AppModel::gotoTestPage() {
 void AppModel::gotoTest() {
 	page_index = 1;
 	currentTest = db->getTest(1,1);
-
-	currentTest->next();
-
 	changed();
+
+	currentTest->nextQuestion();
+
+
 }
 
 void AppModel::createTest(int catid, int langid) {

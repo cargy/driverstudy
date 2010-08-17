@@ -68,8 +68,8 @@ void MainMenuView::cb_categoryBtn_i(Button* btn) {
 		//testBtn.label(model()->getappTitle());
 		//AppModel::getInstance()->nextpage();
 		AppModel::getInstance()->gotoTest();
-		AppModel::getInstance()->setStatusBarMsg(btn->label());
-		printf("categoryBtn: %s\n", btn->label());
+		//AppModel::getInstance()->setStatusBarMsg(btn->label());
+		//printf("categoryBtn: %s\n", btn->label());
 	}
 
 }

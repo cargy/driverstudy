@@ -20,14 +20,19 @@ question(x,y,w,h,l)
 	end();
 
 }
-
+#include <cstdio>
 TestView::~TestView() {
 	// TODO Auto-generated destructor stub
+	printf("TestView was destoyed");
 }
 
 void TestView::update() {
 	// TODO Auto-generated destructor stub
-	question.update();
+	//question.update();
+	question.setQuestionNumber(model()->cursor(), model()->size());
+	question.setQuestion(model()->question()->title());
+	question.setAnswers(model()->question());
+
 }
 
 TestModel* TestView::model() {
