@@ -74,7 +74,7 @@ void AppModel::gotoTestPage() {
 
 void AppModel::gotoTest() {
 	page_index = 1;
-	currentTest = db->getTest(1,1);
+	currentTest = db->getTest(2,1);
 	changed();
 
 	currentTest->nextQuestion();

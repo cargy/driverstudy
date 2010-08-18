@@ -11,6 +11,7 @@
 #include "MV.h"
 #include <fltk/Group.h>
 #include <fltk/RadioButton.h>
+#include "TestModel.h"
 
 class AnswersView: public fltk::Group, public View {
 public:
@@ -19,8 +20,10 @@ public:
 	fltk::RadioButton* answerBtn[6];
 	int size;
 	void update();
-	static void cb_answerBtn(Widget* v, void *);
+	int selectedRB();
+	static void cb_answerBtn(Widget* btn, void* v);
 	void cb_answerBtn_i(fltk::RadioButton* btn);
+	TestModel* model();
 };
 
 #endif /* ANSWERSVIEW_H_ */

@@ -14,7 +14,7 @@
 #include <fltk/Widget.h>
 #include "TimerProgressBar.h"
 #include "AnswersView.h"
-#include "QuestionModel.h"
+#include "TestModel.h"
 
 class QuestionView: public fltk::Group, public View {
 private:
@@ -34,12 +34,14 @@ private:
 	void cb_validateBtn_i(fltk::Button* btn);
 	static void cb_nextBtn(fltk::Widget* v, void *);
 	void cb_nextBtn_i(fltk::Button* btn);
+	TestModel* model();
 
 public:
 	QuestionView(int x, int y, int w, int h, const char* l);
 	void setQuestion(const char* q);
 	void setQuestionNumber(int qNo, int size);
 	void setAnswers(QuestionModel* pQuestion);
+	AnswersView* answersView();
 	~QuestionView();
 	void update();
 };

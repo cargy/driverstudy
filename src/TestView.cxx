@@ -27,12 +27,8 @@ TestView::~TestView() {
 }
 
 void TestView::update() {
-	// TODO Auto-generated destructor stub
-	//question.update();
-	question.setQuestionNumber(model()->cursor(), model()->size());
-	question.setQuestion(model()->question()->title());
-	question.setAnswers(model()->question());
-
+	model()->setView(&question);
+	model()->setView(question.answersView());
 }
 
 TestModel* TestView::model() {

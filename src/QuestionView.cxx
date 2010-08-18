@@ -59,8 +59,15 @@ rightGroup(leftGroup.w()+5, 5, 340, h-10),
 QuestionView::~QuestionView() {
 	// TODO Auto-generated destructor stub
 }
+
+TestModel* QuestionView::model() {
+	return ((TestModel*)pModel);
+}
+
 #include "AppModel.h"
 void QuestionView::update() {
+	setQuestionNumber(model()->cursor(), model()->size());
+	setQuestion(model()->question()->title());
 	//questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
 	//redraw();
 }
@@ -77,6 +84,7 @@ void QuestionView::setQuestion(const char* q) {
 
 void QuestionView::setAnswers(QuestionModel* pQuestion) {
 	answerGroup.size = pQuestion->getAOA();
+
 	answerGroup.update();
 	for (unsigned int i=0; i<answerGroup.size; i++)
 	{
@@ -85,6 +93,10 @@ void QuestionView::setAnswers(QuestionModel* pQuestion) {
 	//answerGroup.answerBtn[pQuestion->getSelectedAnswer()]->state(true);
 
 
+}
+
+AnswersView* QuestionView::answersView() {
+	return &answerGroup;
 }
 
 void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
