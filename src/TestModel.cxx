@@ -21,6 +21,7 @@ void TestModel::loadTest(TestModel* pTestModel) {
 void TestModel::selectAnswerOfCurrentQuestion(int a)
 {
 	tQuestions[ccursor].selectAnswer(a);
+	changed();
 }
 
 void TestModel::verifyAnswerOfCurrentQuestion()

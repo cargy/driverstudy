@@ -6,6 +6,7 @@
  */
 
 #include "QuestionView.h"
+#include <fltk/SharedImage.h>
 
 QuestionView::QuestionView(int x, int y, int w, int h, const char* l):
 Group(x, y, w, h, l, true/* auto-begin() */),
@@ -48,6 +49,7 @@ rightGroup(leftGroup.w()+5, 5, 340, h-10),
 	rightGroup.add(controlGroup);
 	rightGroup.resizable(controlGroup);
 	controlGroup.box(fltk::THIN_UP_BOX);
+	nextBtn.callback(cb_nextQuestionBtn, this);
 	validateBtn.callback(cb_validateBtn, this);
 	controlGroup.add(timerBar);
 	controlGroup.add(validateBtn);
@@ -68,18 +70,25 @@ TestModel* QuestionView::model() {
 void QuestionView::update() {
 	setQuestionNumber(model()->cursor(), model()->size());
 	setQuestion(model()->question()->title());
-	//questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
-	//redraw();
+
+	// handle validateBtn
+	if (model()->question()->getSelectedAnswer() == -1 )
+		validateBtn.deactivate();
+	else
+		validateBtn.activate();
+
+	setQuestionImage(model()->question());
 }
 
 void QuestionView::setQuestionNumber(int qNo, int size) {
 	char label[150];
 	sprintf(label, _("Question %i/%i"),qNo+1,size);
 	questionGroup.copy_label(label);
+	questionGroup.redraw_label();
 }
 void QuestionView::setQuestion(const char* q) {
 	questionHolder.label(q);
-	//questionHolder.redraw_label();
+	questionHolder.redraw_label();
 }
 
 void QuestionView::setAnswers(QuestionModel* pQuestion) {
@@ -90,13 +99,42 @@ void QuestionView::setAnswers(QuestionModel* pQuestion) {
 	{
 		answerGroup.answerBtn[i]->label(pQuestion->getAnswer(i));
 	}
-	//answerGroup.answerBtn[pQuestion->getSelectedAnswer()]->state(true);
 
+}
 
+void QuestionView::setQuestionImage(QuestionModel* pQuestion) {
+	// load question image if available
+	if ( strcmp(pQuestion->image(), "0") != 0 )
+	{
+		char imgPath[MAXIMGFILESIZE];
+		sprintf(imgPath, "img/%s.jpg",pQuestion->image());
+
+		int i = -1;
+		// make imgPath lowercase
+		while (imgPath[++i]) imgPath[i] = tolower(imgPath[i]);
+	#ifdef	DEBUG
+		printf("imgPath = %s\n",imgPath);
+	#endif
+		if ( !imageHolder.visible() ) imageHolder.show();
+		imageHolder.image( fltk::SharedImage::get(imgPath) );
+		imageHolder.redraw();
+	}
+	else
+		if ( imageHolder.visible() ) imageHolder.hide();
 }
 
 AnswersView* QuestionView::answersView() {
 	return &answerGroup;
+}
+
+void QuestionView::cb_nextQuestionBtn(Widget* btn, void *v) { // static method
+  ((QuestionView*)(v))->cb_nextQuestionBtn_i((Button*)btn);
+}
+
+void QuestionView::cb_nextQuestionBtn_i(Button* btn)
+{
+	AppModel::getInstance()->currentTest->nextQuestion();
+	printf("question: %s\n", AppModel::getInstance()->currentTest->question()->title());
 }
 
 void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
@@ -104,12 +142,6 @@ void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
 }
 
 void QuestionView::cb_validateBtn_i(Button* btn) {
-	//questionHolder.copy_label(AppModel::getInstance()->currentTest->next()->title());
-	//answerGroup.label("asadsas");
-	//questionHolder.redraw_label();
-	//questionHolder.hide();
-	//questionHolder.label(AppModel::getInstance()->currentTest->next()->title());
-	AppModel::getInstance()->currentTest->nextQuestion();
-	redraw();
-	printf("question: %s\n", AppModel::getInstance()->currentTest->question()->title());
+	model()->verifyAnswerOfCurrentQuestion();
+	model()->nextQuestion();
 }

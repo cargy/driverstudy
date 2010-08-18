@@ -30,6 +30,8 @@ private:
 			fltk::Button nextBtn;
 
 	//callbacks
+	static void cb_nextQuestionBtn(fltk::Widget* btn, void *v);
+	void cb_nextQuestionBtn_i(fltk::Button* btn);
 	static void cb_validateBtn(fltk::Widget* btn, void *v);
 	void cb_validateBtn_i(fltk::Button* btn);
 	static void cb_nextBtn(fltk::Widget* v, void *);
@@ -41,6 +43,7 @@ public:
 	void setQuestion(const char* q);
 	void setQuestionNumber(int qNo, int size);
 	void setAnswers(QuestionModel* pQuestion);
+	void setQuestionImage(QuestionModel* pQuestion);
 	AnswersView* answersView();
 	~QuestionView();
 	void update();
