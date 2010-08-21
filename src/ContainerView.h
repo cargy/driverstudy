@@ -16,7 +16,7 @@
 #include "HomeView.h"
 #include "TestView.h"
 
-class ContainerView: public fltk::Group, public View {
+class ContainerView: public View, public fltk::Group  {
 private:
 	fltk::Widget * prev_;
 	fltk::Widget * value_;

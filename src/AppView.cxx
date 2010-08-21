@@ -15,8 +15,8 @@ using namespace fltk;
 AppView::AppView(int x, int y, int w, int h, const char* l):
 Window(x, y, w, h, l),
 View(),
-statusBar(20),
-group(0,0,w,580)
+group(0,0,w,580),
+statusBar(20)
 //toolbar(0,500,800,80,"ToolBar"),
 //container(0,0,800, 500)
 

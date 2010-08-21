@@ -16,8 +16,10 @@ IMGLIB   = $(shell $(FLTK2CONFIG) --use-images --ldstaticflags)
 GL_LIB   = $(shell $(FLTK2CONFIG) --use-gl --ldstaticflags)
 
 # Other general settings
-CXX     =  g++ #$(shell $(FLTK2CONFIG) --cxx)
+CXX     =  g++
 CC      = $(shell $(FLTK2CONFIG) --cc)
+
+EXEC = driverstudy
 
 # get version
 MAJOR_VERSION	= $(shell grep "DRIVERSTUDY_MAJOR_VERSION.*[0-9]" version.h | cut -f3)
@@ -32,6 +34,15 @@ VERSION			= $(MAJOR_VERSION).$(MINOR_VERSION).$(MICRO_VERSION)
 # Build commands and filename extensions...
 .SUFFIXES: .cxx .h .fl .o
 
+# list of source files
+CXXSOURCES = \
+	MV.cxx answer.cxx QuestionModel.cxx TestModel.cxx AppModel.cxx sqlite3.cxx \
+	ToolbarView.cxx AppView.cxx ContainerView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.cxx HomeView.cxx \
+	TimerProgressBar.cxx \
+	mvmain.cxx
+	
+CXXOBJECTS = $(CXXSOURCES:.cxx=.o)  # expands to list of object files
+
 # Rule to build an object file from a C++ source file
 %.o : %.cxx
 	@echo Compile $@...
@@ -40,17 +51,11 @@ VERSION			= $(MAJOR_VERSION).$(MINOR_VERSION).$(MICRO_VERSION)
 
 #########################################################
 
-all:  driverstudy
+all: $(EXEC)
 	
-driverstudy: MV.o answer.o QuestionModel.o TestModel.o AppModel.o sqlite3.o \
-			 ToolbarView.o AppView.o ContainerView.o MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.o HomeView.o \
-			 TimerProgressBar.o \
-			 mvmain.o 
+$(EXEC): $(CXXOBJECTS)
 	@echo === Linking $@... ===
-	$(CXX) MV.o answer.o QuestionModel.o TestModel.o AppModel.o sqlite3.o \
-	sqlite3.o TimerProgressBar.o \
-	ToolbarView.o AppView.o ContainerView.o MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.o \
-	 mvmain.o \
+	$(CXX) $(CXXOBJECTS) \
 	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/driverstudy	
 	@echo compiled version:$(VERSION)
 	#@echo Strip $@...

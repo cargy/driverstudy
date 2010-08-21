@@ -37,6 +37,7 @@ public:
 	~View();
 	virtual void update();
 	void setModel(Model *pM);
+	Model* model();
 
 };
 

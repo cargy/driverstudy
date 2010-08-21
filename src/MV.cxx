@@ -25,8 +25,6 @@ void Model::setView(View *pv) {
 }
 
 void Model::changed(void) {
-	int i;
-
 	for (int i = 0; i < view_cnt; i++) {
 		pview[i]->update();
 	}
@@ -50,6 +48,10 @@ View::~View() {
 
 void View::setModel(Model *pM) {
 	pModel = pM;
+}
+
+Model* View::model() {
+	return pModel;
 }
 
 void View::update() {

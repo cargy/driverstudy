@@ -12,8 +12,9 @@
 #include <fltk/events.h>
 
 ContainerView::ContainerView(int x,int y,int w,int h, const char * l, bool begin):
-Group(x,y,w,h,l,begin), value_(0),
-View()
+View(),
+Group(x,y,w,h,l,begin),
+value_(0)
 {
 	transitioning_ = false;
 	interval_ = 0.01f;
@@ -169,7 +170,7 @@ void ContainerView::update()
 }
 
 void ContainerView::slide(Widget *kid) {
-  int num_kids, i;
+  int num_kids;
 
   prev_ = value_;
   next_ = kid;

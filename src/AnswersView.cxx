@@ -6,7 +6,6 @@
  */
 
 #include "AnswersView.h"
-#include "answer.h"
 
 using namespace fltk;
 
@@ -15,7 +14,6 @@ Group(x,y,w,h,l),
 View()
 {
 	size = 2;
-	Answer* testAnswer[size];
 	//update();
 
 }

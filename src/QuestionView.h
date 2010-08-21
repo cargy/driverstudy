@@ -36,7 +36,7 @@ private:
 	void cb_validateBtn_i(fltk::Button* btn);
 	static void cb_nextBtn(fltk::Widget* v, void *);
 	void cb_nextBtn_i(fltk::Button* btn);
-	TestModel* model();
+
 
 public:
 	QuestionView(int x, int y, int w, int h, const char* l);
@@ -47,6 +47,7 @@ public:
 	AnswersView* answersView();
 	~QuestionView();
 	void update();
+	TestModel* model();
 };
 
 #endif /* QUESTIONVIEW_H_ */
