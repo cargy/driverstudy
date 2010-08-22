@@ -37,7 +37,7 @@ VERSION			= $(MAJOR_VERSION).$(MINOR_VERSION).$(MICRO_VERSION)
 # list of source files
 CXXSOURCES = \
 	MV.cxx answer.cxx QuestionModel.cxx TestModel.cxx AppModel.cxx sqlite3.cxx \
-	ToolbarView.cxx AppView.cxx ContainerView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.cxx HomeView.cxx \
+	ToolbarView.cxx AppView.cxx ContainerView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.cxx TestResultsView.cxx \
 	TimerProgressBar.cxx \
 	mvmain.cxx
 	

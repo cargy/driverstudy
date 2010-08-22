@@ -41,8 +41,9 @@ public:
 	int geth();
 	void nextpage();
 	void gotoTest();
+	void gotoCurrentTest();
 	void gotoMainMenu();
-	void gotoTestPage();
+	void gotoTestResults();
 	void setStatusBarMsg(const char* msg);
 	const char* getStuatusBarMsg();
 	int getpage();

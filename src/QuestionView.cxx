@@ -145,7 +145,7 @@ void QuestionView::cb_validateBtn_i(Button* btn) {
 	model()->verifyAnswerOfCurrentQuestion();
 	if ( model()->completed())
 	{
-
+		AppModel::getInstance()->gotoTestResults();
 	}
 	else
 	{

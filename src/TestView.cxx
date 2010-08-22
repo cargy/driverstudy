@@ -41,6 +41,3 @@ TestModel* TestView::model() {
 	return ((TestModel*)pModel);
 }
 
-void TestView::onShow() {
-
-}

@@ -68,7 +68,7 @@ void AppModel::gotoMainMenu() {
 	changed();
 }
 
-void AppModel::gotoTestPage() {
+void AppModel::gotoTestResults() {
 	page_index = 2;
 	changed();
 }
@@ -80,6 +80,16 @@ void AppModel::gotoTest() {
 	changed();
 
 	currentTest->nextQuestion();
+
+
+}
+
+void AppModel::gotoCurrentTest() {
+	page_index = 1;
+	if ( !currentTest ) return;
+	changed();
+
+	currentTest->nextWrong();
 
 
 }

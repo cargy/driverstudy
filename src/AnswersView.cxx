@@ -50,7 +50,7 @@ void AnswersView::update()
 
 		rb_y = (answerBtn[i]->y() + answerBtn[i]->h() + space);
 	}
-	printf("model selected answer:%i\n",model()->question()->getSelectedAnswer());
+
 	if (model()->question()->getSelectedAnswer() > -1)
 		answerBtn[model()->question()->getSelectedAnswer()]->state(true);
 	init_sizes();
@@ -72,5 +72,4 @@ void AnswersView::cb_answerBtn(Widget* btn, void* v) { // static method
 
 void AnswersView::cb_answerBtn_i(RadioButton* btn) {
 	if (selectedRB() > -1) model()->selectAnswerOfCurrentQuestion(selectedRB());
-	printf("selected:%i - mode:%i\n", selectedRB(), model()->question()->getSelectedAnswer());
 }

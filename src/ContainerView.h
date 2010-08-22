@@ -13,7 +13,7 @@
 #include "AppModel.h"
 
 #include "MainMenuView.h"
-#include "HomeView.h"
+#include "TestResultsView.h"
 #include "TestView.h"
 
 class ContainerView: public View, public fltk::Group  {
@@ -23,6 +23,7 @@ private:
 	fltk::Widget * next_;
 	MainMenuView* mainMenuView_;
 	TestView* testView_;
+	TestResultsView* testResultsView_;
 
 	bool transitioning_;
 	float interval_;
