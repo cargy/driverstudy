@@ -27,10 +27,20 @@ TestView::~TestView() {
 }
 
 void TestView::update() {
-	model()->setView(&question);
-	model()->setView(question.answersView());
+	//model()->setView(&question);
+	//model()->setView(question.answersView());
+}
+
+void TestView::setModel(Model* pM) {
+	pM->setView(this);
+	pM->setView(&question);
+	pM->setView(question.answersView());
 }
 
 TestModel* TestView::model() {
 	return ((TestModel*)pModel);
+}
+
+void TestView::onShow() {
+
 }

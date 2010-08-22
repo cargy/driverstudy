@@ -95,7 +95,7 @@ void QuestionView::setAnswers(QuestionModel* pQuestion) {
 	answerGroup.size = pQuestion->getAOA();
 
 	answerGroup.update();
-	for (unsigned int i=0; i<answerGroup.size; i++)
+	for (int i=0; i<answerGroup.size; i++)
 	{
 		answerGroup.answerBtn[i]->label(pQuestion->getAnswer(i));
 	}
@@ -133,8 +133,8 @@ void QuestionView::cb_nextQuestionBtn(Widget* btn, void *v) { // static method
 
 void QuestionView::cb_nextQuestionBtn_i(Button* btn)
 {
-	AppModel::getInstance()->currentTest->nextQuestion();
-	printf("question: %s\n", AppModel::getInstance()->currentTest->question()->title());
+	model()->nextQuestion();
+	printf("question: %s\n", model()->question()->title());
 }
 
 void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
@@ -143,5 +143,12 @@ void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
 
 void QuestionView::cb_validateBtn_i(Button* btn) {
 	model()->verifyAnswerOfCurrentQuestion();
-	model()->nextQuestion();
+	if ( model()->completed())
+	{
+
+	}
+	else
+	{
+		model()->nextQuestion();
+	}
 }

@@ -22,6 +22,7 @@ public:
 	~TestView();
 	void update();
 	TestModel* model();
+	void setModel(Model* pM);
 };
 
 #endif /* TESTVIEW_H_ */

@@ -27,6 +27,7 @@ class TestModel: public Model
 {
 	public:
 		TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory);
+		~TestModel();
 		void loadTest(TestModel* pTestModel);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();

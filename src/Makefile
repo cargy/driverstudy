@@ -56,11 +56,15 @@ all: $(EXEC)
 $(EXEC): $(CXXOBJECTS)
 	@echo === Linking $@... ===
 	$(CXX) $(CXXOBJECTS) \
-	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/driverstudy	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/$(EXEC)	
 	@echo compiled version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
 	#$(POSTBUILD) ../build/QuestionViewMain
+	
+strip: $(EXEC)
+	@echo Striping $(EXEC)...
+	$(STRIP) ../build/$(EXEC)
 
 # configure below the path to fltk2-config of cross-buildable FLTK 2 lib	
 driver_res.o: driverstudy.rc

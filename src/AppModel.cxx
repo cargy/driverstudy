@@ -26,6 +26,7 @@ AppModel::AppModel() : Model() {
 	instance = this;
 	statusbar_msg = "Ready";
 	db = new SQLITE3(DATABASE);
+	currentTest = NULL;
 }
 
 AppModel::~AppModel() {
@@ -74,6 +75,7 @@ void AppModel::gotoTestPage() {
 
 void AppModel::gotoTest() {
 	page_index = 1;
+	if ( currentTest ) delete currentTest;
 	currentTest = db->getTest(2,1);
 	changed();
 

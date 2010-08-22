@@ -1,4 +1,5 @@
 #include "TestModel.h"
+#include <iostream>
 
 TestModel::TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory):
 Model()
@@ -8,6 +9,11 @@ Model()
 	ccursor = -1;
 	testTime = ttime;
 	testCategory = tcategory;
+	std::cout << "TestModel constructed:" << this << std::endl;
+}
+
+TestModel::~TestModel() {
+	std::cout << "TestModel dropped:" << this << std::endl;
 }
 
 void TestModel::loadTest(TestModel* pTestModel) {

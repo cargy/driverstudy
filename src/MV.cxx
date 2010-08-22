@@ -7,9 +7,14 @@
 
 #include "MV.h"
 #include <cstdlib>
+#include <cstdio>
+#include <iostream>
+#include <typeinfo>
 
 Model::Model() {
 	view_cnt = 0;
+	std::cout << "New Model Created: " << this << std::endl;
+	//printf("New Model Created of Type: %d: %i Views\n",typeid(this).name().c_str().view_cnt);
 }
 
 Model::~Model() {
@@ -20,8 +25,9 @@ void Model::setView(View *pv) {
 	if (view_cnt < MAX_VIEWS) {
 		pview[view_cnt] = pv;
 		pv->setModel(this);
+		std::cout << "Added View " << view_cnt << " <" << typeid(*pv).name() << "> on Model:" << this << std::endl;
 		view_cnt++;
-	}
+	}else{ printf("setView(): Max Views (%i), reached\n", MAX_VIEWS); }
 }
 
 void Model::changed(void) {
@@ -55,4 +61,7 @@ Model* View::model() {
 }
 
 void View::update() {
+}
+
+void View::onShow() {
 }

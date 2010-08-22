@@ -23,8 +23,6 @@ value_(0)
 
 
 	mainMenuView_ = new MainMenuView(0,0,w,h, "Main Menu");
-	//add(new HomeView(0,0,w,h, "Choices"));
-	//add(new QuestionView(0,0,w,h, "Question View"));
 	testView_ = new TestView(0,0,w,h, "Test View");
 	add(mainMenuView_);
 	add(testView_);
@@ -38,7 +36,8 @@ ContainerView::~ContainerView() {
 }
 
 void ContainerView::setView() {
-	AppModel::getInstance()->currentTest->setView(testView_);
+	//AppModel::getInstance()->currentTest->setView(testView_);
+	testView_->setModel(AppModel::getInstance()->currentTest);
 }
 
 void ContainerView::draw() {

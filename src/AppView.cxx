@@ -26,10 +26,7 @@ statusBar(20)
 	add(group);
 	toolbar = new ToolbarView(0,h - 80 - statusBar.h(),w,80,"ToolBar");
 	container = new ContainerView(0,0,w, h - toolbar->h() - statusBar.h(),"Container View", false);
-	//container->add(new MainMenuView(0,0,container->w(),container->h(), "Main Menu"));
-	//container->add(new MainMenuView(0,0,container->w(),container->h(), "Main Menu1"));
-	//container->add(new TestView(0,0,container->w(),container->h(), "Test View"));
-	//container->value(child(1));
+
 	group.add(container);
 	group.add(toolbar);
 	group.resizable(container);
@@ -38,23 +35,6 @@ statusBar(20)
 
 	callback(cb_exit);
 	fullscreen_status = false;
-
-	//container->color(fltk::BLUE);
-	//model()->setView(container);
-
-/*
-	fullscreenBtn = new ToggleButton(116, 11, 180, 60, "Fullscreen");
-	fullscreenBtn->callback(cb_fullscreenBtn, this);
-	quitBtn = new Button(18, 11, 60, 60, "Quit" );
-	quitBtn->callback(cb_nextBtn, this);
-	aboutBtn = new Button(536, 11, 60, 60, "About" );
-	aboutBtn->callback(cb_prevBtn, this);
-	dicationBtn = new LightButton(439, 11, 90, 60, "Dictation" );
-	toolbar->add(fullscreenBtn);
-	toolbar->add(quitBtn);
-	toolbar->add(aboutBtn);
-	toolbar->add(dicationBtn);
-*/
 
 	statusBar.child_box(FLAT_BOX);
 	statusBar.set("Hello!",  StatusBarGroup::SBAR_LEFT);
