@@ -5,18 +5,21 @@
  *      Author: krizz
  */
 
+#include "Facade.h"
 #include "AppModel.h"
 #include "AppView.h"
 #include <fltk/run.h>
 
 int main(int argc, char** argv)
 {
-	AppModel* appM = new AppModel();
-	AppView* appV = new AppView(fltk::USEDEFAULT, fltk::USEDEFAULT,800,600,appM->getappTitle());
+	Facade* f = new Facade();
+	AppModel * appM = new AppModel();
+	f->attachModel(APPMODEL_ID, appM);
+	f->attachView(APPVIEW_ID, new AppView(fltk::USEDEFAULT, fltk::USEDEFAULT,800,600,appM->getappTitle()) );
 
-	appM->setView(appV);
+	f->setViewToModel(APPMODEL_ID, APPVIEW_ID);
 
-	appV->show();
+	((AppView*)f->getView(APPVIEW_ID))->show();
 
 	return fltk::run();
 }

@@ -13,6 +13,8 @@
 #include <fltk/RadioButton.h>
 #include "TestModel.h"
 
+#define ANSWERSVIEW_ID 8
+
 class AnswersView: public fltk::Group, public View {
 public:
 	AnswersView(int x, int y, int w, int h, const char* l);

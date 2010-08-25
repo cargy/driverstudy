@@ -13,6 +13,8 @@
 #include <fltk/Window.h>
 #include "sqlite3.cxx"
 
+#define APPMODEL_ID 1
+
 using namespace std;
 
 class AppModel: public Model {

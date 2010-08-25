@@ -24,13 +24,20 @@ value_(0)
 
 	mainMenuView_ = new MainMenuView(0,0,w,h, "Main Menu");
 	testView_ = new TestView(0,0,w,h, "Test View");
+
 	testResultsView_ = new TestResultsView(0,0,w,h, "Results View");
 	add(mainMenuView_);
 	add(testView_);
 	add(testResultsView_);
+	prev_ = next_ = NULL;
 
 
 
+}
+
+void ContainerView::attach()
+{
+	if (getFacade()) getFacade()->attachView(TESTVIEW_ID, testView_);
 }
 
 ContainerView::~ContainerView() {
@@ -81,6 +88,7 @@ void ContainerView::value(Widget *kid) {
   // whenever the wizard pane is changed.  Otherwise text widgets that
   // show the next pane may leave the cursor set to the I beam, etc...
   if (window()) window()->cursor(CURSOR_DEFAULT);
+
 }
 
 AppModel* ContainerView::model() {
@@ -184,5 +192,7 @@ void ContainerView::slide(Widget *kid) {
   }
 
 }
+
+TestView* ContainerView::getTestView() { return testView_; }
 
 

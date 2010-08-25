@@ -73,10 +73,16 @@ void AppModel::gotoTestResults() {
 	changed();
 }
 
+//#include "Facade.h"
 void AppModel::gotoTest() {
 	page_index = 1;
-	if ( currentTest ) delete currentTest;
+	//if ( currentTest ) delete currentTest;
 	currentTest = db->getTest(2,1);
+	getFacade()->attachModel(TESTMODEL_ID, currentTest);
+	getFacade()->setViewToModel(TESTMODEL_ID, TESTVIEW_ID);
+	getFacade()->setViewToModel(TESTMODEL_ID, QUESTIONVIEW_ID);
+	getFacade()->setViewToModel(TESTMODEL_ID, ANSWERSVIEW_ID);
+
 	changed();
 
 	currentTest->nextQuestion();

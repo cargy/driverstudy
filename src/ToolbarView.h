@@ -14,6 +14,8 @@
 #include <fltk/ToggleButton.h>
 #include <fltk/LightButton.h>
 
+#define TOOLBARVIEW_ID 2;
+
 class ToolbarView: public fltk::BarGroup, public View {
 private:
 	static void cb_quitBtn(fltk::Widget* w, void* v) ;

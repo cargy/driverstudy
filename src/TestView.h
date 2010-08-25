@@ -13,6 +13,8 @@
 #include "TestModel.h"
 #include "QuestionView.h"
 
+#define TESTVIEW_ID 5
+
 class TestView: public fltk::Group, public View {
 private:
 	QuestionView question;
@@ -23,6 +25,7 @@ public:
 	void update();
 	TestModel* model();
 	void setModel(Model* pM);
+	virtual void attach();
 };
 
 #endif /* TESTVIEW_H_ */

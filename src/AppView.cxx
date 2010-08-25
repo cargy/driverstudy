@@ -42,6 +42,11 @@ statusBar(20)
 
 }
 
+void AppView::attach()
+{
+	getFacade()->attachView(CONTAINERVIEW_ID, container);
+}
+
 AppView::~AppView() {
 }
 

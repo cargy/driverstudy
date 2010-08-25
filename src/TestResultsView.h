@@ -13,6 +13,8 @@
 #include <fltk/Group.h>
 #include <fltk/Button.h>
 
+#define TESTRESULTSVIEW_ID 7
+
 class TestResultsView: public fltk::Group, public View {
 private:
 	fltk::Widget result;

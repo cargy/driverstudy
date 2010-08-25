@@ -21,6 +21,8 @@
 #include "ContainerView.h"
 #include "ToolbarView.h"
 
+#define APPVIEW_ID 1
+
 class AppView: public fltk::Window, public View {
 private:
 	fltk::PackedGroup group;
@@ -50,7 +52,9 @@ private:
 public:
 	AppView(int x, int y, int w, int h, const char* l);
 	~AppView();
+	virtual void attach();
 	void update();
+	ContainerView* getTestView();
 };
 
 #endif /* APPVIEW_H_ */

@@ -16,6 +16,8 @@
 #include "TestResultsView.h"
 #include "TestView.h"
 
+#define CONTAINERVIEW_ID 3
+
 class ContainerView: public View, public fltk::Group  {
 private:
 	fltk::Widget * prev_;
@@ -36,6 +38,7 @@ protected:
 public:
 	ContainerView(int x,int y,int w,int h, const char * l = 0, bool begin=false);
 	~ContainerView();
+	virtual void attach();
 	void update();
 	void showPage(int i);
 	AppModel* model();
@@ -48,6 +51,7 @@ public:
 	//! return  the current visible child.
 	fltk::Widget* value() const { return value_;}
 	void slide(fltk::Widget *kid);
+	TestView* getTestView();
 };
 
 

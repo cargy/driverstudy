@@ -13,6 +13,8 @@
 #include <fltk/Widget.h>
 #include <fltk/Button.h>
 
+#define MAINMENUVIEW_ID 4
+
 using namespace fltk;
 
 class MainMenuView: public Group, public View {

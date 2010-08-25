@@ -31,6 +31,12 @@ void TestView::update() {
 	//model()->setView(question.answersView());
 }
 
+void TestView::attach()
+{
+	getFacade()->attachView(QUESTIONVIEW_ID, &question);
+	getFacade()->attachView(ANSWERSVIEW_ID, question.answersView());
+}
+
 void TestView::setModel(Model* pM) {
 	pM->setView(this);
 	pM->setView(&question);

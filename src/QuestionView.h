@@ -16,6 +16,7 @@
 #include "AnswersView.h"
 #include "TestModel.h"
 
+#define QUESTIONVIEW_ID 6
 class QuestionView: public fltk::Group, public View {
 private:
 	fltk::Group leftGroup;

@@ -23,6 +23,8 @@
 #include "QuestionModel.h"
 #include "MV.h"
 
+#define TESTMODEL_ID 2
+
 class TestModel: public Model
 {
 	public:
