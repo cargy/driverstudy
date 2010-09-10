@@ -27,6 +27,7 @@
 #include <iterator>
 #include <stdio.h>
 #include "QuestionModel.h"
+#include "CategoryModel.h"
 
 using namespace std;
 
@@ -56,7 +57,7 @@ private:
   int rc;
   int nrow,ncol;
   int db_open;
-  int qNo, tTime, tCategory;
+//  int qNo, tTime, tCategory;
 
 public:
 
@@ -87,7 +88,8 @@ public:
 		//}
 	}
   
-int *createRandomTestFromTemplate ( vector<int> *v) {
+int *createRandomTestFromTemplate ( int cid, vector<int> *v) {
+	int qNo = getCategory(cid)->getAmountOfTestQuestions();
 	int *array = new int[qNo];
 	for (int i=0;i<qNo;i++) {
 		array[i] = v[i].at(random_range(0,v[i].size()));
@@ -98,6 +100,7 @@ int *createRandomTestFromTemplate ( vector<int> *v) {
   
 int getTestTemplateNOQ (int category, int language) {
 	char buffer[1024];
+	int qNo = -1;
 	sprintf(buffer,"Select COUNT(DISTINCT(Qpag)) FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
 	string s_exe(buffer);
 
@@ -112,6 +115,7 @@ int getTestTemplateNOQ (int category, int language) {
 
 int getTestTime (int category) {
 	char buffer[1024];
+	int tTime = 0;
 	sprintf(buffer,"Select KTime FROM Kateg WHERE KCod = %d ;",category);
 	string s_exe(buffer);
 
@@ -122,6 +126,24 @@ int getTestTime (int category) {
 		return tTime;
 	else
 		throw -1;
+}
+
+vector<CategoryModel*> getAllCategories() {
+	vector<CategoryModel*> categories;
+	categories.push_back(new CategoryModel(CAR_CATEGORYMODEL_ID, "Car", 30, 35));
+	categories.push_back(new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle", 10, 15));
+	categories.push_back(new CategoryModel(TRUCK_CATEGORYMODEL_ID, "Truck", 10, 15));
+	categories.push_back(new CategoryModel(BUS_CATEGORYMODEL_ID, "Bus", 10, 15));
+	return categories;
+}
+
+CategoryModel* getCategory(int cid) {
+	vector<CategoryModel*> categories = getAllCategories();
+
+	for (unsigned int i=0;i<categories.size();i++)
+		if ( categories[i]->getCID() == cid) return categories[i];
+
+	return NULL;
 }
 
 vector<int> availableLanguages (int category) {
@@ -150,9 +172,9 @@ vector<int> availableLanguages (int category) {
 
 vector<int> *testTemplate ( int category, int language ) {
 	
-	  qNo = getTestTemplateNOQ(category, language);
-	  tTime = getTestTime(category);
-	  tCategory = category;
+	  int qNo = getTestTemplateNOQ(category, language);
+	  //tTime = getTestTime(category);
+	  //tCategory = category;
 	  
 	  char buffer[1024];
 	  sprintf(buffer,"SELECT Qpag,qcod "
@@ -185,7 +207,8 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return NULL;
   }
   
-  QuestionModel *getQuestionArray(int *array) {
+  QuestionModel *getQuestionArray(int cid, int *array) {
+	  int qNo = getCategory(cid)->getAmountOfTestQuestions();
 	  QuestionModel *q = new QuestionModel[qNo];
 	  
 	  for (int i=0; i<qNo; i++)
@@ -194,14 +217,15 @@ vector<int> *testTemplate ( int category, int language ) {
 	  return q;
   }
 
-  TestModel* getTest(int *array) {
-	  return new TestModel(getQuestionArray(array),qNo,tTime, tCategory);
+  TestModel* getTest(int cid, int *array) {
+	  int qNo = getCategory(cid)->getAmountOfTestQuestions();
+	  return new TestModel(getQuestionArray(cid, array),qNo, getCategory(cid));
   }
 
   TestModel* getTest(int catid,int langid) {
 	  vector<int> *v = testTemplate(catid,langid);
-	  int *array = createRandomTestFromTemplate(v);
-	  return getTest(array);
+	  int *array = createRandomTestFromTemplate(catid, v);
+	  return getTest(catid, array);
   }
 
   QuestionModel getQuestion(int qid) {

@@ -29,6 +29,7 @@ private:
 
 	bool transitioning_;
 	float interval_;
+	int step_;
 	void move_left();
 	void move_right();
 

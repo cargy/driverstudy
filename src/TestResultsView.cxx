@@ -6,11 +6,14 @@
  */
 
 #include "TestResultsView.h"
+#include "AppModel.h"
+#include <sstream>
+#include <string>
 
 TestResultsView::TestResultsView(int x, int y, int w, int h, const char* l) :
 Group(x, y, w, h, l, true/* auto-begin() */),
 View(),
-result(x+12, 6, w - 2*12, 54, "Passed/Failed"),
+result(x+12, 36, w - 2*12, 54, "Passed/Failed"),
 showWrongQuestionsBtn(x+50, 190, w - 2*50, 90, "Show Wrong Questions"),
 newTestBtn(x+50, 290, w - 2*50, 90,"New Test"),
 gotoMainMenuBtn(x+50, 390, w - 2*50, 90, "Go to MainMenu")
@@ -43,10 +46,25 @@ TestResultsView::~TestResultsView() {
 	// TODO Auto-generated destructor stub
 }
 
-AppModel* TestResultsView::model() {
-	return ((AppModel*)pModel);
+TestModel* TestResultsView::model() {
+	return ((TestModel*)pModel);
 }
 
+void TestResultsView::update()
+{
+	//if ( model()->getWrong() > 1 )
+	//result.copy_label("Failed");
+	if (!model()->completed())
+		return;
+	std::stringstream msg;
+	if ( model()->getWrong() > 1 )
+		msg << "Failed";
+	else
+		msg << "Passed";
+	msg << "\nWrong: " << model()->getWrong() << "/" << (model()->getCorrect() + model()->getWrong());
+	result.copy_label(msg.str().c_str());
+	std::cout << msg.str() << std::endl;
+}
 
 
 void TestResultsView::cb_showWrongQuestionsBtn(Widget* v, void *) { // static method
@@ -54,12 +72,7 @@ void TestResultsView::cb_showWrongQuestionsBtn(Widget* v, void *) { // static me
 }
 
 void TestResultsView::cb_showWrongQuestionsBtn_i() {
-	if (AppModel::getInstance() == NULL)
-		gotoMainMenuBtn.label("BOO!");
-	else {
-		//testBtn.label(model()->getappTitle());
-		AppModel::getInstance()->gotoCurrentTest();
-	}
+	AppModel::getInstance()->gotoCurrentTest();
 }
 
 void TestResultsView::cb_newTestBtn(Widget* v, void *) { // static method
@@ -71,7 +84,7 @@ void TestResultsView::cb_newTestBtn_i() {
 		gotoMainMenuBtn.label("BOO!");
 	else {
 		//testBtn.label(model()->getappTitle());
-		AppModel::getInstance()->gotoTestResults();
+		AppModel::getInstance()->runTest(model()->getCategory());
 	}
 }
 

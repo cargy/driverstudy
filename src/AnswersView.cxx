@@ -6,6 +6,7 @@
  */
 
 #include "AnswersView.h"
+#include <fltk/SharedImage.h>
 
 using namespace fltk;
 
@@ -46,12 +47,27 @@ void AnswersView::update()
 		answerBtn[i]->textsize(16);
 		answerBtn[i]->callback(cb_answerBtn, this);
 		answerBtn[i]->align(fltk::ALIGN_LEFT|fltk::ALIGN_INSIDE|fltk::ALIGN_WRAP);
+
+		if (model()->completed())
+		{
+			answerBtn[i]->box(fltk::NO_BOX);
+			answerBtn[i]->image(NULL);
+			answerBtn[i]->image(fltk::SharedImage::get("icons/wrong_24x24.png"));
+		}
+
 		add(answerBtn[i]);
 
 		rb_y = (answerBtn[i]->y() + answerBtn[i]->h() + space);
 	}
 
-	if (model()->question()->getSelectedAnswer() > -1)
+	if (model()->completed())
+	{
+		answerBtn[model()->question()->getSelectedAnswer()]->labelcolor(fltk::color(190,47,10));
+		answerBtn[model()->question()->getCorrectAnswer()]->labelcolor(fltk::color(81,118,17));
+		answerBtn[model()->question()->getCorrectAnswer()]->image(fltk::SharedImage::get("icons/tick_24x24.png"));
+	}
+
+	if ( model()->question()->getSelectedAnswer() > -1 && !model()->completed() )
 		answerBtn[model()->question()->getSelectedAnswer()]->state(true);
 	init_sizes();
 }

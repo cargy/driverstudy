@@ -103,7 +103,6 @@ void AppView::cb_prevBtn(Widget* w, void* v) {
 
 }
 
-
 void AppView::update() {
 
 	if ( model()->isfullscreen() && !fullscreen_status)
@@ -131,6 +130,7 @@ void AppView::update() {
 	char buf[100];
 
 	container->showPage(model()->getpage());
+	toolbar->opened(!model()->getpage());
 	//container->update();
 
 	//container->draw();

@@ -43,6 +43,9 @@ void AppModel::setView(View *pv) {
 }
 
 bool AppModel::fullscreen_toggle() {
+
+	 mainWindow_ = dynamic_cast<fltk::Window*>(getFacade()->getView(APPVIEW_ID));
+
 	if (!fullscreen_flag) {
 		this->x = mainWindow_->x();
 		this->y = mainWindow_->y();
@@ -74,18 +77,19 @@ void AppModel::gotoTestResults() {
 }
 
 //#include "Facade.h"
-void AppModel::gotoTest() {
+void AppModel::runTest(CategoryModel* category) {
 	page_index = 1;
 	//if ( currentTest ) delete currentTest;
-	currentTest = db->getTest(2,1);
+	currentTest = db->getTest(category->getCID(),1);
 	getFacade()->attachModel(TESTMODEL_ID, currentTest);
 	getFacade()->setViewToModel(TESTMODEL_ID, TESTVIEW_ID);
 	getFacade()->setViewToModel(TESTMODEL_ID, QUESTIONVIEW_ID);
 	getFacade()->setViewToModel(TESTMODEL_ID, ANSWERSVIEW_ID);
+	getFacade()->setViewToModel(TESTMODEL_ID, TESTRESULTSVIEW_ID);
 
 	changed();
 
-	currentTest->nextQuestion();
+	currentTest->startTest();
 
 
 }
@@ -128,3 +132,4 @@ int AppModel::geth() { return h;}
 int AppModel::getpage() { return page_index; }
 void AppModel::setpos(int x, int y) { this->x = x; this->y = y; /*changed();*/ }
 void AppModel::setsize(int w, int h) { this->w = w; this->h = h; /*changed();*/ }
+SQLITE3* AppModel::getDB() { return db; }

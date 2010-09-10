@@ -164,16 +164,16 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 				// New Test
 				switch ( currTest->category_id() )
 				{
-					case DBCARID:
+					case CAR_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->carBtn->do_callback();
 						break;
-					case DBMOTORCYCLEID:
+					case MOTORCYCLE_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->motorcycleBtn->do_callback();
 						break;
-					case DBTRUCKID:
+					case TRUCK_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->truckBtn->do_callback();
 						break;
-					case DBBUSID:
+					case BUS_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->busBtn->do_callback();
 						break;
 					case DBSCARID:
@@ -355,10 +355,10 @@ void QuestionUI::setTest(TestModel* t, bool pmode)
 	// set window label
 	char tl[100];
 	const char* tcl = "";
-	if (currTest->category_id() == DBCARID) tcl = _("Car");
-	if (currTest->category_id() == DBMOTORCYCLEID) tcl = _("Motorcycle");
-	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");
-	if (currTest->category_id() == DBBUSID) tcl = _("Bus");
+	if (currTest->category_id() == CAR_CATEGORYMODEL_ID) tcl = _("Car");
+	if (currTest->category_id() == MOTORCYCLE_CATEGORYMODEL_ID) tcl = _("Motorcycle");
+	if (currTest->category_id() == TRUCK_CATEGORYMODEL_ID) tcl = _("Truck");
+	if (currTest->category_id() == BUS_CATEGORYMODEL_ID) tcl = _("Bus");
 	if (currTest->category_id() == DBSCARID) tcl = _("Car Special Category");
 	if (currTest->category_id() == DBSMOTORCYCLEID) tcl = _("Motorcycle Special Category");
 	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id()%10,tcl);

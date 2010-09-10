@@ -56,6 +56,8 @@ rightGroup(leftGroup.w()+5, 5, 340, h-10),
 	controlGroup.add(nextBtn);
 	end();
 
+	preview_mode = false;
+
 }
 
 QuestionView::~QuestionView() {
@@ -68,6 +70,14 @@ TestModel* QuestionView::model() {
 
 #include "AppModel.h"
 void QuestionView::update() {
+	if (model()->completed() != preview_mode)
+	{
+		preview_mode = model()->completed();
+		if (preview_mode)
+			setPreviewMode();
+		else
+			setTestMode();
+	}
 	setQuestionNumber(model()->cursor(), model()->size());
 	setQuestion(model()->question()->title());
 
@@ -76,6 +86,11 @@ void QuestionView::update() {
 		validateBtn.deactivate();
 	else
 		validateBtn.activate();
+
+	// check if there is any other un-validated question
+	// to disable/enable nextBtn
+	if ( model()->is_next() || model()->completed() ) nextBtn.activate();
+	else nextBtn.deactivate();
 
 	setQuestionImage(model()->question());
 }
@@ -123,6 +138,31 @@ void QuestionView::setQuestionImage(QuestionModel* pQuestion) {
 		if ( imageHolder.visible() ) imageHolder.hide();
 }
 
+void QuestionView::setTestMode()
+{
+	// restore setting changed by previewQuestion()
+	answerGroup.clear_output();
+  	if ( !timerBar.visible() ) timerBar.show();
+  	if ( !validateBtn.visible() ) validateBtn.show();
+
+  	preview_mode = false;
+}
+
+void QuestionView::setPreviewMode()
+{
+	answerGroup.set_output();
+	timerBar.hide();
+
+
+	// hide validateBtn we are in preview_mode
+	if ( validateBtn.visible() ) validateBtn.hide();
+
+    // activate nextBtn because it's probably
+    // deactivated from showQuestion()
+	if ( !nextBtn.active() ) nextBtn.activate();
+	preview_mode = true;
+
+}
 AnswersView* QuestionView::answersView() {
 	return &answerGroup;
 }
@@ -133,8 +173,16 @@ void QuestionView::cb_nextQuestionBtn(Widget* btn, void *v) { // static method
 
 void QuestionView::cb_nextQuestionBtn_i(Button* btn)
 {
-	model()->nextQuestion();
-	printf("question: %s\n", model()->question()->title());
+	if (!model()->completed())
+		model()->nextQuestion();
+	else
+	{
+		if (model()->is_nextWrong())
+			model()->nextWrong();
+		else
+			AppModel::getInstance()->gotoTestResults();
+	}
+
 }
 
 void QuestionView::cb_validateBtn(Widget* btn, void *v) { // static method
@@ -146,6 +194,7 @@ void QuestionView::cb_validateBtn_i(Button* btn) {
 	if ( model()->completed())
 	{
 		AppModel::getInstance()->gotoTestResults();
+		model()->showResults();
 	}
 	else
 	{

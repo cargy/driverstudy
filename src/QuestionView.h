@@ -26,10 +26,11 @@ private:
 	fltk::Group rightGroup;
 		fltk::Widget imageHolder;
 		fltk::Group controlGroup;
+public:
 			TimerProgressBar timerBar;
 			fltk::Button validateBtn;
 			fltk::Button nextBtn;
-
+private:
 	//callbacks
 	static void cb_nextQuestionBtn(fltk::Widget* btn, void *v);
 	void cb_nextQuestionBtn_i(fltk::Button* btn);
@@ -37,6 +38,7 @@ private:
 	void cb_validateBtn_i(fltk::Button* btn);
 	static void cb_nextBtn(fltk::Widget* v, void *);
 	void cb_nextBtn_i(fltk::Button* btn);
+	bool preview_mode;
 
 
 public:
@@ -45,6 +47,8 @@ public:
 	void setQuestionNumber(int qNo, int size);
 	void setAnswers(QuestionModel* pQuestion);
 	void setQuestionImage(QuestionModel* pQuestion);
+	void setPreviewMode();
+	void setTestMode();
 	AnswersView* answersView();
 	~QuestionView();
 	void update();

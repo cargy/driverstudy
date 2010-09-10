@@ -18,6 +18,7 @@ value_(0)
 {
 	transitioning_ = false;
 	interval_ = 0.01f;
+	step_ = 40;
 	box(THIN_UP_BOX);
 	end();
 
@@ -37,7 +38,11 @@ value_(0)
 
 void ContainerView::attach()
 {
-	if (getFacade()) getFacade()->attachView(TESTVIEW_ID, testView_);
+	if (!getFacade())
+		return;
+	getFacade()->attachView(MAINMENUVIEW_ID, mainMenuView_);
+	getFacade()->attachView(TESTVIEW_ID, testView_);
+	getFacade()->attachView(TESTRESULTSVIEW_ID, testResultsView_);
 }
 
 ContainerView::~ContainerView() {
@@ -82,7 +87,11 @@ void ContainerView::value(Widget *kid) {
   if ((num_kids = children()) == 0)  return;
 
   for (i=0; i<num_kids; i++)
-    if (child(i) != kid)  child(i)->hide(); else kid->show();
+    if (child(i) != kid)  child(i)->hide();
+    else {
+    	kid->clear();
+    	kid->activate();
+    }
 
   // This will restore the mouse pointer to the window's default cursor
   // whenever the wizard pane is changed.  Otherwise text widgets that
@@ -124,7 +133,7 @@ int ContainerView::handle(int event) {
 
 void ContainerView::move_left() {
 	if ( prev_->x() > -prev_->w()) {
-		prev_->x(prev_->x()-20);
+		prev_->x(prev_->x()-step_);
 		next_->x(prev_->x() + prev_->w());
 		if (!next_->visible()) next_->show();
 		redraw();
@@ -142,7 +151,7 @@ void ContainerView::move_left() {
 
 void ContainerView::move_right() {
 	if (prev_ && prev_->x() < prev_->parent()->w()) {
-		prev_->x(prev_->x()+20);
+		prev_->x(prev_->x()+step_);
 		next_->x(prev_->x() - next_->w());
 		if (!next_->visible()) next_->show();
 		redraw();
@@ -182,6 +191,8 @@ void ContainerView::slide(Widget *kid) {
 
   prev_ = value_;
   next_ = kid;
+  prev_->deactivate();
+  next_->deactivate();
   if ((num_kids = children()) == 0)  return;
 
   if (kid == value_ )

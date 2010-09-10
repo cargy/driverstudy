@@ -12,6 +12,8 @@
 #include <fltk/Group.h>
 #include <fltk/Widget.h>
 #include <fltk/Button.h>
+#include "CategoryBtnView.h"
+#include <vector>
 
 #define MAINMENUVIEW_ID 4
 
@@ -27,10 +29,12 @@ private:
 public:
 	MainMenuView(int x, int y, int w, int h, const char* l);
 	~MainMenuView();
-	Button motorcycleBtn;
-	Button carBtn;
-	Button truckBtn;
-	Button busBtn;
+	CategoryBtnView motorcycleBtn;
+	CategoryBtnView carBtn;
+	CategoryBtnView truckBtn;
+	CategoryBtnView busBtn;
+	std::vector<CategoryBtnView> categoryButtons;
+	virtual void attach();
 };
 
 #endif /* MAINMENUVIEW_H_ */

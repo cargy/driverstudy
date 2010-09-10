@@ -25,14 +25,16 @@
 #include <cstdlib>
 #include <iostream>
 #include <cassert>
-#endif /* DEBUG */ 
 
+#endif /* DEBUG */
+#include <iostream>
 
 QuestionModel::QuestionModel():
 Model()
 {
 	amountOfAnswers = 0;
 	selectedAnswer = -1;
+	std::cout << __LINE__ << ":QuestionModel1 constructed:" << this << std::endl;
 }
 
 QuestionModel::QuestionModel(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook,Answer *xferAnswers, unsigned int aoa):
@@ -54,6 +56,7 @@ Model()
 	selectedAnswer = -1;
 	amountOfAnswers = aoa;
 	verified = false;
+	std::cout << "QuestionModel constructed:" << this << std::endl;
 }
 
 bool QuestionModel::isCorrect() {

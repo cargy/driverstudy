@@ -25,7 +25,7 @@ protected:
 
 public:
 	Model();
-	~Model();
+	virtual ~Model();
 	int lol();
 	void setFacade(Facade * const facade);
 	Facade *getFacade() const;
@@ -46,6 +46,7 @@ public:
 	Facade *getFacade() const;
 	void setModel(Model *pM);
 	virtual void attach();
+	virtual void modelAttached();
 	Model* model();
 
 private:

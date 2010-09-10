@@ -36,8 +36,8 @@ VERSION			= $(MAJOR_VERSION).$(MINOR_VERSION).$(MICRO_VERSION)
 
 # list of source files
 CXXSOURCES = \
-	MV.cxx Facade.cxx answer.cxx QuestionModel.cxx TestModel.cxx AppModel.cxx sqlite3.cxx \
-	ToolbarView.cxx AppView.cxx ContainerView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.cxx TestResultsView.cxx \
+	MV.cxx Facade.cxx answer.cxx CategoryModel.cxx QuestionModel.cxx TestModel.cxx AppModel.cxx sqlite3.cxx \
+	ToolbarView.cxx AppView.cxx ContainerView.cxx CategoryBtnView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.cxx TestResultsView.cxx \
 	TimerProgressBar.cxx \
 	mvmain.cxx
 	
@@ -73,9 +73,7 @@ driver_res.o: driverstudy.rc
 	
 driverstudy.exe: driver_res.o 
 	@echo === Compiling $@... ===
-	i586-mingw32msvc-g++ -static -O2 -Wall mvmain.cxx MV.cxx sqlite3.cxx AppModel.cxx \
-	ToolbarView.cxx  AppView.cxx ContainerView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx \
-	HomeView.cxx TimerProgressBar.cxx answer.cxx AnswersView.cxx QuestionModel.cxx TestModel.cxx  driver_res.o \
+	i586-mingw32msvc-g++ -static -O2 -Wall $(CXXSOURCES) driver_res.o \
 	-o ../build/DriverStudy.exe \
 	-L/home/krizz/src/cross_win32/lib \
 	-laudiere -ldsound -lole32 -lrpcrt4 -lspeex -lwinmm -lvorbisfile -lvorbis -logg -lpthread -lws2_32 \

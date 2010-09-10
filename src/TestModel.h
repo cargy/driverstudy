@@ -21,6 +21,7 @@
 #ifndef TESTMODEL_H
 #define TESTMODEL_H
 #include "QuestionModel.h"
+#include "CategoryModel.h"
 #include "MV.h"
 
 #define TESTMODEL_ID 2
@@ -28,7 +29,7 @@
 class TestModel: public Model
 {
 	public:
-		TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory);
+		TestModel(QuestionModel *xferQuestions, int aoq, CategoryModel* tcategory);
 		~TestModel();
 		void loadTest(TestModel* pTestModel);
 		void selectAnswerOfCurrentQuestion(int a);
@@ -41,15 +42,19 @@ class TestModel: public Model
 		QuestionModel* question();
 		QuestionModel *nextWrong();
 		void nextQuestion();
+		void startTest();
+		bool isRunning();
 		bool is_next();
 		bool is_nextWrong();
 		int size(){	return csize;}	
 		int cursor(){return ccursor;}
 		int time();
 		int category_id();
+		void showResults();
+		CategoryModel* getCategory();
 		#ifdef DEBUG
 		void answerRandomly();
-		void showResults();
+		void showResultsDbg();
 		#endif
 		
 	protected:
@@ -57,7 +62,8 @@ class TestModel: public Model
 		int csize;
 		int ccursor;
 		int testTime;
-		int testCategory;
+		CategoryModel* testCategory;
+		bool run_;
 	
 	private:
 		QuestionModel* currentQuestion;

@@ -98,6 +98,7 @@ Facade *View::getFacade() const
 
 void View::setModel(Model *pM) {
 	pModel = pM;
+	modelAttached();
 }
 
 
@@ -109,6 +110,7 @@ Model* View::model() {
  * Do any kind of model attachment needed.
  */
 void View::attach() {}
+void View::modelAttached() { std::cout << "Model Attached to View: " << pModel;}
 
 void View::update() {
 }

@@ -42,7 +42,7 @@ public:
 	int getw();
 	int geth();
 	void nextpage();
-	void gotoTest();
+	void runTest(CategoryModel* category);
 	void gotoCurrentTest();
 	void gotoMainMenu();
 	void gotoTestResults();
@@ -54,6 +54,7 @@ public:
 	void setView(View *pw);
 	void createTest(int catid, int langid);
 	TestModel* currentTest;
+	SQLITE3* getDB();
 };
 
 #endif /* APPMODEL_H_ */

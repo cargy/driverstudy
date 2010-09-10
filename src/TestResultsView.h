@@ -9,7 +9,7 @@
 #define TESTRESULTSVIEW_H_
 
 #include "MV.h"
-#include "AppModel.h"
+#include "TestModel.h"
 #include <fltk/Group.h>
 #include <fltk/Button.h>
 
@@ -27,11 +27,12 @@ private:
 	void cb_gotoMainMenuBtn_i();
 	static void cb_newTestBtn(fltk::Widget* v, void *);
 	void cb_newTestBtn_i();
-	AppModel* model();
+	TestModel* model();
 
 public:
 	TestResultsView(int x, int y, int w, int h, const char* l);
 	~TestResultsView();
+	void update();
 };
 
 #endif /* TESTRESULTSVIEW_H_ */

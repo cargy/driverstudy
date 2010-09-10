@@ -1,14 +1,15 @@
 #include "TestModel.h"
 #include <iostream>
 
-TestModel::TestModel(QuestionModel *xferQuestions, int aoq, int ttime, int tcategory):
+TestModel::TestModel(QuestionModel *xferQuestions, int aoq, CategoryModel* tcategory):
 Model()
 {
 	tQuestions = xferQuestions;
 	csize = aoq;
 	ccursor = -1;
-	testTime = ttime;
 	testCategory = tcategory;
+	testTime = tcategory->getTime();
+	run_ = false;
 	std::cout << "TestModel constructed:" << this << std::endl;
 }
 
@@ -22,6 +23,10 @@ void TestModel::loadTest(TestModel* pTestModel) {
 	ccursor = -1;
 	testTime = pTestModel->testTime;
 	testCategory = pTestModel->testCategory;
+}
+
+void TestModel::showResults() {
+	changed();
 }
 
 void TestModel::selectAnswerOfCurrentQuestion(int a)
@@ -87,6 +92,14 @@ QuestionModel* TestModel::next()
 	
 }
 
+bool TestModel::isRunning() { return run_; }
+
+void TestModel::startTest() {
+	currentQuestion = next();
+	run_ = true;
+	changed();
+}
+
 void TestModel::nextQuestion() {
 	currentQuestion = next();
 	changed();
@@ -129,8 +142,9 @@ QuestionModel* TestModel::nextWrong()
 	
 }
 
+CategoryModel* TestModel::getCategory() { return testCategory; }
 int TestModel::time() { return testTime;};
-int TestModel::category_id() {return testCategory;};
+int TestModel::category_id() {return testCategory->getCID();};
 
 #ifdef DEBUG
 #include <cstdio>
@@ -140,7 +154,7 @@ void TestModel::answerRandomly()
 		tQuestions[i].answerRandomly();			
 }
 
-void TestModel::showResults() {
+void TestModel::showResultsDbg() {
 	int i=0;
 	for(i=0;i<csize;i++) {
 		printf("\nQuestion %i\n",i+1);

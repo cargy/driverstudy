@@ -29,6 +29,15 @@ TestView::~TestView() {
 void TestView::update() {
 	//model()->setView(&question);
 	//model()->setView(question.answersView());
+	if (model()->isRunning() != question.timerBar.status() )
+	{
+		if (model()->isRunning()) {
+			question.timerBar.settime(model()->time());
+			question.timerBar.start();
+		}
+		else question.timerBar.stop();
+	}
+
 }
 
 void TestView::attach()

@@ -55,6 +55,18 @@ MainMenuView::~MainMenuView() {
 	// TODO Auto-generated destructor stub
 }
 
+void MainMenuView::attach() {
+	getFacade()->attachModel(11,new CategoryModel(CAR_CATEGORYMODEL_ID, "Car",30, 35));
+	getFacade()->attachModel(12,new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle",10, 15));
+	getFacade()->attachModel(13,new CategoryModel(TRUCK_CATEGORYMODEL_ID, "Truck",10, 15));
+	getFacade()->attachModel(14,new CategoryModel(BUS_CATEGORYMODEL_ID, "Bus", 10, 15));
+
+	getFacade()->getModel(11)->setView(&carBtn);
+	getFacade()->getModel(12)->setView(&motorcycleBtn);
+	getFacade()->getModel(13)->setView(&truckBtn);
+	getFacade()->getModel(14)->setView(&busBtn);
+}
+
 void MainMenuView::cb_categoryBtn(Widget* v, void *) { // static method
   ((MainMenuView*)(v->parent()))->cb_categoryBtn_i((Button*)v);
 }
@@ -62,14 +74,8 @@ void MainMenuView::cb_categoryBtn(Widget* v, void *) { // static method
 #include <cstdio>
 
 void MainMenuView::cb_categoryBtn_i(Button* btn) {
-	if (AppModel::getInstance() == NULL)
-		carBtn.label("BOO!");
-	else {
-		//testBtn.label(model()->getappTitle());
-		//AppModel::getInstance()->nextpage();
-		AppModel::getInstance()->gotoTest();
-		//AppModel::getInstance()->setStatusBarMsg(btn->label());
-		//printf("categoryBtn: %s\n", btn->label());
-	}
+		CategoryModel* pCM = dynamic_cast<CategoryModel*>((dynamic_cast<View*>(btn))->model());
+		std::cout << "Category Selected: " << pCM->getCID() << ". " << pCM->getLabel() << std::endl;
+		AppModel::getInstance()->runTest(pCM);
 
 }
