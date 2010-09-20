@@ -61,11 +61,6 @@ bool AppModel::isfullscreen() {
 	return fullscreen_flag;
 }
 
-void AppModel::nextpage() {
-	page_index++;
-	changed();
-}
-
 void AppModel::gotoMainMenu() {
 	page_index = 0;
 	changed();
@@ -74,6 +69,16 @@ void AppModel::gotoMainMenu() {
 void AppModel::gotoTestResults() {
 	page_index = 2;
 	changed();
+}
+
+void AppModel::quit() {
+	if (page_index)
+		gotoMainMenu();
+	else
+	{
+		dynamic_cast<fltk::Window*>(getFacade()->getView(APPVIEW_ID))->hide();
+		std::cout << "Good bye!" << std::endl;
+	}
 }
 
 //#include "Facade.h"
@@ -99,13 +104,9 @@ void AppModel::gotoCurrentTest() {
 	if ( !currentTest ) return;
 	changed();
 
-	currentTest->nextWrong();
+	currentTest->nextWrongQuestion();
 
 
-}
-
-void AppModel::createTest(int catid, int langid) {
-	db->getTest(1,1);
 }
 
 void AppModel::setStatusBarMsg(const char* msg)

@@ -42,6 +42,7 @@ class TestModel: public Model
 		QuestionModel* question();
 		QuestionModel *nextWrong();
 		void nextQuestion();
+		void nextWrongQuestion();
 		void startTest();
 		bool isRunning();
 		bool is_next();

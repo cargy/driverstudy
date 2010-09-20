@@ -39,13 +39,6 @@ private:
 	bool fullscreen_status;
 
 	static void cb_exit(fltk::Widget* pWdg, void* p);
-	//static void cb_fullscreenBtn(fltk::Widget* pWdg, void* p);
-	static void cb_fullscreenBtn(Widget* w, void* v) ;
-	inline void cb_fullscreenBtn_i(fltk::ToggleButton* fullscreenBtn);
-	static void cb_nextBtn(fltk::Widget* w, void* v) ;
-	inline void cb_nextBtn_i(fltk::Button* btn);
-	static void cb_prevBtn(fltk::Widget* w, void* v) ;
-	inline void cb_prevBtn_i(fltk::Button* btn);
 	AppModel* model();
 
 

@@ -17,7 +17,7 @@
 #include "TestView.h"
 
 #define CONTAINERVIEW_ID 3
-
+#define STEP_FACTOR 20
 class ContainerView: public View, public fltk::Group  {
 private:
 	fltk::Widget * prev_;

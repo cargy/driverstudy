@@ -178,7 +178,7 @@ void QuestionView::cb_nextQuestionBtn_i(Button* btn)
 	else
 	{
 		if (model()->is_nextWrong())
-			model()->nextWrong();
+			model()->nextWrongQuestion();
 		else
 			AppModel::getInstance()->gotoTestResults();
 	}

@@ -21,6 +21,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <iostream>
+#include <sstream>
 #include <sqlite3.h>
 #include "TestModel.h"
 #include <vector>
@@ -210,7 +211,7 @@ vector<int> *testTemplate ( int category, int language ) {
   QuestionModel *getQuestionArray(int cid, int *array) {
 	  int qNo = getCategory(cid)->getAmountOfTestQuestions();
 	  QuestionModel *q = new QuestionModel[qNo];
-	  
+
 	  for (int i=0; i<qNo; i++)
 		q[i] = getQuestion(array[i]);
 		
@@ -225,6 +226,7 @@ vector<int> *testTemplate ( int category, int language ) {
   TestModel* getTest(int catid,int langid) {
 	  vector<int> *v = testTemplate(catid,langid);
 	  int *array = createRandomTestFromTemplate(catid, v);
+	  //getQuestions(catid, array);
 	  return getTest(catid, array);
   }
 
@@ -266,6 +268,63 @@ vector<int> *testTemplate ( int category, int language ) {
      
      sqlite3_free_table(result);
      return QuestionModel();
+  }
+
+  QuestionModel* getQuestions(int cid, int* qid) {
+
+	  int qNo = getCategory(cid)->getAmountOfTestQuestions();
+	  //string s_exe(buffer);
+	  QuestionModel *question = new QuestionModel[qNo];
+
+	  stringstream ss;
+	  string ss_exe("SELECT qlect, QPhoto, QSound, QBook, alect, ACorr, ASound, AAA, AQCOD "
+			  "FROM Quest,answer "
+			  "WHERE qcod = aqcod and qcod IN ( ");
+
+	  ss << ss_exe;
+	  for (int i=0; i<qNo; i++)
+	  {
+		  ss << qid[i];
+		  if (i != qNo -1) ss << ", ";
+		  else ss << " )";
+	  }
+
+	  ss << " ORDER BY RANDOM();";
+
+	  cout << ss.str() << endl;
+
+	  string s_exe(ss.str());
+
+
+      rc = sqlite3_get_table(
+			db,              /* An open database */
+			s_exe.c_str(),       /* SQL to be executed */
+			&result,       /* Result written to a char *[]  that this points to */
+			&nrow,             /* Number of result rows written here */
+			&ncol,          /* Number of result columns written here */
+			&zErrMsg          /* Error msg written here */
+			);
+
+     if( rc == SQLITE_OK ){
+		 int i=0;
+		 Answer *a = new Answer[nrow];
+
+		 // question string
+		 //cout << result[ncol] << endl;
+		 for(i=1; i <= nrow;i++) {
+			 string corr_str = result[ncol*i+5];
+			 bool correct = true;
+			 if ( corr_str.find ('1') == string::npos ) correct = false;
+			 a[i-1] = Answer(result[ncol*i+4], correct, result[ncol*i+6],atoi(result[ncol*i+7]));
+
+		 }
+		 QuestionModel q =  QuestionModel(result[ncol],result[ncol+1],result[ncol+2],result[ncol+3],a,nrow);
+		 sqlite3_free_table(result);
+		 return question;
+     }else {throw DBError(sqlite3_errmsg(db),s_exe.c_str());}
+
+     sqlite3_free_table(result);
+     return question;
   }
 
 

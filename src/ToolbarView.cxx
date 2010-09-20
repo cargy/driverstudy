@@ -7,18 +7,28 @@
 
 #include "ToolbarView.h"
 #include "AppModel.h"
+#include <fltk/Item.h>
 
 using namespace fltk;
 
 ToolbarView::ToolbarView(int x, int y, int width, int height, const char* label):
 BarGroup(x,y,width,height,label, true/* auto-begin() */),
-fullscreenBtn(116, 11, 180, 60, "Fullscreen"),
-quitBtn(18, 11, 60, 60, "Quit" ),
-aboutBtn(536, 11, 60, 60, "About"),
-dicationBtn(439, 11, 90, 60, "Dictation")
+quitBtn(730, (height-60)/2-1, 60, 60, "Quit" ),
+languageMenu(40,(height-60)/2-1, 180, 60, "Language" ),
+fullscreenBtn(440, (height-60)/2-1, 180, 60, "Fullscreen"),
+dicationBtn(240, (height-60)/2-1, 180, 60, "Dictation"),
+aboutBtn(660, (height-60)/2-1, 60, 60, "About")
 {
+	resizable(this);
+	glyph_size(30);
+	//align(ALIGN_TOP);
+
 	quitBtn.callback(cb_quitBtn,this);
 	fullscreenBtn.callback(cb_fullscreenBtn, this);
+	languageMenu.add(new Item("Greek"));
+	languageMenu.add(new Item("English"));
+	languageMenu.add(new Item("Russian"));
+	languageMenu.add(new Item("Albanian"));
 
 
 }
@@ -32,7 +42,7 @@ void ToolbarView::cb_quitBtn(Widget* w, void* v) {
 }
 
 inline void ToolbarView::cb_quitBtn_i(Button* btn) {
-	AppModel::getInstance()->gotoMainMenu();
+	AppModel::getInstance()->quit();
 }
 
 void ToolbarView::cb_aboutBtn(Widget* w, void* v) {

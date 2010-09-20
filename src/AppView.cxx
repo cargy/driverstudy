@@ -24,7 +24,7 @@ statusBar(20)
 
 
 	add(group);
-	toolbar = new ToolbarView(0,h - 80 - statusBar.h(),w,80,"ToolBar");
+	toolbar = new ToolbarView(0,h - 80 - statusBar.h(),w,80,"Toolbar");
 	container = new ContainerView(0,0,w, h - toolbar->h() - statusBar.h(),"Container View", false);
 
 	group.add(container);
@@ -55,52 +55,7 @@ AppModel* AppView::model() {
 }
 
 void AppView::cb_exit(fltk::Widget* pWdg, void* p) {
-	exit(0);
-}
-/*
-void AppView::cb_fullscreenBtn(fltk::Widget* pWdg, void* p) {
-	((AppView*)(p))->pModel->setfullscreen(true);
-}
-*/
-
-inline void AppView::cb_fullscreenBtn_i(ToggleButton* fullscreenBtn) {
-	model()->fullscreen_toggle();
-}
-void AppView::cb_fullscreenBtn(Widget* w, void* v) {
-  ((AppView*)v)->cb_fullscreenBtn_i((ToggleButton*)w);
-
-}
-#include <cstdio>
-#include <fltk/run.h>
-
-void move(void* v) {
-  //printf("TICK: %s\n",((Button*)v)->label());
-	Button* btn = (Button*)v;
-  btn->x(btn->x()+20);
-  btn->parent()->redraw();
-  //fltk::check();
-
-  if (btn->x() < 790)
-	  repeat_timeout(0.05f,move,v);
-}
-
-inline void AppView::cb_nextBtn_i(Button* btn) {
-	//model()->nextpage();
-	//add_timeout(0.5,move);
-	//add_timeout(0.01f, move, quitBtn);
-	//quitBtn->x(quitBtn->x()+1);
-}
-void AppView::cb_nextBtn(Widget* w, void* v) {
-  ((AppView*)v)->cb_nextBtn_i((Button*)w);
-
-}
-
-inline void AppView::cb_prevBtn_i(Button* btn) {
-	model()->gotoMainMenu();
-}
-void AppView::cb_prevBtn(Widget* w, void* v) {
-  ((AppView*)v)->cb_prevBtn_i((Button*)w);
-
+	AppModel::getInstance()->quit();
 }
 
 void AppView::update() {
@@ -130,8 +85,12 @@ void AppView::update() {
 	char buf[100];
 
 	container->showPage(model()->getpage());
-	toolbar->opened(!model()->getpage());
+	//toolbar->opened(!model()->getpage());
 	//container->update();
+	if (model()->getpage())
+		toolbar->quitBtn.copy_label("Back");
+	else
+		toolbar->quitBtn.copy_label("Quit");
 
 	//container->draw();
 	sprintf(buf, "%s page: %d", container->value()->label(), model()->getpage());

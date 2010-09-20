@@ -105,6 +105,11 @@ void TestModel::nextQuestion() {
 	changed();
 }
 
+void TestModel::nextWrongQuestion() {
+	currentQuestion = nextWrong();
+	changed();
+}
+
 QuestionModel* TestModel::question()
 {
 	return &tQuestions[ccursor];

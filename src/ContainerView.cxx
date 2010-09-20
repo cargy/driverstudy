@@ -18,7 +18,7 @@ value_(0)
 {
 	transitioning_ = false;
 	interval_ = 0.01f;
-	step_ = 40;
+	step_ = w / STEP_FACTOR;
 	box(THIN_UP_BOX);
 	end();
 
@@ -133,8 +133,20 @@ int ContainerView::handle(int event) {
 
 void ContainerView::move_left() {
 	if ( prev_->x() > -prev_->w()) {
+
+		// easing effect
+		if ( -prev_->x() >  prev_->parent()->w()*(0.65f)) {
+			//std::cout << -prev_->x() << " > " << prev_->parent()->w()*(0.65f) << " step:" << step_ << std::endl;
+			if ( step_ * (0.08f) > 1 ) step_-= step_ * (0.08f);
+			else step_ = 3;
+		}
+
+		// fix step_
+		if (prev_->x()-step_ < -prev_->w())
+			step_ =  prev_->r();
+
 		prev_->x(prev_->x()-step_);
-		next_->x(prev_->x() + prev_->w());
+		next_->x(prev_->r());
 		if (!next_->visible()) next_->show();
 		redraw();
 		add_timeout(interval_);
@@ -151,6 +163,18 @@ void ContainerView::move_left() {
 
 void ContainerView::move_right() {
 	if (prev_ && prev_->x() < prev_->parent()->w()) {
+
+		// easing effect
+		if ( prev_->x() >  prev_->parent()->w()*(0.65f)) {
+			//std::cout << prev_->x() << " > " << prev_->parent()->w()*(0.65f) << " step:" << step_ << std::endl;
+			if ( step_ * (0.08f) > 1 ) step_-= step_ * (0.08f);
+			else step_ = 3;
+		}
+
+		// fix step
+		if ( prev_->x()+step_ > prev_->parent()->w())
+			step_ = prev_->parent()->w() - prev_->x();
+
 		prev_->x(prev_->x()+step_);
 		next_->x(prev_->x() - next_->w());
 		if (!next_->visible()) next_->show();
@@ -171,12 +195,6 @@ void ContainerView::showPage(int i) {
 	if ( children() == 0 || child(i) == NULL )  return;
 	if (transitioning_) return;
 
-
-	if (i == 1)  {
-		//setView();
-		//AppModel::getInstance()->currentTest->next();
-	}
-
 	slide(child(i));
 
 }
@@ -193,6 +211,7 @@ void ContainerView::slide(Widget *kid) {
   next_ = kid;
   prev_->deactivate();
   next_->deactivate();
+  step_ = w() / STEP_FACTOR;
   if ((num_kids = children()) == 0)  return;
 
   if (kid == value_ )

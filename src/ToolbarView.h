@@ -13,6 +13,7 @@
 #include <fltk/Button.h>
 #include <fltk/ToggleButton.h>
 #include <fltk/LightButton.h>
+#include <fltk/PopupMenu.h>
 
 #define TOOLBARVIEW_ID 2;
 
@@ -28,10 +29,11 @@ private:
 public:
 	ToolbarView(int x, int y, int width, int height, const char* label);
 	~ToolbarView();
-	fltk::ToggleButton fullscreenBtn;
 	fltk::Button quitBtn;
-	fltk::Button aboutBtn;
+	fltk::PopupMenu languageMenu;
+	fltk::ToggleButton fullscreenBtn;
 	fltk::LightButton dicationBtn;
+	fltk::Button aboutBtn;
 };
 
 #endif /* TOOLBARVIEW_H_ */
