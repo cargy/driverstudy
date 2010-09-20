@@ -18,23 +18,27 @@
 //      MA 02110-1301, USA.
 
 
-#include "question.h"
+#include "QuestionModel.h"
 
 
 #ifdef DEBUG
 #include <cstdlib>
 #include <iostream>
 #include <cassert>
-#endif /* DEBUG */ 
 
+#endif /* DEBUG */
+#include <iostream>
 
-Question::Question()
+QuestionModel::QuestionModel():
+Model()
 {
 	amountOfAnswers = 0;
 	selectedAnswer = -1;
+	std::cout << __LINE__ << ":QuestionModel1 constructed:" << this << std::endl;
 }
 
-Question::Question(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook,Answer *xferAnswers, unsigned int aoa)
+QuestionModel::QuestionModel(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook,Answer *xferAnswers, unsigned int aoa):
+Model()
 {
 	strncpy(question, pQuestion, MAXQUESTIONSIZE);
 	question[MAXQUESTIONSIZE - 1] = '\0';
@@ -52,27 +56,28 @@ Question::Question(const char* pQuestion, const char* pImgFile, const char* pSnd
 	selectedAnswer = -1;
 	amountOfAnswers = aoa;
 	verified = false;
+	std::cout << "QuestionModel constructed:" << this << std::endl;
 }
 
-bool Question::isCorrect() {
+bool QuestionModel::isCorrect() {
 	return qAnswers[selectedAnswer].isCorrect();
 }
 
-void Question::selectAnswer(int selected) {
+void QuestionModel::selectAnswer(int selected) {
 	for (unsigned int i=0; i < amountOfAnswers;i++) qAnswers[i].deselect();
 	if (selected != -1 ) qAnswers[selected].select();
 	selectedAnswer = selected;
 }		
 	
-const char* Question::title() {	return question;}
+const char* QuestionModel::title() {	return question;}
 
-const char* Question::image() {	return imgFile; }
+const char* QuestionModel::image() {	return imgFile; }
 
-const char* Question::sound() {	return sndFile; }
+const char* QuestionModel::sound() {	return sndFile; }
 
-const char* Question::getBookSection(){	return book;}
+const char* QuestionModel::getBookSection(){	return book;}
 
-const char* Question::getAnswer(unsigned int i)
+const char* QuestionModel::getAnswer(unsigned int i)
 {
 	#ifdef DEBUG
 	assert(i<amountOfAnswers);
@@ -80,7 +85,7 @@ const char* Question::getAnswer(unsigned int i)
 	return qAnswers[i].text();
 }
 
-const char* Question::answerSound(unsigned int i)
+const char* QuestionModel::answerSound(unsigned int i)
 {
 	#ifdef DEBUG
 	assert(i<amountOfAnswers);
@@ -88,11 +93,11 @@ const char* Question::answerSound(unsigned int i)
 	return qAnswers[i].soundFile();
 }
 
-unsigned int Question::getAOA(){return amountOfAnswers;}
+unsigned int QuestionModel::getAOA(){return amountOfAnswers;}
 
-int Question::getSelectedAnswer(){return selectedAnswer;}
+int QuestionModel::getSelectedAnswer(){return selectedAnswer;}
 
-int Question::getCorrectAnswer()
+int QuestionModel::getCorrectAnswer()
 {
 	for (unsigned int i=0; i<amountOfAnswers;i++) 
 	{
@@ -102,9 +107,9 @@ int Question::getCorrectAnswer()
 	return -1;
 }
 
-bool Question::isVerified(){return verified;}
+bool QuestionModel::isVerified(){return verified;}
 
-void Question::verify()
+void QuestionModel::verify()
 {
 	// flag question verified ONLY if a selection is made
 	if (selectedAnswer != -1) verified = true;
@@ -112,7 +117,7 @@ void Question::verify()
 
 #ifdef DEBUG
 using namespace std;
-void Question::answerRandomly() {
+void QuestionModel::answerRandomly() {
 	unsigned int s;
 	//cin >> s;
 	
@@ -123,7 +128,7 @@ void Question::answerRandomly() {
 	
 }
 
-void Question::showAnswers() {
+void QuestionModel::showAnswers() {
 	cout << question << " (" << book << ")" <<endl;
 	cout << "Choose:";
 	for (unsigned int i=0; i<amountOfAnswers;i++) {

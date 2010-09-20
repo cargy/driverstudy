@@ -19,14 +19,14 @@
 
 #include "questionCollection.h"
 
-QuestionCollection::QuestionCollection(Question *questionArray, int aoq)
+QuestionCollection::QuestionCollection(QuestionModel *questionArray, int aoq)
 {
 	tQuestions = questionArray;
 	csize = aoq;
 	ccursor = -1;
 }
 
-Question* QuestionCollection::next()
+QuestionModel* QuestionCollection::next()
 {			
 	if (ccursor >= csize-1) ccursor = -1;
 

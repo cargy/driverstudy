@@ -7,13 +7,13 @@
 class QuestionCollection
 {
 	protected:
-		Question *tQuestions;
+		QuestionModel *tQuestions;
 		int csize;
 		int ccursor;
 		
 	public:
-		QuestionCollection(Question *questionArray, int aoq);	
-		Question *next();
+		QuestionCollection(QuestionModel *questionArray, int aoq);	
+		QuestionModel *next();
 		int size(){	return csize;}	
 		int cursor(){return ccursor;}
 	

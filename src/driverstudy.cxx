@@ -125,7 +125,7 @@ QuestionUI *qv;
 // day
 #include "test.h"
 #include "sqlite3.cxx"
-Test* createTest(int catid, int langid) {
+TestModel* createTest(int catid, int langid) {
 	SQLITE3 sql(DATABASE);
 	//catid = DBCARID;
 
@@ -139,7 +139,7 @@ Test* createTest(int catid, int langid) {
 	
 	int *array = sql.createRandomTestFromTemplate(v);
 	
-	Test* ct = sql.getTest(array);
+	TestModel* ct = sql.getTest(array);
 	return ct;
 }
 

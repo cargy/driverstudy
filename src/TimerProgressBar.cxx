@@ -67,6 +67,7 @@ void TimerProgressBar::stop()
 }
 	
 int TimerProgressBar::handle(int event) {
+	if (!run) return 0;
   switch (event) {
   case SHOW:
     remove_timeout();

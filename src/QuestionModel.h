@@ -18,17 +18,18 @@
 //      MA 02110-1301, USA.
 
 
-#ifndef QUESTION_H
-#define QUESTION_H
+#ifndef QUESTIONMODEL_H
+#define QUESTIONMODEL_H
 
 #include "config.h"
+#include "MV.h"
 #include "answer.h"
 
-class Question
+class QuestionModel: public Model
 {
 	public:
-		Question();
-		Question(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook, Answer *xferAnswers, unsigned int aoa);
+		QuestionModel();
+		QuestionModel(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook, Answer *xferAnswers, unsigned int aoa);
 		bool isCorrect();
 		void selectAnswer(int selected);
 		const char *title();
@@ -60,4 +61,4 @@ class Question
 
 };
 
-#endif /* QUESTION_H */ 
+#endif /* QUESTIONMODEL_H */

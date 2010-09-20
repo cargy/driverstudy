@@ -164,16 +164,16 @@ void QuestionUI::cb_next(fltk::Widget* pBtn, const char* Btn)
 				// New Test
 				switch ( currTest->category_id() )
 				{
-					case DBCARID:
+					case CAR_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->carBtn->do_callback();
 						break;
-					case DBMOTORCYCLEID:
+					case MOTORCYCLE_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->motorcycleBtn->do_callback();
 						break;
-					case DBTRUCKID:
+					case TRUCK_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->truckBtn->do_callback();
 						break;
-					case DBBUSID:
+					case BUS_CATEGORYMODEL_ID:
 						//((MainMenuUI*)child_of())->busBtn->do_callback();
 						break;
 					case DBSCARID:
@@ -207,7 +207,7 @@ int QuestionUI::selectedRB()
 	return -1;
 }
 
-void QuestionUI::showQuestion(Question* q)
+void QuestionUI::showQuestion(QuestionModel* q)
 {
 	// restore setting changed by previewQuestion()
 	AnswerGroup->clear_output();
@@ -291,7 +291,7 @@ void QuestionUI::createAnswerRB(int no)
 	AnswerGroup->init_sizes();
 	
 }
-void QuestionUI::previewQuestion(Question* q)
+void QuestionUI::previewQuestion(QuestionModel* q)
 {
 	AnswerGroup->set_output();
 	timer->hide();
@@ -347,7 +347,7 @@ void QuestionUI::previewQuestion(Question* q)
 	redraw();
 }
 
-void QuestionUI::setTest(Test* t, bool pmode)
+void QuestionUI::setTest(TestModel* t, bool pmode)
 {
 	currTest = t;
 	preview_mode = false;
@@ -355,10 +355,10 @@ void QuestionUI::setTest(Test* t, bool pmode)
 	// set window label
 	char tl[100];
 	const char* tcl = "";
-	if (currTest->category_id() == DBCARID) tcl = _("Car");
-	if (currTest->category_id() == DBMOTORCYCLEID) tcl = _("Motorcycle");
-	if (currTest->category_id() == DBTRUCKID) tcl = _("Truck");
-	if (currTest->category_id() == DBBUSID) tcl = _("Bus");
+	if (currTest->category_id() == CAR_CATEGORYMODEL_ID) tcl = _("Car");
+	if (currTest->category_id() == MOTORCYCLE_CATEGORYMODEL_ID) tcl = _("Motorcycle");
+	if (currTest->category_id() == TRUCK_CATEGORYMODEL_ID) tcl = _("Truck");
+	if (currTest->category_id() == BUS_CATEGORYMODEL_ID) tcl = _("Bus");
 	if (currTest->category_id() == DBSCARID) tcl = _("Car Special Category");
 	if (currTest->category_id() == DBSMOTORCYCLEID) tcl = _("Motorcycle Special Category");
 	sprintf(tl, _("Questionnaire %i - %s"),currTest->category_id()%10,tcl);

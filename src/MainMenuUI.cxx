@@ -170,10 +170,10 @@ int MainMenuUI::getSelectedLanguage()
 int MainMenuUI::getSelectedCategory(const char* tCategory)
 {
 	int catid = 0;
-	if (strcmp(tCategory, "car")==0) catid = DBCARID;
-	if (strcmp(tCategory, "motorcycle")==0) catid = DBMOTORCYCLEID;
-	if (strcmp(tCategory, "truck")==0) catid = DBTRUCKID;
-	if (strcmp(tCategory, "bus")==0) catid = DBBUSID;
+	if (strcmp(tCategory, "car")==0) catid = CAR_CATEGORYMODEL_ID;
+	if (strcmp(tCategory, "motorcycle")==0) catid = MOTORCYCLE_CATEGORYMODEL_ID;
+	if (strcmp(tCategory, "truck")==0) catid = TRUCK_CATEGORYMODEL_ID;
+	if (strcmp(tCategory, "bus")==0) catid = BUS_CATEGORYMODEL_ID;
 	if (strcmp(tCategory, "scar")==0) catid = DBSCARID;
 	if (strcmp(tCategory, "smotorcycle")==0) catid = DBSMOTORCYCLEID;
 	assert(catid>0);
@@ -189,10 +189,10 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	//fltk::message("languagePUM->item->userdata() == %s",languagePUM->get_item()->user_data() );
 	SQLITE3 sql(DATABASE);
 	int catid = 0;
-	if (strcmp(tCategory, "car")==0) catid = DBCARID;
-	if (strcmp(tCategory, "motorcycle")==0) catid = DBMOTORCYCLEID;
-	if (strcmp(tCategory, "truck")==0) catid = DBTRUCKID;
-	if (strcmp(tCategory, "bus")==0) catid = DBBUSID;
+	if (strcmp(tCategory, "car")==0) catid = CAR_CATEGORYMODEL_ID;
+	if (strcmp(tCategory, "motorcycle")==0) catid = MOTORCYCLE_CATEGORYMODEL_ID;
+	if (strcmp(tCategory, "truck")==0) catid = TRUCK_CATEGORYMODEL_ID;
+	if (strcmp(tCategory, "bus")==0) catid = BUS_CATEGORYMODEL_ID;
 	if (strcmp(tCategory, "scar")==0) catid = DBSCARID;
 	if (strcmp(tCategory, "smotorcycle")==0) catid = DBSMOTORCYCLEID;
 	assert(catid>0);
@@ -244,7 +244,7 @@ void MainMenuUI::cb_start(fltk::Widget* pBtn, const char* tCategory)
 	
 	int *array = sql.createRandomTestFromTemplate(v);
 	
-	Test* ct = sql.getTest(array);
+	TestModel* ct = sql.getTest(array);
 	fltk::check();
 	
 	#ifdef DEBUG

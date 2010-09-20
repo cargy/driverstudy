@@ -18,43 +18,57 @@
 //      MA 02110-1301, USA.
 
 
-#ifndef TEST_H
-#define TEST_H
-#include "question.h"
+#ifndef TESTMODEL_H
+#define TESTMODEL_H
+#include "QuestionModel.h"
+#include "CategoryModel.h"
+#include "MV.h"
 
-class Test
+#define TESTMODEL_ID 2
+
+class TestModel: public Model
 {
 	public:
-		Test(Question *xferQuestions, int aoq, int ttime, int tcategory);
+		TestModel(QuestionModel *xferQuestions, int aoq, CategoryModel* tcategory);
+		~TestModel();
+		void loadTest(TestModel* pTestModel);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();
 		bool completed();
 		int getCorrect();
 		int getWrong();
-		Question *wrongQuestions();
-		Question *next();
-		Question* question();
-		Question *nextWrong();
+		QuestionModel *wrongQuestions();
+		QuestionModel *next();
+		QuestionModel* question();
+		QuestionModel *nextWrong();
+		void nextQuestion();
+		void nextWrongQuestion();
+		void startTest();
+		bool isRunning();
 		bool is_next();
 		bool is_nextWrong();
 		int size(){	return csize;}	
 		int cursor(){return ccursor;}
 		int time();
 		int category_id();
+		void showResults();
+		CategoryModel* getCategory();
 		#ifdef DEBUG
 		void answerRandomly();
-		void showResults();
+		void showResultsDbg();
 		#endif
 		
 	protected:
-		Question *tQuestions;
+		QuestionModel *tQuestions;
 		int csize;
 		int ccursor;
+		int testTime;
+		CategoryModel* testCategory;
+		bool run_;
 	
 	private:
-		int testTime;
-		int testCategory;
+		QuestionModel* currentQuestion;
 
 };
 
-#endif /* TEST_H */ 
+#endif /* TESTMODEL_H */
