@@ -26,13 +26,18 @@ TestView::~TestView() {
 	printf("TestView was destoyed");
 }
 
+void TestView::modelAttached()
+{
+	question.timerBar.starttime(model()->time());
+}
+
 void TestView::update() {
 	//model()->setView(&question);
 	//model()->setView(question.answersView());
 	if (model()->isRunning() != question.timerBar.status() )
 	{
 		if (model()->isRunning()) {
-			question.timerBar.settime(model()->time());
+			//question.timerBar.starttime(model()->time());
 			question.timerBar.start();
 		}
 		else question.timerBar.stop();

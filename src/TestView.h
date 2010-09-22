@@ -26,6 +26,7 @@ public:
 	TestModel* model();
 	void setModel(Model* pM);
 	virtual void attach();
+	virtual void modelAttached();
 };
 
 #endif /* TESTVIEW_H_ */
