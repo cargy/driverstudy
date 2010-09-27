@@ -25,10 +25,12 @@ aboutBtn(660, (height-60)/2-1, 60, 60, "About")
 
 	quitBtn.callback(cb_quitBtn,this);
 	fullscreenBtn.callback(cb_fullscreenBtn, this);
+	/*
 	languageMenu.add(new Item("Greek"));
 	languageMenu.add(new Item("English"));
 	languageMenu.add(new Item("Russian"));
 	languageMenu.add(new Item("Albanian"));
+	*/
 
 
 }

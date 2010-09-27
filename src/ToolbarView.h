@@ -14,6 +14,7 @@
 #include <fltk/ToggleButton.h>
 #include <fltk/LightButton.h>
 #include <fltk/PopupMenu.h>
+#include "LanguageSelectView.h"
 
 #define TOOLBARVIEW_ID 2;
 
@@ -30,7 +31,7 @@ public:
 	ToolbarView(int x, int y, int width, int height, const char* label);
 	~ToolbarView();
 	fltk::Button quitBtn;
-	fltk::PopupMenu languageMenu;
+	LanguageSelectView languageMenu;
 	fltk::ToggleButton fullscreenBtn;
 	fltk::LightButton dicationBtn;
 	fltk::Button aboutBtn;
