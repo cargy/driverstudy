@@ -14,10 +14,12 @@ LanguageSelectView::LanguageSelectView(int x, int y, int w, int h, const char* l
 PopupMenu(x,y,w,h,label)
 {
 	// TODO Auto-generated constructor stub
-	add(new Item("Greek"));
-	add(new Item("English"));
-	add(new Item("Russian"));
-	add(new Item("Albanian"));
+	//add(new Item("Greek",0,NULL,new LanguageModel(1,"MyGreek"),0));
+	add(new LanguageModel(1,"MyGreek"));
+	add(new LanguageModel(2,"English"));
+	add(new LanguageModel(3,"Russian"));
+	add(new LanguageModel(4,"Albanian"));
+
 	callback(cb_languageSelected, this);
 
 }
@@ -26,6 +28,9 @@ LanguageSelectView::~LanguageSelectView() {
 	// TODO Auto-generated destructor stub
 }
 
+void LanguageSelectView::add(LanguageModel* plm) {
+	PopupMenu::add(plm->getLabel().c_str(),0,NULL, (void*)plm, 0);
+}
 void LanguageSelectView::cb_languageSelected(Widget* w, void* v) {
   ((LanguageSelectView*)v)->cb_languageSelected_i((PopupMenu*)w);
 }
@@ -35,5 +40,6 @@ inline void LanguageSelectView::cb_languageSelected_i(PopupMenu* menu) {
 	fltk::Widget* item = menu->get_item();
 
 	// set languagePUM label to selected item label
-	menu->label(item->label());
+	LanguageModel* lang = ((LanguageModel*)item->user_data());
+	menu->label(lang->getLabel().c_str());
 }

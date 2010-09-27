@@ -10,6 +10,7 @@
 
 #include "MV.h"
 #include <fltk/PopupMenu.h>
+#include "LanguageModel.h"
 
 class LanguageSelectView: public fltk::PopupMenu, public View {
 
@@ -20,6 +21,7 @@ private:
 public:
 	LanguageSelectView(int x, int y, int w, int h, const char* label);
 	virtual ~LanguageSelectView();
+	void add(LanguageModel* plm);
 };
 
 #endif /* LANGUAGESELECTVIEW_H_ */
