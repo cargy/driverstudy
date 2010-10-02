@@ -85,7 +85,7 @@ void TestResultsView::cb_newTestBtn_i() {
 		gotoMainMenuBtn.label("BOO!");
 	else {
 		//testBtn.label(model()->getappTitle());
-		//AppModel::getInstance()->runTest(model()->getCategory());
+		AppModel::getInstance()->runTest();
 	}
 }
 
