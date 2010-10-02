@@ -11,6 +11,8 @@
 #include <cstring>
 #include "AppView.h"
 #include <fltk/Widget.h>
+#include <fltk/ask.h>
+#include <fltk/error.h>
 
 AppModel* AppModel::instance = NULL;
 
@@ -25,7 +27,14 @@ AppModel::AppModel() : Model() {
 	page_index = 0;
 	instance = this;
 	statusbar_msg = "Ready";
-	db = new SQLITE3(DATABASE);
+	try
+	{
+		db = new SQLITE3(DATABASE);
+	}
+	catch (exception& e)
+	{
+		fltk::fatal(e.what());
+	}
 	currentTest = NULL;
 	testProperties_ = new TestPropertiesModel();
 }
@@ -80,9 +89,18 @@ void AppModel::quit() {
 //#include "Facade.h"
 void AppModel::runTest() {
 	page_index = 1;
-
-	CategoryModel* category = testProperties_->getCategory();
-	LanguageModel* language = testProperties_->getLanguage();
+	CategoryModel* category;
+	LanguageModel* language;
+	try {
+		category = testProperties_->getCategory();
+		language = testProperties_->getLanguage();
+	}
+	catch (exception& e)
+	{
+		std::cout << e.what() << std::endl;
+		fltk::message(e.what());
+		return;
+	}
 
 	currentTest = db->getTest(category->getCID(),language->getLID());
 	getFacade()->attachModel(TESTMODEL_ID, currentTest);

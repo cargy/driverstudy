@@ -23,6 +23,7 @@
 #include <iostream>
 #include <sstream>
 #include <sqlite3.h>
+#include <exception>
 #include "TestModel.h"
 #include <vector>
 #include <iterator>
@@ -32,22 +33,49 @@
 
 using namespace std;
 
-class DBError {
-	const char* errormsg;
-	const char* sql;
+class DBError: public exception {
+	string errormsg;
+	string sql;
 	
 	public:
-	DBError(const char* msg)
+	string getMsg() { return errormsg; }
+	string getSQL() { return sql; }
+
+	virtual const char* what() const throw()
 	{
-		cout << "DB error:" << msg << endl;
+		string msg;
+		if ( sql == "")
+			msg = "DB error:" + errormsg;
+		else
+			msg = "DB error:" + errormsg + "Last SQL Query:"+"`" + sql+"`";
+		return msg.c_str();
+	}
+
+	DBError() throw()
+		{
+
+		}
+
+	DBError(string msg)
+	{
+		errormsg = msg;
+		sql = "";
+		//cout << "DB error:" << msg << endl;
 	}
 	
-	DBError(const char* msg, const char* lsql)
+	DBError(string msg, string lsql)
 	{
-		cout << "DB error:" << msg << endl <<"Last SQL Query:"<<endl<<"`" << lsql<<"`"<<endl;
+		errormsg = msg;
+		sql = lsql;
+		//cout << "DB error:" << msg << endl <<"Last SQL Query:"<<endl<<"`" << lsql<<"`"<<endl;
 	}
+	
+	~DBError() throw() {
+		// dso
+	}
+
 };
-	
+
 	
 
 class SQLITE3 {
@@ -68,7 +96,7 @@ public:
     rc = sqlite3_open_v2(tablename.c_str(),&db,SQLITE_OPEN_READONLY,NULL);
     if( rc ){
       //fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-      throw DBError(sqlite3_errmsg(db));
+      throw DBError(string(sqlite3_errmsg(db))+": "+tablename);
       sqlite3_close(db);
     }
     
@@ -166,7 +194,7 @@ vector<int> availableLanguages (int category) {
 	}
 	else
 	{
-		throw DBError(sqlite3_errmsg(db),s_exe.c_str());
+		throw DBError(string(sqlite3_errmsg(db)),s_exe);
 		sqlite3_free_table(result);
 	}
 }
