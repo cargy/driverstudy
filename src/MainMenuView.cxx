@@ -55,6 +55,8 @@ MainMenuView::~MainMenuView() {
 	// TODO Auto-generated destructor stub
 }
 
+TestPropertiesModel* MainMenuView::model() { return ((TestPropertiesModel*)pModel); }
+
 void MainMenuView::attach() {
 	getFacade()->attachModel(11,new CategoryModel(CAR_CATEGORYMODEL_ID, "Car",30, 35));
 	getFacade()->attachModel(12,new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle",10, 15));
@@ -76,6 +78,8 @@ void MainMenuView::cb_categoryBtn(Widget* v, void *) { // static method
 void MainMenuView::cb_categoryBtn_i(Button* btn) {
 		CategoryModel* pCM = dynamic_cast<CategoryModel*>((dynamic_cast<View*>(btn))->model());
 		std::cout << "Category Selected: " << pCM->getCID() << ". " << pCM->getLabel() << std::endl;
-		AppModel::getInstance()->runTest(pCM);
+		std::cout << "Category Model: " << model() << ". " << pCM->getLabel() << std::endl;
+		AppModel::getInstance()->getTestProperties()->setCategory(pCM);
+		AppModel::getInstance()->runTest();
 
 }

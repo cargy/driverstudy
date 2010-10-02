@@ -24,7 +24,7 @@ public:
 	~TestView();
 	void update();
 	TestModel* model();
-	void setModel(Model* pM);
+	//void setModel(Model* pM);
 	virtual void attach();
 	virtual void modelAttached();
 };

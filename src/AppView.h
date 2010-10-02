@@ -46,6 +46,7 @@ public:
 	AppView(int x, int y, int w, int h, const char* l);
 	~AppView();
 	virtual void attach();
+	virtual void modelAttached();
 	void update();
 	ContainerView* getTestView();
 };

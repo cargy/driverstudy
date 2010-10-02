@@ -13,6 +13,7 @@ using namespace fltk;
 
 ToolbarView::ToolbarView(int x, int y, int width, int height, const char* label):
 BarGroup(x,y,width,height,label, true/* auto-begin() */),
+View(),
 quitBtn(730, (height-60)/2-1, 60, 60, "Quit" ),
 languageMenu(40,(height-60)/2-1, 180, 60, "Language" ),
 fullscreenBtn(440, (height-60)/2-1, 180, 60, "Fullscreen"),

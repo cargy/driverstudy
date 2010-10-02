@@ -28,6 +28,8 @@ TestView::~TestView() {
 
 void TestView::modelAttached()
 {
+	model()->setView(&question);
+	model()->setView(question.answersView());
 	question.timerBar.starttime(model()->time());
 }
 
@@ -50,13 +52,13 @@ void TestView::attach()
 	getFacade()->attachView(QUESTIONVIEW_ID, &question);
 	getFacade()->attachView(ANSWERSVIEW_ID, question.answersView());
 }
-
+/*
 void TestView::setModel(Model* pM) {
 	pM->setView(this);
 	pM->setView(&question);
 	pM->setView(question.answersView());
 }
-
+*/
 TestModel* TestView::model() {
 	return ((TestModel*)pModel);
 }

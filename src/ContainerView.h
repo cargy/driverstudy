@@ -18,7 +18,7 @@
 
 #define CONTAINERVIEW_ID 3
 #define STEP_FACTOR 20
-class ContainerView: public View, public fltk::Group  {
+class ContainerView: public fltk::Group, public View  {
 private:
 	fltk::Widget * prev_;
 	fltk::Widget * value_;
@@ -40,10 +40,10 @@ public:
 	ContainerView(int x,int y,int w,int h, const char * l = 0, bool begin=false);
 	~ContainerView();
 	virtual void attach();
+	virtual void modelAttached();
 	void update();
 	void showPage(int i);
 	AppModel* model();
-	void setView();
 
 	void draw();
 	void next();

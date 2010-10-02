@@ -13,6 +13,7 @@
 #include <fltk/Widget.h>
 #include <fltk/Button.h>
 #include "CategoryBtnView.h"
+#include "TestPropertiesModel.h"
 #include <vector>
 
 #define MAINMENUVIEW_ID 4
@@ -35,6 +36,7 @@ public:
 	CategoryBtnView busBtn;
 	std::vector<CategoryBtnView> categoryButtons;
 	virtual void attach();
+	TestPropertiesModel* model();
 };
 
 #endif /* MAINMENUVIEW_H_ */

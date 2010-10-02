@@ -12,6 +12,9 @@
 #include <string>
 #include <fltk/Window.h>
 #include "sqlite3.cxx"
+#include "CategoryModel.h"
+#include "LanguageModel.h"
+#include "TestPropertiesModel.h"
 
 #define APPMODEL_ID 1
 
@@ -27,6 +30,7 @@ private:
 	static AppModel* instance;
 	fltk::Window* mainWindow_;
 	SQLITE3* db;
+	TestPropertiesModel* testProperties_;
 
 
 public:
@@ -41,7 +45,7 @@ public:
 	int gety();
 	int getw();
 	int geth();
-	void runTest(CategoryModel* category);
+	void runTest();
 	void gotoCurrentTest();
 	void gotoMainMenu();
 	void gotoTestResults();
@@ -51,9 +55,10 @@ public:
 	int getpage();
 	void setpos(int x, int y);
 	void setsize(int w, int h);
-	void setView(View *pw);
 	TestModel* currentTest;
 	SQLITE3* getDB();
+	TestPropertiesModel* getTestProperties();
+	void setTestProperties(TestPropertiesModel* testProperties);
 };
 
 #endif /* APPMODEL_H_ */

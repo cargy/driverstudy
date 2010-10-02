@@ -32,6 +32,7 @@ gotoMainMenuBtn(x+50, 390, w - 2*50, 90, "Go to MainMenu")
 	newTestBtn.labeltype(fltk::EMBOSSED_LABEL);
 	newTestBtn.labelsize(22);
 	newTestBtn.textsize(22);
+	newTestBtn.tooltip("Start a new Test of the same category");
 
 	gotoMainMenuBtn.labeltype(fltk::EMBOSSED_LABEL);
 	gotoMainMenuBtn.labelsize(22);
@@ -84,7 +85,7 @@ void TestResultsView::cb_newTestBtn_i() {
 		gotoMainMenuBtn.label("BOO!");
 	else {
 		//testBtn.label(model()->getappTitle());
-		AppModel::getInstance()->runTest(model()->getCategory());
+		//AppModel::getInstance()->runTest(model()->getCategory());
 	}
 }
 

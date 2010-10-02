@@ -27,6 +27,7 @@ AppModel::AppModel() : Model() {
 	statusbar_msg = "Ready";
 	db = new SQLITE3(DATABASE);
 	currentTest = NULL;
+	testProperties_ = new TestPropertiesModel();
 }
 
 AppModel::~AppModel() {
@@ -35,11 +36,6 @@ AppModel::~AppModel() {
 
 AppModel* AppModel::getInstance() {
 	return instance;
-}
-
-void AppModel::setView(View *pv) {
-	if ( dynamic_cast<fltk::Window*>(pv)->is_window() ) mainWindow_ = dynamic_cast<fltk::Window*>(pv);
-	Model::setView(pv);
 }
 
 bool AppModel::fullscreen_toggle() {
@@ -82,10 +78,13 @@ void AppModel::quit() {
 }
 
 //#include "Facade.h"
-void AppModel::runTest(CategoryModel* category) {
+void AppModel::runTest() {
 	page_index = 1;
-	//if ( currentTest ) delete currentTest;
-	currentTest = db->getTest(category->getCID(),1);
+
+	CategoryModel* category = testProperties_->getCategory();
+	LanguageModel* language = testProperties_->getLanguage();
+
+	currentTest = db->getTest(category->getCID(),language->getLID());
 	getFacade()->attachModel(TESTMODEL_ID, currentTest);
 	getFacade()->setViewToModel(TESTMODEL_ID, TESTVIEW_ID);
 	getFacade()->setViewToModel(TESTMODEL_ID, QUESTIONVIEW_ID);
@@ -134,3 +133,5 @@ int AppModel::getpage() { return page_index; }
 void AppModel::setpos(int x, int y) { this->x = x; this->y = y; /*changed();*/ }
 void AppModel::setsize(int w, int h) { this->w = w; this->h = h; /*changed();*/ }
 SQLITE3* AppModel::getDB() { return db; }
+TestPropertiesModel* AppModel::getTestProperties() { return testProperties_; }
+void AppModel::setTestProperties(TestPropertiesModel* testProperties) { testProperties_ = testProperties; }

@@ -12,8 +12,8 @@
 #include <fltk/events.h>
 
 ContainerView::ContainerView(int x,int y,int w,int h, const char * l, bool begin):
-View(),
 Group(x,y,w,h,l,begin),
+View(),
 value_(0)
 {
 	transitioning_ = false;
@@ -45,12 +45,13 @@ void ContainerView::attach()
 	getFacade()->attachView(TESTRESULTSVIEW_ID, testResultsView_);
 }
 
-ContainerView::~ContainerView() {
-	// TODO Auto-generated destructor stub
+void ContainerView::modelAttached()
+{
+	model()->getTestProperties()->setView(mainMenuView_);
 }
 
-void ContainerView::setView() {
-	testView_->setModel(AppModel::getInstance()->currentTest);
+ContainerView::~ContainerView() {
+	// TODO Auto-generated destructor stub
 }
 
 void ContainerView::draw() {

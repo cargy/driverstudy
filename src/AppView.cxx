@@ -75,6 +75,14 @@ void AppView::attach()
 	getFacade()->attachView(CONTAINERVIEW_ID, container);
 }
 
+void AppView::modelAttached()
+{
+
+	model()->setView(container);
+	std::cout << "Attach TestProperties to LanguageBar" << std::endl;
+	model()->getTestProperties()->setView(&toolbar->languageMenu);
+}
+
 AppView::~AppView() {
 }
 

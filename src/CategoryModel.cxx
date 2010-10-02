@@ -10,7 +10,9 @@
 
 using namespace std;
 
-CategoryModel::CategoryModel(int cid, string label, int amountOfTestQuestions, int time) {
+CategoryModel::CategoryModel(int cid, string label, int amountOfTestQuestions, int time):
+Model()
+{
 	cid_ = cid;
 	label_ = label;
 	amountOfTestQuestions_ = amountOfTestQuestions;
