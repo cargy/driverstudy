@@ -77,7 +77,7 @@ void QuestionUI::fullscreen()
 */
 void QuestionUI::show()
 {
-	extern bool fullscreen_flag;
+	//extern bool fullscreen_flag;
 	//if (fullscreen_flag) fullscreen();
 	soundBtn->value(ds->initialized());
 	fltk::Widget::show();

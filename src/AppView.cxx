@@ -38,7 +38,7 @@ statusBar(20)
 
 	statusBar.child_box(FLAT_BOX);
 	statusBar.set("Hello!",  StatusBarGroup::SBAR_LEFT);
-
+#ifndef _WIN32
 	static unsigned img[] = {
 			22, 22,
 			0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00, 0x00ffff00,0x00ffff00, 0x00ffff00,
@@ -66,7 +66,7 @@ statusBar(20)
 	};
 
 	icon((char*)img);
-
+#endif
 
 }
 
