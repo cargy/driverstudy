@@ -49,7 +49,6 @@ TimerProgressBar::TimerProgressBar(int x, int y, int w, int h)
 void TimerProgressBar::start()
 {
   #ifdef _WIN32
-	step(2);
     repeat_timeout(1.0f);
   #else
     {struct timeval t; gettimeofday(&t, 0);
