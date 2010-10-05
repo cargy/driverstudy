@@ -110,6 +110,11 @@ void TestModel::nextWrongQuestion() {
 	changed();
 }
 
+void TestModel::firstWrongQuestion() {
+	currentQuestion = firstWrong();
+	changed();
+}
+
 QuestionModel* TestModel::question()
 {
 	return &tQuestions[ccursor];
@@ -142,9 +147,22 @@ QuestionModel* TestModel::nextWrong()
 	{
 		if (ccursor >= csize-1) ccursor = -1;
 	}
-	changed();
+
 	return &tQuestions[ccursor];
 	
+}
+
+QuestionModel* TestModel::firstWrong()
+{
+	ccursor = -1;
+
+	while ( tQuestions[++ccursor].isCorrect() && ( getWrong() != 0 ) )
+	{
+		if (ccursor >= csize-1) ccursor = -1;
+	}
+
+	return &tQuestions[ccursor];
+
 }
 
 CategoryModel* TestModel::getCategory() { return testCategory; }

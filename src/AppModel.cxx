@@ -121,7 +121,7 @@ void AppModel::gotoCurrentTest() {
 	if ( !currentTest ) return;
 	changed();
 
-	currentTest->nextWrongQuestion();
+	currentTest->firstWrongQuestion();
 
 
 }

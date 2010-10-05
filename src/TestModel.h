@@ -28,7 +28,7 @@
 
 class TestModel: public Model
 {
-	public:
+public:
 		TestModel(QuestionModel *xferQuestions, int aoq, CategoryModel* tcategory);
 		~TestModel();
 		void loadTest(TestModel* pTestModel);
@@ -37,12 +37,10 @@ class TestModel: public Model
 		bool completed();
 		int getCorrect();
 		int getWrong();
-		QuestionModel *wrongQuestions();
-		QuestionModel *next();
 		QuestionModel* question();
-		QuestionModel *nextWrong();
 		void nextQuestion();
 		void nextWrongQuestion();
+		void firstWrongQuestion();
 		void startTest();
 		bool isRunning();
 		bool is_next();
@@ -68,6 +66,10 @@ class TestModel: public Model
 	
 	private:
 		QuestionModel* currentQuestion;
+		QuestionModel *wrongQuestions();
+		QuestionModel *next();
+		QuestionModel *nextWrong();
+		QuestionModel *firstWrong();
 
 };
 
