@@ -37,6 +37,7 @@ AppModel::AppModel() : Model() {
 	}
 	currentTest = NULL;
 	testProperties_ = new TestPropertiesModel();
+	langs_ = db->getAllLanguages();
 }
 
 AppModel::~AppModel() {
@@ -153,3 +154,4 @@ void AppModel::setsize(int w, int h) { this->w = w; this->h = h; /*changed();*/ 
 SQLITE3* AppModel::getDB() { return db; }
 TestPropertiesModel* AppModel::getTestProperties() { return testProperties_; }
 void AppModel::setTestProperties(TestPropertiesModel* testProperties) { testProperties_ = testProperties; }
+vector<LanguageModel*> AppModel::getLanguages() { return langs_; }

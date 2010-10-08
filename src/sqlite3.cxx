@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include "QuestionModel.h"
 #include "CategoryModel.h"
+#include "LanguageModel.h"
 
 using namespace std;
 
@@ -173,6 +174,37 @@ CategoryModel* getCategory(int cid) {
 		if ( categories[i]->getCID() == cid) return categories[i];
 
 	return NULL;
+}
+
+vector<LanguageModel*> getAllLanguages()
+{
+	char buffer[1024];
+	sprintf(buffer,
+	"SELECT L.id, L.code, L.shortCode, LL.name "
+	"FROM Locale L "
+	"	INNER JOIN LocaleLocale LL ON LL.localeID = L.id AND LL.localeNameID = L.id;");
+
+	vector<LanguageModel*> languages;
+	string s_exe(buffer);
+
+	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
+
+	if ( rc == SQLITE_OK )
+	{
+		for (int i=1; i <= nrow; i++)
+		{
+			languages.push_back(new LanguageModel(atoi(result[ncol*i+0]),string(result[ncol*i+1]), string(result[ncol*i+2]),string(result[ncol*i+3])));
+			cout << "result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
+		}
+		sqlite3_free_table(result);
+			//languages.push_back(new LanguageModel(atoi(result[nrow*i+1])));
+	}else{
+		throw DBError(string(sqlite3_errmsg(db)),s_exe);
+		sqlite3_free_table(result);
+	}
+	return languages;
+
+
 }
 
 vector<int> availableLanguages (int category) {

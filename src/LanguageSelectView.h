@@ -27,6 +27,7 @@ public:
 	void add(LanguageModel* plm);
 	LanguageModel* getSelectedLanguage();
 	TestPropertiesModel* model();
+	virtual void modelAttached();
 };
 
 #endif /* LANGUAGESELECTVIEW_H_ */

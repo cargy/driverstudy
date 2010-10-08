@@ -10,6 +10,7 @@
 #include "MV.h"
 #include <cstdlib>
 #include <string>
+#include <vector>
 #include <fltk/Window.h>
 #include "sqlite3.cxx"
 #include "CategoryModel.h"
@@ -31,6 +32,7 @@ private:
 	fltk::Window* mainWindow_;
 	SQLITE3* db;
 	TestPropertiesModel* testProperties_;
+	vector<LanguageModel*> langs_;
 
 
 public:
@@ -59,6 +61,7 @@ public:
 	SQLITE3* getDB();
 	TestPropertiesModel* getTestProperties();
 	void setTestProperties(TestPropertiesModel* testProperties);
+	vector<LanguageModel*> getLanguages();
 };
 
 #endif /* APPMODEL_H_ */
