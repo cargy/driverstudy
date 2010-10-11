@@ -30,6 +30,7 @@ AppModel::AppModel() : Model() {
 	try
 	{
 		db = new SQLITE3(DATABASE);
+		db->setDefaultLocale(1);
 	}
 	catch (exception& e)
 	{

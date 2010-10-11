@@ -87,6 +87,7 @@ private:
   int rc;
   int nrow,ncol;
   int db_open;
+  int default_locale_id_;
 //  int qNo, tTime, tCategory;
 
 public:
@@ -102,8 +103,11 @@ public:
     }
     
     db_open=1;
+    default_locale_id_ = 1;
   }
   
+  void setDefaultLocale(int localeid) { default_locale_id_ = localeid; }
+
   int random_range(int lowest=1, int highest=10 )
   {
 	  srand(time(NULL));
@@ -159,12 +163,33 @@ int getTestTime (int category) {
 }
 
 vector<CategoryModel*> getAllCategories() {
+	char buffer[1024];
+	sprintf(buffer,
+	"SELECT C.id, CL.name, C.questionnaireNo, C.testQuestionsAmount, C.time, C.image  "
+	"FROM Category C "
+	"	INNER JOIN CategoryLocale CL ON CL.categoryID = C.id AND CL.localeID = %d;", default_locale_id_);
+
 	vector<CategoryModel*> categories;
-	categories.push_back(new CategoryModel(CAR_CATEGORYMODEL_ID, "Car", 30, 35));
-	categories.push_back(new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle", 10, 15));
-	categories.push_back(new CategoryModel(TRUCK_CATEGORYMODEL_ID, "Truck", 10, 15));
-	categories.push_back(new CategoryModel(BUS_CATEGORYMODEL_ID, "Bus", 10, 15));
+	string s_exe(buffer);
+
+	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
+
+	if ( rc == SQLITE_OK )
+	{
+		for (int i=1; i <= nrow; i++)
+		{
+			// int cid, string label, int questionnaireNo, int amountOfTestQuestions, int time, string image
+			categories.push_back(new CategoryModel(atoi(result[ncol*i+0]),string(result[ncol*i+1]), atoi(result[ncol*i+2]),atoi(result[ncol*i+3]), atoi(result[ncol*i+4]), string(result[ncol*i+5])));
+			cout << "result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
+		}
+		sqlite3_free_table(result);
+			//languages.push_back(new LanguageModel(atoi(result[nrow*i+1])));
+	}else{
+		throw DBError(string(sqlite3_errmsg(db)),s_exe);
+		sqlite3_free_table(result);
+	}
 	return categories;
+
 }
 
 CategoryModel* getCategory(int cid) {
@@ -284,6 +309,7 @@ vector<int> *testTemplate ( int category, int language ) {
   }
 
   TestModel* getTest(int catid,int langid) {
+	  default_locale_id_ = langid;
 	  vector<int> *v = testTemplate(catid,langid);
 	  int *array = createRandomTestFromTemplate(catid, v);
 	  //getQuestions(catid, array);

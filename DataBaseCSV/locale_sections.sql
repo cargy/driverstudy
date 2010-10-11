@@ -15,6 +15,7 @@ CREATE UNIQUE INDEX section_locale_unique ON SectionLocale ( sectionID, localeID
 CREATE TABLE Category(
 	id INTEGER PRIMARY KEY,
 	questionnaireNo INTEGER,
+	testQuestionsAmount INTEGER,
 	time INTEGER,
 	image TEXT);
 
@@ -38,10 +39,10 @@ CREATE TABLE LocaleLocale(
 
 CREATE UNIQUE INDEX locale_locale_unique ON LocaleLocale ( localeNameID, localeID );
 
-INSERT INTO Category Values ( 1, 1, 35, '');
-INSERT INTO Category Values ( 2, 2, 15, '');
-INSERT INTO Category Values ( 3, 3, 15, '');
-INSERT INTO Category Values ( 4, 4, 15, '');
+INSERT INTO Category Values ( 1, 1, 30, 35, '');
+INSERT INTO Category Values ( 2, 2, 10, 15, '');
+INSERT INTO Category Values ( 3, 3, 10, 15, '');
+INSERT INTO Category Values ( 4, 4, 10, 15, '');
 
 INSERT INTO CategoryLocale VALUES ( 1, 1, 'Αυτοκίνητο', '');
 INSERT INTO CategoryLocale VALUES ( 2, 1, 'Μοτοσυκλέτα', '');
@@ -51,6 +52,14 @@ INSERT INTO CategoryLocale VALUES ( 1, 2, 'Car', '');
 INSERT INTO CategoryLocale VALUES ( 2, 2, 'Motorcycle', '');
 INSERT INTO CategoryLocale VALUES ( 3, 2, 'Truck', '');
 INSERT INTO CategoryLocale VALUES ( 4, 2, 'Bus', '');
+INSERT INTO CategoryLocale VALUES ( 1, 3, 'машина', '');
+INSERT INTO CategoryLocale VALUES ( 2, 3, 'мотоцикл', '');
+INSERT INTO CategoryLocale VALUES ( 3, 3, 'грузовик', '');
+INSERT INTO CategoryLocale VALUES ( 4, 3, 'автобус', '');
+INSERT INTO CategoryLocale VALUES ( 1, 4, 'kerr', '');
+INSERT INTO CategoryLocale VALUES ( 2, 4, 'motoçikletë', '');
+INSERT INTO CategoryLocale VALUES ( 3, 4, 'kamion', '');
+INSERT INTO CategoryLocale VALUES ( 4, 4, 'autobus', '');
 
 INSERT INTO Locale Values ( 1, 'el-GR', 'el'); 
 INSERT INTO Locale Values ( 2, 'en-US', 'en' ); 

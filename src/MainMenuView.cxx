@@ -58,10 +58,10 @@ MainMenuView::~MainMenuView() {
 TestPropertiesModel* MainMenuView::model() { return ((TestPropertiesModel*)pModel); }
 
 void MainMenuView::attach() {
-	getFacade()->attachModel(11,new CategoryModel(CAR_CATEGORYMODEL_ID, "Car",30, 35));
-	getFacade()->attachModel(12,new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle",10, 15));
-	getFacade()->attachModel(13,new CategoryModel(TRUCK_CATEGORYMODEL_ID, "Truck",10, 15));
-	getFacade()->attachModel(14,new CategoryModel(BUS_CATEGORYMODEL_ID, "Bus", 10, 15));
+	getFacade()->attachModel(11,new CategoryModel(CAR_CATEGORYMODEL_ID, "Car",1, 30, 35, ""));
+	getFacade()->attachModel(12,new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle",2 ,10, 15,""));
+	getFacade()->attachModel(13,new CategoryModel(TRUCK_CATEGORYMODEL_ID, "Truck",3,10, 15,""));
+	getFacade()->attachModel(14,new CategoryModel(BUS_CATEGORYMODEL_ID, "Bus",4, 10, 15,""));
 
 	getFacade()->getModel(11)->setView(&carBtn);
 	getFacade()->getModel(12)->setView(&motorcycleBtn);
