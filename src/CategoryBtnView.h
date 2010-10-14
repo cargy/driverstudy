@@ -19,7 +19,7 @@ public:
 	CategoryBtnView(int x, int y, int w, int h, const char* l);
 	virtual ~CategoryBtnView();
 	int getCID();
-	virtual void attach();
+	virtual void modelAttached();
 };
 
 #endif /* CATEGORYBTNVIEW_H_ */

@@ -6,10 +6,12 @@
  */
 
 #include "CategoryBtnView.h"
+#include "CategoryModel.h"
 #include <fltk/Image.h>
 #include <fltk/SharedImage.h>
 
 using namespace fltk;
+using namespace std;
 
 CategoryBtnView::CategoryBtnView(int x, int y, int w, int h, const char* l):
 Button(x, y, w, h, l),
@@ -22,8 +24,12 @@ CategoryBtnView::~CategoryBtnView() {
 	// TODO Auto-generated destructor stub
 }
 
-void CategoryBtnView::attach() {
-	image( fltk::SharedImage::get("icons/motorcycle_256x182.png") );
+void CategoryBtnView::modelAttached()
+{
+	CategoryModel* category = ((CategoryModel*)pModel);
+
+	copy_label(category->getLabel().c_str());
+	image ( fltk::SharedImage::get(category->getImagePath().c_str()));
 }
 
 int CategoryBtnView::getCID() { return cid_; }

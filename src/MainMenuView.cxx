@@ -35,20 +35,9 @@ busBtn(category.x()+15+w/4*3, y + 100, 130, 120, "Bus")
 
 	fltk::register_images();
 	motorcycleBtn.callback(cb_categoryBtn, this);
-	motorcycleBtn.image( fltk::SharedImage::get("icons/motorcycle_256x182.png") );
-	motorcycleBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
 	carBtn.callback(cb_categoryBtn, this);
-	carBtn.image( fltk::SharedImage::get("icons/car_256x182.png") );
-	carBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
-
 	truckBtn.callback(cb_categoryBtn, this);
-	truckBtn.image( fltk::SharedImage::get("icons/truck_256x182.png") );
-	truckBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
-
 	busBtn.callback(cb_categoryBtn, this);
-	busBtn.image( fltk::SharedImage::get("icons/bus_256x182.png") );
-	busBtn.align((fltk::RESIZE_FIT | fltk::ALIGN_INSIDE));
-
 }
 
 MainMenuView::~MainMenuView() {
@@ -58,10 +47,10 @@ MainMenuView::~MainMenuView() {
 TestPropertiesModel* MainMenuView::model() { return ((TestPropertiesModel*)pModel); }
 
 void MainMenuView::attach() {
-	getFacade()->attachModel(11,new CategoryModel(CAR_CATEGORYMODEL_ID, "Car",1, 30, 35, ""));
-	getFacade()->attachModel(12,new CategoryModel(MOTORCYCLE_CATEGORYMODEL_ID, "Motorcycle",2 ,10, 15,""));
-	getFacade()->attachModel(13,new CategoryModel(TRUCK_CATEGORYMODEL_ID, "Truck",3,10, 15,""));
-	getFacade()->attachModel(14,new CategoryModel(BUS_CATEGORYMODEL_ID, "Bus",4, 10, 15,""));
+	getFacade()->attachModel(11,AppModel::getInstance()->getDB()->getCategory(CAR_CATEGORYMODEL_ID));
+	getFacade()->attachModel(12,AppModel::getInstance()->getDB()->getCategory(MOTORCYCLE_CATEGORYMODEL_ID));
+	getFacade()->attachModel(13,AppModel::getInstance()->getDB()->getCategory(TRUCK_CATEGORYMODEL_ID));
+	getFacade()->attachModel(14,AppModel::getInstance()->getDB()->getCategory(BUS_CATEGORYMODEL_ID));
 
 	getFacade()->getModel(11)->setView(&carBtn);
 	getFacade()->getModel(12)->setView(&motorcycleBtn);

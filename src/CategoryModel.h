@@ -39,6 +39,7 @@ public:
 	std::string getLabel();
 	void setImage(std::string image);
 	std::string getImage();
+	std::string getImagePath();
 };
 
 #endif /* CATEGORYMODEL_H_ */

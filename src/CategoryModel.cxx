@@ -7,6 +7,7 @@
 
 #include "CategoryModel.h"
 #include "config.h"
+#include <sstream>
 
 using namespace std;
 
@@ -36,4 +37,9 @@ void CategoryModel::setQuestionnaireNo(int questionnaireNo) { questionnaireNo_ =
 int CategoryModel::getQuestionnaireNo() { return questionnaireNo_; }
 void CategoryModel::setImage(string image) { image_ = image; }
 string CategoryModel::getImage() { return image_; }
-
+string CategoryModel::getImagePath()
+{
+	stringstream imagePath;
+	imagePath << "icons/" << image_;
+	return imagePath.str();
+}

@@ -39,10 +39,10 @@ CREATE TABLE LocaleLocale(
 
 CREATE UNIQUE INDEX locale_locale_unique ON LocaleLocale ( localeNameID, localeID );
 
-INSERT INTO Category Values ( 1, 1, 30, 35, '');
-INSERT INTO Category Values ( 2, 2, 10, 15, '');
-INSERT INTO Category Values ( 3, 3, 10, 15, '');
-INSERT INTO Category Values ( 4, 4, 10, 15, '');
+INSERT INTO Category Values ( 1, 1, 30, 35, 'car_256x182.png');
+INSERT INTO Category Values ( 2, 2, 10, 15, 'motorcycle_256x182.png');
+INSERT INTO Category Values ( 3, 3, 10, 15, 'truck_256x182.png');
+INSERT INTO Category Values ( 4, 4, 10, 15, 'bus_256x182.png');
 
 INSERT INTO CategoryLocale VALUES ( 1, 1, 'Αυτοκίνητο', '');
 INSERT INTO CategoryLocale VALUES ( 2, 1, 'Μοτοσυκλέτα', '');
