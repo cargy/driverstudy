@@ -52,5 +52,5 @@ inline void LanguageSelectView::cb_languageSelected_i(PopupMenu* menu) {
 	LanguageModel* lang = ((LanguageModel*)item->user_data());
 	model()->setLanguage(lang);
 	selected_ = (Item*)item;
-	menu->label(lang->getLabel().c_str());
+	menu->copy_label(lang->getLabel().c_str());
 }

@@ -111,7 +111,8 @@ public:
 
   int random_range(int lowest=1, int highest=10 )
   {
-	  srand(time(NULL));
+	  // vcnet doesn't get it: error C3861 'time': identifier found
+	  //srand(time(NULL));
 	  int random_integer;
 	 // int range=(highest-lowest)+1;
 	  
