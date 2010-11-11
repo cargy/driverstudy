@@ -1,4 +1,5 @@
-FLTK2CONFIG=fltk2-config
+FLTK2CONFIG=/home/argy/usr/local/bin/fltk2-config
+FLTK2CONFIGW32=/home/argy/usr/w32/bin/fltk2-config
 
 # flags for compiler:
 CFLAGS   = -Wall -O3 -I. $(shell $(FLTK2CONFIG) --cflags) -DFLTK2
@@ -40,11 +41,13 @@ CXXSOURCES = \
 	LanguageSelectView.cxx ToolbarView.cxx AppView.cxx ContainerView.cxx CategoryBtnView.cxx MainMenuView.cxx TestView.cxx QuestionView.cxx AnswersView.cxx TestResultsView.cxx \
 	TimerProgressBar.cxx \
 	mvmain.cxx
-	
-CXXOBJECTS = $(CXXSOURCES:.cxx=.o)  # expands to list of object files
+
+OBJDIR	   = Debug
+CXXOBJECTS = $(CXXSOURCES:%.cxx=$(OBJDIR)/%.o)  # expands to list of object files
+
 
 # Rule to build an object file from a C++ source file
-%.o : %.cxx
+$(OBJDIR)/%.o : %.cxx
 	@echo Compile $@...
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 	
@@ -56,7 +59,7 @@ all: $(EXEC)
 $(EXEC): $(CXXOBJECTS)
 	@echo === Linking $@... ===
 	$(CXX) $(CXXOBJECTS) \
-	$(IMGLIB) $(LDLIBS) -lsqlite3 -laudiere -o ../build/$(EXEC)	
+	$(IMGLIB) $(LDLIBS) -lsqlite3 -o ../build/$(EXEC)	
 	@echo compiled version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
@@ -75,15 +78,12 @@ driverstudy.exe: driver_res.o
 	@echo === Compiling $@... ===
 	i586-mingw32msvc-g++ -static -O2 -Wall $(CXXSOURCES) driver_res.o \
 	-o ../build/DriverStudy.exe \
-	-L/home/krizz/src/cross_win32/lib \
-	-laudiere -ldsound -lole32 -lrpcrt4 -lspeex -lwinmm -lvorbisfile -lvorbis -logg -lpthread -lws2_32 \
-	-I/home/krizz/src/cross_win32/include -DPTW32_STATIC_LIB=1 -D_WIN32_WINNT=0x0501 \
-	`/home/krizz/src/cross_win32/bin/fltk2-config --cxxflags` \
-	`/home/krizz/src/cross_win32/bin/fltk2-config --libs --use-images --ldstaticflags` \
+	-L/home/argy/usr/w32/lib -lws2_32 \
+	-I/home/argy/usr/w32/include -DPTW32_STATIC_LIB=1 -D_WIN32_WINNT=0x0501 \
+	`$(FLTK2CONFIGW32) --cxxflags` \
+	`$(FLTK2CONFIGW32) --libs --use-images --ldstaticflags` \
 	-lgdi32 -lws2_32 -lole32 -luuid -lmsimg32 -mwindows -lgdi32  \
-	-I/home/krizz/src/cross_win32/include -I./ \
-	/home/krizz/src/cross_win32/lib/libintl.a  \
-	/home/krizz/src/cross_win32/lib/libsqlite3.a 
+	-I/home/argy/usr/w32/include -I./ /home/argy/usr/w32/lib/libsqlite3.a 
 	@echo build version:$(VERSION)
 	#@echo Strip $@...
 	#$(STRIP) ../build/$@
@@ -95,7 +95,7 @@ strip-w32: driverstudy.exe
 
 clean:
 	@echo Cleaning object and executable files...
-	rm -f *.o
+	rm -f $(OBJDIR)/*.o
 	rm -f ../build/driverstudy
 	rm -f ../build/DriverStudy.exe
 	

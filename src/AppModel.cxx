@@ -105,6 +105,7 @@ void AppModel::runTest() {
 	}
 
 	currentTest = db->getTest(category->getCID(),language->getLID());
+	db->getCategorySections(category->getCID());
 	getFacade()->attachModel(TESTMODEL_ID, currentTest);
 	getFacade()->setViewToModel(TESTMODEL_ID, TESTVIEW_ID);
 	getFacade()->setViewToModel(TESTMODEL_ID, QUESTIONVIEW_ID);
