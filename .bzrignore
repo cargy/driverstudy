@@ -5,3 +5,7 @@ build/MainMenu.exe
 build/DriverStudy.exe
 build/driverstudy
 DriverStudy.geany
+vcnet/Debug
+vcnet/Release
+vcnet/*.user
+vcnet/*.ncb

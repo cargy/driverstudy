@@ -79,7 +79,7 @@ void QuestionView::update() {
 			setTestMode();
 	}
 	setQuestionNumber(model()->cursor(), model()->size());
-	setQuestion(model()->question()->title());
+	setQuestion(model()->question()->title().c_str());
 
 	// handle validateBtn
 	if (model()->question()->getSelectedAnswer() == -1 )
@@ -102,7 +102,7 @@ void QuestionView::setQuestionNumber(int qNo, int size) {
 	questionGroup.redraw_label();
 }
 void QuestionView::setQuestion(const char* q) {
-	questionHolder.label(q);
+	questionHolder.copy_label(q);
 	questionHolder.redraw_label();
 }
 
@@ -112,17 +112,19 @@ void QuestionView::setAnswers(QuestionModel* pQuestion) {
 	answerGroup.update();
 	for (int i=0; i<answerGroup.size; i++)
 	{
-		answerGroup.answerBtn[i]->label(pQuestion->getAnswer(i));
+		answerGroup.answerBtn[i]->copy_label(pQuestion->getAnswer(i).c_str());
 	}
 
 }
 
 void QuestionView::setQuestionImage(QuestionModel* pQuestion) {
 	// load question image if available
-	if ( strcmp(pQuestion->image(), "0") != 0 )
+	if ( pQuestion->image().compare("0") != 0 )
 	{
-		char imgPath[MAXIMGFILESIZE];
-		sprintf(imgPath, "img/%s.jpg",pQuestion->image());
+		//char imgPath[MAXIMGFILESIZE];
+		//sprintf(imgPath, "img/%s.jpg",pQuestion->image());
+		string imgPath ("img/");
+		imgPath += pQuestion->image() + ".jpg";
 
 		int i = -1;
 		// make imgPath lowercase
@@ -131,7 +133,7 @@ void QuestionView::setQuestionImage(QuestionModel* pQuestion) {
 		printf("imgPath = %s\n",imgPath);
 	#endif
 		if ( !imageHolder.visible() ) imageHolder.show();
-		imageHolder.image( fltk::SharedImage::get(imgPath) );
+		imageHolder.image( fltk::SharedImage::get(imgPath.c_str()) );
 		imageHolder.redraw();
 	}
 	else

@@ -41,7 +41,8 @@ void AnswersView::update()
 
 	for (int i=0; i<size; i++)
 	{
-		answerBtn[i] = new RadioButton(5,rb_y,w()-space,rb_height,model()->question()->getAnswer(i));
+		answerBtn[i] = new RadioButton(5,rb_y,w()-space,rb_height,"");
+		answerBtn[i]->copy_label(model()->question()->getAnswer(i).c_str());
 		answerBtn[i]->buttonbox(fltk::RSHADOW_BOX);
 		answerBtn[i]->labelsize(16);
 		answerBtn[i]->textsize(16);

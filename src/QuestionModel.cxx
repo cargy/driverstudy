@@ -28,6 +28,8 @@
 
 #endif /* DEBUG */
 #include <iostream>
+#include <string>
+using namespace std;
 
 QuestionModel::QuestionModel():
 Model()
@@ -37,20 +39,13 @@ Model()
 	std::cout << __LINE__ << ":QuestionModel1 constructed:" << this << std::endl;
 }
 
-QuestionModel::QuestionModel(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook,Answer *xferAnswers, unsigned int aoa):
+QuestionModel::QuestionModel(string pQuestion, string pImgFile, string pSndFile,string pBook,Answer *xferAnswers, unsigned int aoa):
 Model()
 {
-	strncpy(question, pQuestion, MAXQUESTIONSIZE);
-	question[MAXQUESTIONSIZE - 1] = '\0';
-
-	strncpy(imgFile, pImgFile, MAXIMGFILESIZE);
-	imgFile[MAXIMGFILESIZE - 1] = '\0';
-	
-	strncpy(sndFile, pSndFile, MAXSNDFILESIZE);
-	sndFile[MAXSNDFILESIZE - 1] = '\0';	
-			
-	strncpy(book, pBook, 128);
-	book[128 - 1] = '\0';	
+	question = pQuestion;
+	imgFile = pImgFile;
+	sndFile = pSndFile;			
+	book = pBook;
 			
 	qAnswers = xferAnswers;
 	selectedAnswer = -1;
@@ -69,15 +64,15 @@ void QuestionModel::selectAnswer(int selected) {
 	selectedAnswer = selected;
 }		
 	
-const char* QuestionModel::title() {	return question;}
+string QuestionModel::title() {	return question;}
 
-const char* QuestionModel::image() {	return imgFile; }
+string QuestionModel::image() {	return imgFile; }
 
-const char* QuestionModel::sound() {	return sndFile; }
+string QuestionModel::sound() {	return sndFile; }
 
-const char* QuestionModel::getBookSection(){	return book;}
+string QuestionModel::getBookSection(){	return book;}
 
-const char* QuestionModel::getAnswer(unsigned int i)
+string QuestionModel::getAnswer(unsigned int i)
 {
 	#ifdef DEBUG
 	assert(i<amountOfAnswers);
@@ -85,7 +80,7 @@ const char* QuestionModel::getAnswer(unsigned int i)
 	return qAnswers[i].text();
 }
 
-const char* QuestionModel::answerSound(unsigned int i)
+string QuestionModel::answerSound(unsigned int i)
 {
 	#ifdef DEBUG
 	assert(i<amountOfAnswers);

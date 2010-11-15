@@ -112,7 +112,6 @@ public:
 
   int random_range(int lowest=1, int highest=10 )
   {
-
 	  int random_integer = (rand()%highest)+lowest;
 	  cout << "low=" << lowest << " high=" <<highest<< " : " << random_integer << endl;
 	  return random_integer;

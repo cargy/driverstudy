@@ -21,27 +21,27 @@
 #ifndef ANSWER_H
 #define ANSWER_H
 #include "config.h"
-#include <cstring>
+#include <string>
 
 class Answer
 {
 	public:
 		Answer();
-		Answer(const char* pText, bool xferCorrect, const char* pSndFile, int xferOrder=-1);
+		Answer(std::string pText, bool xferCorrect, std::string pSndFile, int xferOrder=-1);
 		void select();
 		void deselect();
 		bool isCorrect();
 		bool isSelected();
-		const char* text();
-		const char* soundFile();
+		std::string text();
+		std::string soundFile();
 		int order();
 			
 	private:
-		char answer[MAXANSWERSIZE];
+		std::string answer;
 		bool correct;
 		bool selected;
 		int porder;
-		char sndFile[MAXSNDFILESIZE];
+		std::string sndFile;
 
 };
 

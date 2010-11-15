@@ -112,7 +112,7 @@ void TimerProgressBar::draw() {
   if (mPresent > mMax) mPresent = mMax;
   if (mPresent < mMin) mPresent = mMin;
   double pct = mMax != mMin ? (mPresent - mMin) / (mMax - mMin) : 0;
-  int dtime = mPresent;
+  int dtime = (int)mPresent;
   
   int hour,min,sec;
 
