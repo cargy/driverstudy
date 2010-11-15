@@ -30,7 +30,7 @@ class TestModel: public Model
 {
 public:
 		TestModel(QuestionModel *xferQuestions, int aoq, CategoryModel* tcategory);
-		~TestModel();
+		virtual ~TestModel();
 		void loadTest(TestModel* pTestModel);
 		void selectAnswerOfCurrentQuestion(int a);
 		void verifyAnswerOfCurrentQuestion();

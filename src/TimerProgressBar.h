@@ -40,7 +40,7 @@ class TimerProgressBar: public fltk::ProgressBar
 		void stoptime(int stime) { mMin = (double)stime; }
 		void settime(int stime) { mPresent = (double)stime; redraw();}
 		int gettime() { return (int)mPresent; }
-		int starttime() { return mMax; }
+		int starttime() { return (int)mMax; }
 		void warningtime(int stime) { mWarning = stime; }
 		void start();
 		void stop();

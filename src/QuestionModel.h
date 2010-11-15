@@ -24,20 +24,21 @@
 #include "config.h"
 #include "MV.h"
 #include "answer.h"
+#include <string>
 
 class QuestionModel: public Model
 {
 	public:
 		QuestionModel();
-		QuestionModel(const char* pQuestion, const char* pImgFile, const char* pSndFile,const char* pBook, Answer *xferAnswers, unsigned int aoa);
+		QuestionModel(std::string pQuestion, std::string pImgFile, std::string pSndFile,std::string pBook, Answer *xferAnswers, unsigned int aoa);
 		bool isCorrect();
 		void selectAnswer(int selected);
-		const char *title();
-		const char *image();
-		const char *sound();
-		const char *getBookSection();
-		const char *getAnswer(unsigned int i);
-		const char *answerSound(unsigned int i);
+		std::string title();
+		std::string image();
+		std::string sound();
+		std::string getBookSection();
+		std::string getAnswer(unsigned int i);
+		std::string answerSound(unsigned int i);
 		unsigned int getAOA();
 		int getSelectedAnswer();
 		int getCorrectAnswer();
@@ -50,13 +51,13 @@ class QuestionModel: public Model
 			
 	private:
 		int dbId;
-		char question[MAXQUESTIONSIZE];
+		std::string question;
 		unsigned int amountOfAnswers;
 		int selectedAnswer;
 		Answer *qAnswers;
-		char imgFile[MAXIMGFILESIZE];
-		char sndFile[MAXSNDFILESIZE];
-		char book[128];
+		std::string imgFile;
+		std::string sndFile;
+		std::string book;
 		bool verified;
 
 };

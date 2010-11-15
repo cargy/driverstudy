@@ -19,23 +19,22 @@
 
 
 #include "answer.h"
+using namespace std;
 
 
 Answer::Answer()
 {
-	strncpy(answer, "", MAXANSWERSIZE);
+	answer = "";
 	correct = false;
 	selected = false;
 	porder = -1;
 }
 
-Answer::Answer(const char* pText, bool xferCorrect, const char* pSndFile, int xferOrder)
+Answer::Answer(string pText, bool xferCorrect, string pSndFile, int xferOrder)
 {
-	strncpy(answer, pText, MAXANSWERSIZE);
-	answer[MAXANSWERSIZE - 1] = '\0';
+	answer = pText;
 	correct = xferCorrect;
-	strncpy(sndFile, pSndFile, MAXSNDFILESIZE);
-	sndFile[MAXSNDFILESIZE - 1] = '\0';			
+	sndFile = pSndFile;		
 	selected = false;
 	porder = xferOrder;
 }
@@ -44,6 +43,6 @@ void Answer::select(){selected = true;}
 void Answer::deselect(){selected = false;}
 bool Answer::isCorrect(){return correct;}
 bool Answer::isSelected(){return selected;}
-const char* Answer::text(){return answer;}
-const char* Answer::soundFile(){return sndFile;}
+string Answer::text(){return answer;}
+string Answer::soundFile(){return sndFile;}
 int Answer::order(){return porder;}

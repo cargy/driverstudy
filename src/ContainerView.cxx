@@ -18,7 +18,7 @@ value_(0)
 {
 	transitioning_ = false;
 	interval_ = 0.01f;
-	step_ = w / STEP_FACTOR;
+	step_ = (float)w / (float)STEP_FACTOR;
 	box(THIN_UP_BOX);
 	end();
 
@@ -144,9 +144,9 @@ void ContainerView::move_left() {
 
 		// fix step_
 		if (prev_->x()-step_ < -prev_->w())
-			step_ =  prev_->r();
+			step_ =  (float)prev_->r();
 
-		prev_->x(prev_->x()-step_);
+		prev_->x((int)(prev_->x()-step_));
 		next_->x(prev_->r());
 		if (!next_->visible()) next_->show();
 		redraw();
@@ -173,10 +173,10 @@ void ContainerView::move_right() {
 		}
 
 		// fix step
-		if ( prev_->x()+step_ > prev_->parent()->w())
-			step_ = prev_->parent()->w() - prev_->x();
+		if ( prev_->x()+step_ > (float)(prev_->parent()->w()))
+			step_ = (float)(prev_->parent()->w() - prev_->x());
 
-		prev_->x(prev_->x()+step_);
+		prev_->x((int)(prev_->x()+step_));
 		next_->x(prev_->x() - next_->w());
 		if (!next_->visible()) next_->show();
 		redraw();
@@ -212,7 +212,7 @@ void ContainerView::slide(Widget *kid) {
   next_ = kid;
   prev_->deactivate();
   next_->deactivate();
-  step_ = w() / STEP_FACTOR;
+  step_ = (float)w() / (float)STEP_FACTOR;
   if ((num_kids = children()) == 0)  return;
 
   if (kid == value_ )
