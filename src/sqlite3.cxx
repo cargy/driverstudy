@@ -32,6 +32,7 @@
 #include "CategoryModel.h"
 #include "SectionModel.h"
 #include "LanguageModel.h"
+#include <time.h>
 
 using namespace std;
 
@@ -78,7 +79,7 @@ class DBError: public exception {
 
 };
 
-	
+
 
 class SQLITE3 {
 private:
@@ -111,22 +112,15 @@ public:
 
   int random_range(int lowest=1, int highest=10 )
   {
-	  // vcnet doesn't get it: error C3861 'time': identifier found
-	  //srand(time(NULL));
-	  int random_integer;
-	 // int range=(highest-lowest)+1;
-	  
-	 // for(int index=0; index<20; index++){
-		  //random_integer = lowest+int(range*rand()/(RAND_MAX + 1.0));
-		  random_integer = (rand()%highest)+lowest;
-		  //cout << "low=" << lowest << " high=" <<highest<< " : " << random_integer << endl;
-		  return random_integer;
-		//}
+	  int random_integer = (rand()%highest)+lowest;
+	  cout << "low=" << lowest << " high=" <<highest<< " : " << random_integer << endl;
+	  return random_integer;
 	}
   
 int *createRandomTestFromTemplate ( int cid, vector<int> *v) {
 	int qNo = getCategory(cid)->getAmountOfTestQuestions();
 	int *array = new int[qNo];
+	srand((unsigned int)time(NULL));
 	for (int i=0;i<qNo;i++) {
 		array[i] = v[i].at(random_range(0,v[i].size()));
 	}

@@ -166,8 +166,8 @@ QuestionModel* TestModel::firstWrong()
 }
 
 CategoryModel* TestModel::getCategory() { return testCategory; }
-int TestModel::time() { return testTime;};
-int TestModel::category_id() {return testCategory->getCID();};
+int TestModel::time() { return testTime;}
+int TestModel::category_id() {return testCategory->getCID();}
 
 #ifdef DEBUG
 #include <cstdio>
