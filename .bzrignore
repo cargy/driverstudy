@@ -9,3 +9,4 @@ vcnet/Debug
 vcnet/Release
 vcnet/*.user
 vcnet/*.ncb
+vcnet/*.suo
