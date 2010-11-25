@@ -6,6 +6,7 @@
  */
 
 #include "AppModel.h"
+#include "log.h"
 #include "config.h"
 #include <cstdio>
 #include <cstring>
@@ -84,7 +85,7 @@ void AppModel::quit() {
 	else
 	{
 		dynamic_cast<fltk::Window*>(getFacade()->getView(APPVIEW_ID))->hide();
-		std::cout << "Good bye!" << std::endl;
+		FILE_LOG(logINFO) << "Logging Ended.";
 	}
 }
 
@@ -99,7 +100,7 @@ void AppModel::runTest() {
 	}
 	catch (exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		FILE_LOG(logWARNING) << e.what();
 		fltk::message(e.what());
 		return;
 	}

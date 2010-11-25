@@ -17,7 +17,7 @@
 //      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //      MA 02110-1301, USA.
 
-
+#include "log.h"
 #include <cstdlib>
 #include <cassert>
 #include <iostream>
@@ -113,7 +113,7 @@ public:
   int random_range(int lowest=1, int highest=10 )
   {
 	  int random_integer = (rand()%highest)+lowest;
-	  cout << "low=" << lowest << " high=" <<highest<< " : " << random_integer << endl;
+	  FILE_LOG(logDEBUG3) << "low=" << lowest << " high=" <<highest<< " : " << random_integer;
 	  return random_integer;
 	}
   
@@ -133,6 +133,7 @@ int getTestTemplateNOQ (int category, int language) {
 	int qNo = -1;
 	sprintf(buffer,"Select COUNT(DISTINCT(Qpag)) FROM Quest, Numbs WHERE KCod = %d and PCod = Qpag and KCod = QKateg and qlang = %d order by qpag;",category,language);
 	string s_exe(buffer);
+	FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 
 	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 	qNo = atoi(result[1]);
@@ -148,6 +149,7 @@ int getTestTime (int category) {
 	int tTime = 0;
 	sprintf(buffer,"Select KTime FROM Kateg WHERE KCod = %d ;",category);
 	string s_exe(buffer);
+	FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 
 	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 	tTime = atoi(result[1]);
@@ -167,6 +169,7 @@ vector<CategoryModel*> getAllCategories() {
 
 	vector<CategoryModel*> categories;
 	string s_exe(buffer);
+	FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 
 	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 
@@ -176,7 +179,7 @@ vector<CategoryModel*> getAllCategories() {
 		{
 			// int cid, string label, int questionnaireNo, int amountOfTestQuestions, int time, string image
 			categories.push_back(new CategoryModel(atoi(result[ncol*i+0]),string(result[ncol*i+1]), atoi(result[ncol*i+2]),atoi(result[ncol*i+3]), atoi(result[ncol*i+4]), string(result[ncol*i+5])));
-			cout << "result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
+			FILE_LOG(logDEBUG3) << "sqlite3::getAllCategories():" << __LINE__ << ": result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
 		}
 		sqlite3_free_table(result);
 	}else{
@@ -209,6 +212,7 @@ vector<SectionModel*> getCategorySections(int category_id) {
 	CategoryModel* category;
 	category = getCategory(category_id);
 	string s_exe(buffer);
+	FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 
 	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 
@@ -218,7 +222,7 @@ vector<SectionModel*> getCategorySections(int category_id) {
 		{
 			// int cid, string label, int questionnaireNo, int amountOfTestQuestions, int time, string image
 			sections.push_back(new SectionModel(atoi(result[ncol*i+0]),category, string(result[ncol*i+2]),string(result[ncol*i+3])));
-			cout << "result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
+			FILE_LOG(logDEBUG3) << "sqlite3::getCategorySections():" << __LINE__  << ": result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
 		}
 		sqlite3_free_table(result);
 	}else{
@@ -239,7 +243,7 @@ vector<LanguageModel*> getAllLanguages()
 
 	vector<LanguageModel*> languages;
 	string s_exe(buffer);
-
+	FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 	rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 
 	if ( rc == SQLITE_OK )
@@ -247,7 +251,7 @@ vector<LanguageModel*> getAllLanguages()
 		for (int i=1; i <= nrow; i++)
 		{
 			languages.push_back(new LanguageModel(atoi(result[ncol*i+0]),string(result[ncol*i+1]), string(result[ncol*i+2]),string(result[ncol*i+3])));
-			cout << "result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
+			FILE_LOG(logDEBUG3) << "sqlite3::getAllLanguages():" << __LINE__  << ": result[]:" << result[ncol*i+0] << "|" <<  result[ncol*i+1] << "|" << result[ncol*i+2] << "|" << result[ncol*i+2] << endl;
 		}
 		sqlite3_free_table(result);
 			//languages.push_back(new LanguageModel(atoi(result[nrow*i+1])));
@@ -264,7 +268,7 @@ vector<int> availableLanguages (int category) {
 	char buffer[1024];
 	sprintf(buffer,"SELECT DISTINCT(qlang) FROM Quest WHERE QKateg = %d ;",category);
 	string s_exe(buffer);
-	
+	FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 	
 	if( rc == SQLITE_OK )
 	{
@@ -298,7 +302,7 @@ vector<int> *testTemplate ( int category, int language ) {
 			  "ORDER BY qpag;",
 			  category,language);
 	  string s_exe(buffer);
-
+	  FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 	  rc = sqlite3_get_table(db,s_exe.c_str(),&result,&nrow,&ncol,&zErrMsg);
 
 	  if( rc == SQLITE_OK )
@@ -310,11 +314,7 @@ vector<int> *testTemplate ( int category, int language ) {
 		 
 		 sqlite3_free_table(result);
 		 return v;
-		 
-		 for(int i=0; i < qNo;i++) {
-			 cout << endl << "v[" << i << "]=";
-			 copy(v[i].begin(),v[i].end(),ostream_iterator<int>(cout,","));
-		 }		 
+
 	  } else { throw DBError(sqlite3_errmsg(db),s_exe.c_str()); }
 	  
 	  
@@ -352,7 +352,7 @@ vector<int> *testTemplate ( int category, int language ) {
 			  "ORDER BY RANDOM();",
 			  qid);
 	  string s_exe(buffer);
-	  
+	  FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
       rc = sqlite3_get_table(
 			db,              /* An open database */
 			s_exe.c_str(),       /* SQL to be executed */
@@ -405,10 +405,8 @@ vector<int> *testTemplate ( int category, int language ) {
 
 	  ss << " ORDER BY RANDOM();";
 
-	  cout << ss.str() << endl;
-
 	  string s_exe(ss.str());
-
+	  FILE_LOG(logDEBUG1) << __FUNCTION__<<":" << __FILE__ << ":"<<  __LINE__ <<" Query: " << s_exe;
 
       rc = sqlite3_get_table(
 			db,              /* An open database */

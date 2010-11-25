@@ -79,7 +79,7 @@ void AppView::modelAttached()
 {
 
 	model()->setView(container);
-	std::cout << "Attach TestProperties to LanguageBar" << std::endl;
+	FILE_LOG(logDEBUG4) << "Attach TestProperties to LanguageBar" << std::endl;
 	model()->getTestProperties()->setView(&toolbar->languageMenu);
 }
 

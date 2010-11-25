@@ -20,7 +20,7 @@
 
 #include "QuestionModel.h"
 
-
+#include "log.h"
 #ifdef DEBUG
 #include <cstdlib>
 #include <iostream>
@@ -36,7 +36,7 @@ Model()
 {
 	amountOfAnswers = 0;
 	selectedAnswer = -1;
-	std::cout << __LINE__ << ":QuestionModel1 constructed:" << this << std::endl;
+	FILE_LOG(logDEBUG4) << __LINE__ << ":QuestionModel1 constructed:" << this;
 }
 
 QuestionModel::QuestionModel(string pQuestion, string pImgFile, string pSndFile,string pBook,Answer *xferAnswers, unsigned int aoa):
@@ -51,7 +51,7 @@ Model()
 	selectedAnswer = -1;
 	amountOfAnswers = aoa;
 	verified = false;
-	std::cout << "QuestionModel constructed:" << this << std::endl;
+	FILE_LOG(logDEBUG4) << "QuestionModel constructed:" << this;
 }
 
 bool QuestionModel::isCorrect() {

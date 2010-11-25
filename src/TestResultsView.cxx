@@ -64,7 +64,7 @@ void TestResultsView::update()
 		msg << "Passed";
 	msg << "\nWrong: " << model()->getWrong() << "/" << (model()->getCorrect() + model()->getWrong());
 	result.copy_label(msg.str().c_str());
-	std::cout << msg.str() << std::endl;
+	FILE_LOG(logDEBUG2) << msg.str() << std::endl;
 }
 
 

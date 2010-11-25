@@ -7,6 +7,7 @@
 
 #include "MainMenuView.h"
 #include "AppModel.h"
+#include "log.h"
 #include <fltk/Image.h>
 #include <fltk/SharedImage.h>
 
@@ -62,12 +63,11 @@ void MainMenuView::cb_categoryBtn(Widget* v, void *) { // static method
   ((MainMenuView*)(v->parent()))->cb_categoryBtn_i((Button*)v);
 }
 
-#include <cstdio>
 
 void MainMenuView::cb_categoryBtn_i(Button* btn) {
 		CategoryModel* pCM = dynamic_cast<CategoryModel*>((dynamic_cast<View*>(btn))->model());
-		std::cout << "Category Selected: " << pCM->getCID() << ". " << pCM->getLabel() << std::endl;
-		std::cout << "Category Model: " << model() << ". " << pCM->getLabel() << std::endl;
+		FILE_LOG(logDEBUG2) << "Category Selected: " << pCM->getCID() << ". " << pCM->getLabel();
+		FILE_LOG(logDEBUG2) << "Category Model: " << model() << ". " << pCM->getLabel();
 		AppModel::getInstance()->getTestProperties()->setCategory(pCM);
 		AppModel::getInstance()->runTest();
 

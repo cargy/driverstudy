@@ -6,6 +6,7 @@
  */
 
 #include "MV.h"
+#include "log.h"
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
@@ -15,7 +16,7 @@ Model::Model() {
 	view_cnt = 0;
 	_facade = NULL;
 	for (int i=0; i< MAX_VIEWS; i++) pview[i] = NULL;
-	std::cout << "New Model Created: " << this << std::endl;
+	FILE_LOG(logDEBUG4) << "New Model Created: " << this;
 	//printf("New Model Created of Type: %d: %i Views\n",typeid(this).name().c_str().view_cnt);
 }
 
@@ -48,8 +49,8 @@ void Model::setView(View *pv) {
 	if (view_cnt < MAX_VIEWS) {
 		pview[view_cnt++] = pv;
 		pv->setModel(this);
-		std::cout << "Added View " << view_cnt << " <" << typeid(*pv).name() << "> on Model:" << this << std::endl;
-	}else{ printf("setView(): Max Views (%i), reached\n", MAX_VIEWS); }
+		FILE_LOG(logDEBUG4) << "Added View " << view_cnt << " <" << typeid(*pv).name() << "> on Model:" << this;
+	}else{ FILE_LOG(logWARNING) << "setView(): Max Views (" << MAX_VIEWS << "), reached\n"; }
 }
 
 void Model::changed(void) {
@@ -110,7 +111,7 @@ Model* View::model() {
  * Do any kind of model attachment needed.
  */
 void View::attach() {}
-void View::modelAttached() { std::cout << "Model Attached to View: " << pModel;}
+void View::modelAttached() { FILE_LOG(logDEBUG4) << "Model Attached to View: " << pModel;}
 
 void View::update() {
 }

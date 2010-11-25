@@ -5,6 +5,7 @@
  *      Author: krizz
  */
 
+#include "log.h"
 #include "Facade.h"
 #include "AppModel.h"
 #include "AppView.h"
@@ -12,6 +13,11 @@
 
 int main(int argc, char** argv)
 {
+	//FILE* logFile = fopen( "driverstudy.log" , "a" );
+	//if( logFile ) Output2FILE::Stream() = logFile;
+	FILELog::ReportingLevel() = FILELog::FromString(argv[1] ? argv[1] : "DEBUG1");
+	FILE_LOG(logINFO) << "Logging Started...";
+
 	Facade* f = new Facade();
 	AppModel * appM = new AppModel();
 	f->attachModel(APPMODEL_ID, appM);

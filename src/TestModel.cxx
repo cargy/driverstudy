@@ -1,5 +1,5 @@
 #include "TestModel.h"
-#include <iostream>
+#include "log.h"
 
 TestModel::TestModel(QuestionModel *xferQuestions, int aoq, CategoryModel* tcategory):
 Model()
@@ -10,11 +10,11 @@ Model()
 	testCategory = tcategory;
 	testTime = tcategory->getTime();
 	run_ = false;
-	std::cout << "TestModel constructed:" << this << std::endl;
+	FILE_LOG(logDEBUG4) << "TestModel constructed:" << this << std::endl;
 }
 
 TestModel::~TestModel() {
-	std::cout << "TestModel dropped:" << this << std::endl;
+	FILE_LOG(logDEBUG4) << "TestModel dropped:" << this << std::endl;
 }
 
 void TestModel::loadTest(TestModel* pTestModel) {
