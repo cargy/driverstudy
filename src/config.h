@@ -23,7 +23,6 @@
 #include "version.h"
 #define DRIVERSTUDYVERSION DRIVERSTUDY_VERSION_STRING
 //#define DEBUG
-#define NDEBUG
 #define TOUCHSCREEN
 
 // SOUND DEFs

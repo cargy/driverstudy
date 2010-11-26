@@ -13,9 +13,14 @@
 
 int main(int argc, char** argv)
 {
-	//FILE* logFile = fopen( "driverstudy.log" , "a" );
-	//if( logFile ) Output2FILE::Stream() = logFile;
+#ifdef NDEBUG
+	FILE* logFile = fopen( "driverstudy.log" , "a" );
+	if( logFile ) Output2FILE::Stream() = logFile;
+	FILELog::ReportingLevel() = FILELog::FromString(argv[1] ? argv[1] : "INFO");
+#else
 	FILELog::ReportingLevel() = FILELog::FromString(argv[1] ? argv[1] : "DEBUG1");
+#endif
+	
 	FILE_LOG(logINFO) << "Logging Started...";
 
 	Facade* f = new Facade();
